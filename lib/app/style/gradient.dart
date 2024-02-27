@@ -3,8 +3,8 @@ import 'package:tatarupiah/app/style/colors.dart';
 
 LinearGradient primary = LinearGradient(
   colors: [
-    greenAccent,
-    yellowAccent,
+    Color(0xffE1F375),
+    Color(0xff9AEB85),
   ],
   begin: Alignment.centerRight,
   end: Alignment.centerLeft,
