@@ -9,6 +9,7 @@ abstract class Routes {
   static const STATISTICS = _Paths.STATISTICS;
   static const CHAT_AI = _Paths.CHAT_AI;
   static const TRANSACTION = _Paths.HOME + _Paths.TRANSACTION;
+  static const MAIN = _Paths.MAIN;
 }
 
 abstract class _Paths {
@@ -19,4 +20,5 @@ abstract class _Paths {
   static const STATISTICS = '/statistics';
   static const CHAT_AI = '/chat-ai';
   static const TRANSACTION = '/transaction';
+  static const MAIN = '/main';
 }

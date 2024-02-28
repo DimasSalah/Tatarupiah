@@ -8,6 +8,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/transaction/bindings/transaction_binding.dart';
 import '../modules/home/transaction/views/transaction_view.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/main/bindings/main_binding.dart';
+import '../modules/main/views/main_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/statistics/bindings/statistics_binding.dart';
@@ -52,6 +54,11 @@ class AppPages {
       name: _Paths.CHAT_AI,
       page: () => const ChatAiView(),
       binding: ChatAiBinding(),
+    ),
+    GetPage(
+      name: _Paths.MAIN,
+      page: () => const MainView(),
+      binding: MainBinding(),
     ),
   ];
 }
