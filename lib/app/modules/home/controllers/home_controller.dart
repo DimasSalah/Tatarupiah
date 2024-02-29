@@ -46,7 +46,7 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     mybarData.initializeBarData();
+    dropdownValue.value = "Pemasukan";
 
-    
   }
 }

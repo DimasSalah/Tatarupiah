@@ -4,10 +4,12 @@ import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
+import 'app/modules/home/controllers/home_controller.dart';
 import 'app/routes/app_pages.dart';
 import 'app/style/themes.dart';
 
 Future<void> main() async {
+  Get.lazyPut(() => HomeController());
   await initializeDateFormatting();
   Intl.defaultLocale = 'id_ID';
   runApp(
