@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 //neutral colors
 Color light = const Color(0xFFececec);
+Color lighter = const Color(0xFFD9D9D9);
 Color lightHover = const Color(0xFFe2e2e2);
 Color lightActive = const Color(0xFFc3c3c3);
 Color normal = const Color(0xFF3d3d3d);
