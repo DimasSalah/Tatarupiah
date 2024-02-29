@@ -1,41 +1,20 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tatarupiah/app/style/colors.dart';
+import 'package:tatarupiah/app/style/gradient.dart';
 import 'package:tatarupiah/app/style/text_style.dart';
 
-class OnboardingView extends GetView {
-  OnboardingView({Key? key}) : super(key: key);
-  final List<String> imagePaths = [
-    'assets/icons/onboarding1.svg',
-    'assets/icons/onboarding2.svg',
-    'assets/icons/onboarding3.svg',
-  ];
+import '../controllers/onboarding_controller.dart';
+
+class OnboardingView extends GetView<OnboardingController> {
+  const OnboardingView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    int currentPage = 0;
-    PageController pageController = PageController();
-
-    // Function to change the page
-    void nextPage() {
-      currentPage = (currentPage + 1) % imagePaths.length;
-      pageController.animateToPage(
-        currentPage,
-        duration: Duration(milliseconds: 500),
-        curve: Curves.easeIn,
-      );
-    }
-
-    // Automatic page change with a timer
-    Timer.periodic(Duration(seconds: 3), (timer) {
-      nextPage();
-    });
-
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: darker,
       appBar: AppBar(
         backgroundColor: light,
       ),
@@ -44,32 +23,31 @@ class OnboardingView extends GetView {
           Expanded(
             child: Stack(
               children: [
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: light,
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30),
+                    ),
+                  ),
+                ),
                 PageView.builder(
-                  controller: pageController,
-                  itemCount: imagePaths.length,
+                  controller: controller.pageController,
+                  itemCount: controller.imagePaths.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      width: double.infinity,
-                      height: 470,
-                      decoration: BoxDecoration(
-                        color: light,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
-                        child: SvgPicture.asset(
-                          imagePaths[index],
-                          width: 30,
-                          height: 30,
-                        ),
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: SvgPicture.asset(
+                        controller.imagePaths[index],
+                        width: 30,
+                        height: 30,
                       ),
                     );
                   },
                   onPageChanged: (index) {
-                    currentPage = index;
+                    controller.currentPage.value = index;
                   },
                 ),
                 Positioned(
@@ -78,10 +56,11 @@ class OnboardingView extends GetView {
                   right: 0,
                   child: Align(
                     child: SmoothPageIndicator(
-                      controller: pageController,
-                      count: imagePaths.length,
+                      
+                      controller: controller.pageController,
+                      count: controller.imagePaths.length,
                       effect: ExpandingDotsEffect(
-                        activeDotColor: Colors.black,
+                        activeDotColor: darker,
                         dotColor: lightActive,
                         dotHeight: 8,
                         dotWidth: 8,
@@ -92,102 +71,78 @@ class OnboardingView extends GetView {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 4,
           ),
           Container(
+            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
             width: double.infinity,
-            height: 284,
             decoration: BoxDecoration(
               color: light,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(30),
                 topRight: Radius.circular(30),
               ),
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 35, left: 69, right: 70),
-                  child: Text('Kelola Semua Transaksi!',
-                      style: semiBold.copyWith(fontSize: 20)),
-                ),
-                SizedBox(height: 6),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 44),
-                  child: Text(
-                    'Selamat datang di Tatarupiah kendalikan keuangan usahamu dengan lebih rapi. Ayo mulai perjalanan finansial Anda bersama kami!',
-                    style: regular.copyWith(
-                      fontSize: 13,
-                      color: lightActive,
-                    ),
-                    textAlign: TextAlign.center,
+                Text('Kelola Semua Transaksi!',
+                    style: semiBold.copyWith(fontSize: 20)),
+                const SizedBox(height: 6),
+                Text(
+                  'Selamat datang di Tatarupiah kendalikan keuangan usahamu dengan lebih rapi. Ayo mulai perjalanan finansial Anda bersama kami!',
+                  style: regular.copyWith(
+                    fontSize: 13,
+                    color: lightActive,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 33, right: 45),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+                  decoration: BoxDecoration(
+                    color: darker,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(width: 5),
+                      Text(
+                        'Mulai Sekarang',
+                        style: regular.copyWith(fontSize: 16, color: light),
                       ),
-                      backgroundColor: MaterialStateProperty.all(Colors.black),
-                      minimumSize: MaterialStateProperty.all(
-                        Size(
-                          double.infinity,
-                          64,
+                      Container(
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          gradient: primary,
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                      ), // Ganti ukuran sesuai kebutuhan
-                    ),
-                    onPressed: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 70),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Mulai Sekarang',
-                            textAlign: TextAlign.center,
-                            style: regular.copyWith(
-                                fontSize: 16, color: Colors.white),
-                          ),
-                          SizedBox(
-                            width: 44,
-                          ),
-                          Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: yellowAccent,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Icon(
-                              Icons.arrow_forward_outlined,
-                              color: darker,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                        child: SvgPicture.asset(
+                          'assets/icons/left_arrow.svg',
+                          height: 20,
+                        ),
+                      )
+                    ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 93, right: 93),
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'Sudah punya akun? ',
-                      style: regular.copyWith(fontSize: 13, color: lightActive),
-                      children: [
-                        TextSpan(
-                          text: 'Masuk',
-                          style: regular.copyWith(fontSize: 13, color: darker),
-                        ),
-                      ],
-                    ),
+                const SizedBox(height: 10),
+                RichText(
+                  text: TextSpan(
+                    text: 'Sudah punya akun? ',
+                    style: regular.copyWith(fontSize: 13, color: lightActive),
+                    children: [
+                      TextSpan(
+                        text: 'Masuk',
+                        style: regular.copyWith(fontSize: 13, color: darker),
+                      ),
+                    ],
                   ),
                 ),
               ],
