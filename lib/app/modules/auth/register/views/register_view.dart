@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
-import 'package:tatarupiah/app/modules/auth/controllers/auth_controller.dart';
 import 'package:tatarupiah/app/modules/auth/register/views/components/CustomTextFormFieldContainer.dart';
 import 'package:tatarupiah/app/style/colors.dart';
 import 'package:tatarupiah/app/style/text_style.dart';
 
-class AuthView extends GetView<AuthController> {
-  const AuthView({Key? key}) : super(key: key);
+import '../controllers/register_controller.dart';
+
+class RegisterView extends GetView<RegisterController> {
+  const RegisterView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,23 +23,30 @@ class AuthView extends GetView<AuthController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Ayo Masuk !',
+                    'Ayo Daftar !',
                     style: semiBold.copyWith(fontSize: 30),
                   ),
-                  SizedBox(height: 7),
                   Text(
-                    '''Lanjutkan Perjalananmu! Siap untuk Bermain dengan Angka-angka?''',
+                    '''Tingkatkan Keuangan Usahamu dengan Sedikit Sentuhan Kreatifitas!''',
                     style: regular.copyWith(fontSize: 16, color: lightActive),
                   ),
-                  SizedBox(height: 28),
+                  SizedBox(height: 27),
                   Center(
                     child: SvgPicture.asset(
-                      'assets/icons/login.svg',
+                      'assets/icons/register.svg',
                       width: 200,
                       height: 200,
                     ),
                   ),
                   SizedBox(height: 46),
+                  CustomTextFieldContainer(
+                    labelText: 'nama',
+                    hintText: 'Masukkan Nama Lengkap',
+                    onChanged: (value) {
+                      controller.name = value;
+                    },
+                  ),
+                  SizedBox(height: 11),
                   CustomTextFieldContainer(
                     labelText: 'email',
                     hintText: 'Masukkan Email',
@@ -50,44 +59,47 @@ class AuthView extends GetView<AuthController> {
                     onChanged: (value) => controller.password = value,
                   ),
                   SizedBox(height: 11),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Text(
-                      'lupa password ?',
-                      style: regular.copyWith(fontSize: 13, color: normal),
-                    ),
+                  CustomTextFieldContainer(
+                    labelText: 'konfirm password',
+                    hintText: 'Masukkan Konfirmasi Password',
+                    onChanged: (value) => controller.confirmPassword = value,
                   ),
                   SizedBox(height: 26),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 141, vertical: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    width: double.infinity,
-                    height: 64,
-                    child: Text(
-                      'Masuk',
-                      style:
-                          regular.copyWith(fontSize: 16, color: Colors.white),
-                      textAlign: TextAlign.center,
+                  GestureDetector(
+                    onTap: () {
+                      controller.register();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 141, vertical: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      width: double.infinity,
+                      height: 64,
+                      child: Text(
+                        'Daftar',
+                        style:
+                            regular.copyWith(fontSize: 16, color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 100),
+                  SizedBox(height: 16),
                   Center(
                     child: GestureDetector(
                       onTap: () {
-                        controller.navigationToRegister();
+                        controller.navigationToLogin();
                       },
                       child: RichText(
                         text: TextSpan(
-                          text: 'Belum punya akun? ',
+                          text: 'Sudah punya akun? ',
                           style: regular.copyWith(
                               fontSize: 13, color: lightActive),
                           children: [
                             TextSpan(
-                              text: 'ayo daftar',
+                              text: 'Masuk',
                               style:
                                   regular.copyWith(fontSize: 13, color: darker),
                             ),

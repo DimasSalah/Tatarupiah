@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tatarupiah/app/routes/app_pages.dart';
 
 class OnboardingController extends GetxController {
   //TODO: Implement OnboardingController
@@ -11,7 +12,6 @@ class OnboardingController extends GetxController {
     'assets/icons/onboarding2.svg',
     'assets/icons/onboarding3.svg',
   ].obs;
-
 
   final PageController pageController = PageController();
 
@@ -32,5 +32,9 @@ class OnboardingController extends GetxController {
     Timer.periodic(Duration(seconds: 3), (timer) {
       nextPage();
     });
+  }
+
+  void navigationToRegister() {
+    Get.toNamed(Routes.REGISTER);
   }
 }

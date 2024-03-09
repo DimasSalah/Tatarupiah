@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
+import '../modules/auth/register/bindings/register_binding.dart';
+import '../modules/auth/register/views/register_view.dart';
 import '../modules/auth/views/auth_view.dart';
 import '../modules/chatAi/bindings/chat_ai_binding.dart';
 import '../modules/chatAi/views/chat_ai_view.dart';
@@ -42,6 +44,13 @@ class AppPages {
       name: _Paths.AUTH,
       page: () => const AuthView(),
       binding: AuthBinding(),
+      children: [
+        GetPage(
+          name: _Paths.REGISTER,
+          page: () => const RegisterView(),
+          binding: RegisterBinding(),
+        ),
+      ],
     ),
     GetPage(
       name: _Paths.STATISTICS,

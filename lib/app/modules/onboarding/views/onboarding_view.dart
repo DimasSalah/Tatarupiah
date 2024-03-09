@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:tatarupiah/app/routes/app_pages.dart';
 import 'package:tatarupiah/app/style/colors.dart';
 import 'package:tatarupiah/app/style/gradient.dart';
 import 'package:tatarupiah/app/style/text_style.dart';
@@ -56,7 +57,6 @@ class OnboardingView extends GetView<OnboardingController> {
                   right: 0,
                   child: Align(
                     child: SmoothPageIndicator(
-                      
                       controller: controller.pageController,
                       count: controller.imagePaths.length,
                       effect: ExpandingDotsEffect(
@@ -101,35 +101,40 @@ class OnboardingView extends GetView<OnboardingController> {
                 const SizedBox(
                   height: 8,
                 ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
-                  decoration: BoxDecoration(
-                    color: darker,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  width: double.infinity,
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SizedBox(width: 5),
-                      Text(
-                        'Mulai Sekarang',
-                        style: regular.copyWith(fontSize: 16, color: light),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          gradient: primary,
-                          borderRadius: BorderRadius.circular(15),
+                GestureDetector(
+                  onTap: () {
+                    controller.navigationToRegister();
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+                    decoration: BoxDecoration(
+                      color: darker,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    width: double.infinity,
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const SizedBox(width: 5),
+                        Text(
+                          'Mulai Sekarang',
+                          style: regular.copyWith(fontSize: 16, color: light),
                         ),
-                        child: SvgPicture.asset(
-                          'assets/icons/left_arrow.svg',
-                          height: 20,
-                        ),
-                      )
-                    ],
+                        Container(
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            gradient: primary,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: SvgPicture.asset(
+                            'assets/icons/left_arrow.svg',
+                            height: 20,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),
