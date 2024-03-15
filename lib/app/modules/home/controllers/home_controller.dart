@@ -1,11 +1,20 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
 import 'package:tatarupiah/app/modules/home/views/components/bar%20graph/bar_data.dart';
+import 'package:tatarupiah/app/routes/app_pages.dart';
 
 class HomeController extends GetxController {
   RxDouble maxY = 200.0.obs;
   RxInt selectedBarIndex = 0.obs;
   RxString dropdownValue = "Pemasukan".obs;
+
+  void navigationToTransaction() {
+    Get.toNamed(Routes.TRANSACTION);
+  }
+
+  void navigationToHistory() {
+    Get.toNamed(Routes.HISTORY);
+  } 
   
 
   void setSelectedBarIndex(FlTouchEvent event, BarTouchResponse? response) {
@@ -18,7 +27,6 @@ class HomeController extends GetxController {
 
   void setSelected(String value){
      dropdownValue.value = value;
-     print(dropdownValue.value);
    }
 
   Bardata mybarData = Bardata(

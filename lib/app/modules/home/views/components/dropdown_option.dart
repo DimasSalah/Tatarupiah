@@ -28,8 +28,8 @@ class DropdownOption extends StatelessWidget {
         // iconSize: 30,
         dropdownColor: darkHover,
         borderRadius: BorderRadius.circular(14),
-        focusColor: lightHover,
-        style: medium.copyWith(fontSize: 20, color: light),
+        focusColor: white,
+        style: medium.copyWith(fontSize: 20, color: white),
         onChanged: (newValue) {
           onItemSelected(newValue.toString());
         },
