@@ -5,6 +5,8 @@ import '../modules/auth/views/auth_view.dart';
 import '../modules/chatAi/bindings/chat_ai_binding.dart';
 import '../modules/chatAi/views/chat_ai_view.dart';
 import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/history/bindings/history_binding.dart';
+import '../modules/home/history/views/history_view.dart';
 import '../modules/home/transaction/bindings/transaction_binding.dart';
 import '../modules/home/transaction/views/transaction_view.dart';
 import '../modules/home/views/home_view.dart';
@@ -32,6 +34,11 @@ class AppPages {
           name: _Paths.TRANSACTION,
           page: () => const TransactionView(),
           binding: TransactionBinding(),
+        ),
+        GetPage(
+          name: _Paths.HISTORY,
+          page: () => const HistoryView(),
+          binding: HistoryBinding(),
         ),
       ],
     ),
