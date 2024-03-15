@@ -1,7 +1,7 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:get/get.dart';
 import 'package:tatarupiah/app/modules/home/views/components/bar%20graph/bar_graph.dart';
 import 'package:tatarupiah/app/modules/home/views/components/dropdown_option.dart';
 import 'package:tatarupiah/app/style/colors.dart';
@@ -15,7 +15,9 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+        body: SingleChildScrollView(
+      controller: ScrollController(),
+      child: SafeArea(
           child: Column(
         children: [
           const HeaderBar(),
@@ -39,16 +41,21 @@ class HomeView extends GetView<HomeController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          //dropdown
-                          
+                          Obx(
+                            () => DropdownOption(
+                                dropdownValue: controller.dropdownValue.string,
+                                onItemSelected: controller.setSelected),
+                          ),
                           SvgPicture.asset(
-                            'assets/icons/calendar.svg',height: 34,
+                            'assets/icons/calendar.svg',
+                            height: 34,
                           ),
                         ],
                       ),
                       Text(
                         "Rp 1.000.000",
-                        style: bold.copyWith(fontSize: 33, color: light),)
+                        style: bold.copyWith(fontSize: 33, color: light),
+                      )
                     ],
                   ),
                 ),
@@ -171,14 +178,8 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
           ),
-          DropdownOption(
-                            label: "Pendapatan",
-                            onItemSelected: (value) {
-                              print(value);
-                            },
-                          )
         ],
       )),
-    );
+    ));
   }
 }

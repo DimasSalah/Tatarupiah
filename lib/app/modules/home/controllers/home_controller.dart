@@ -5,6 +5,7 @@ import 'package:tatarupiah/app/modules/home/views/components/bar%20graph/bar_dat
 class HomeController extends GetxController {
   RxDouble maxY = 200.0.obs;
   RxInt selectedBarIndex = 0.obs;
+  RxString dropdownValue = "Pemasukan".obs;
   
 
   void setSelectedBarIndex(FlTouchEvent event, BarTouchResponse? response) {
@@ -14,6 +15,11 @@ class HomeController extends GetxController {
     update();
   }
   }
+
+  void setSelected(String value){
+     dropdownValue.value = value;
+     print(dropdownValue.value);
+   }
 
   Bardata mybarData = Bardata(
     sunAmmount: 25.40,
