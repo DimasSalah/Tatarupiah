@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -91,7 +90,8 @@ class HomeView extends GetView<HomeController> {
                       onTap: controller.navigationToHistory,
                       child: Text(
                         "Lihat Semua",
-                        style: medium.copyWith(fontSize: 13, color: lightActive),
+                        style:
+                            medium.copyWith(fontSize: 13, color: lightActive),
                       ),
                     )
                   ],
@@ -131,10 +131,8 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
               const Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-                child: TransactionsCard()
-              ),
+                  padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                  child: TransactionsCard()),
             ],
           ),
         ),
@@ -151,17 +149,17 @@ class HomeView extends GetView<HomeController> {
               borderRadius: BorderRadius.circular(24),
             ),
             elevation: 0,
-            onPressed: controller.navigationToTransaction,
+            onPressed:
+                controller.navigationToTransaction,
             child: Container(
-              padding: const EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                gradient: primary,
-                borderRadius: BorderRadius.circular(50),
-              ),
-              child: SvgPicture.asset(
-                'assets/icons/plus.svg',
-              )
-            ),
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  gradient: primary,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: SvgPicture.asset(
+                  'assets/icons/plus.svg',
+                )),
           ),
         ),
       ),
