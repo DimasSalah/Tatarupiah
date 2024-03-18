@@ -21,4 +21,8 @@ class EditProfileController extends GetxController {
   }
 
   void increment() => count.value++;
+
+  void getToProfile() {
+    Get.toNamed(Routes.PROFILE);
+  }
 }
