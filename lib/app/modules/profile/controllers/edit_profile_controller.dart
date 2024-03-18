@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
 
-class ProfileController extends GetxController {
+class EditProfileController extends GetxController {
   //TODO: Implement ProfileController
 
   final count = 0.obs;
@@ -21,8 +21,4 @@ class ProfileController extends GetxController {
   }
 
   void increment() => count.value++;
-
-  void getToEditProfile() {
-    Get.toNamed(Routes.EDITPROFILE);
-  }
 }
