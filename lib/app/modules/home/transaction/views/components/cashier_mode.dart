@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../../../style/colors.dart';
 import '../../../../../style/text_style.dart';
 import '../../controllers/transaction_controller.dart';
+import 'SearchField.dart';
 import 'card_cashier_mode.dart';
 class CashierMode extends StatelessWidget {
   const CashierMode({
@@ -26,37 +27,7 @@ class CashierMode extends StatelessWidget {
               top: 10,
               bottom: 15,
             ),
-            child: TextField(
-              decoration: InputDecoration(
-                prefixIcon: SvgPicture.asset(
-                  'assets/icons/search.svg',
-                ),
-                prefixIconConstraints: const BoxConstraints(
-                  minWidth: 52,
-                ),
-                hintText: 'Cari Produk',
-                hintStyle: medium.copyWith(
-                  fontSize: 13,
-                  color: lightActive,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: lightActive,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: normal,
-                  ),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 8,
-                ),
-              ),
-            ),
+            child: const SearchField(),
           ),
           Container(
             padding: const EdgeInsets.symmetric(
@@ -94,3 +65,4 @@ class CashierMode extends StatelessWidget {
       );
   }
 }
+

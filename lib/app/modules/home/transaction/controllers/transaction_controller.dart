@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:tatarupiah/app/routes/app_pages.dart';
 
 class TransactionController extends GetxController {
   RxBool switchMode = false.obs;
@@ -56,6 +57,10 @@ class TransactionController extends GetxController {
     if (orderValue.value > 0) {
       orderValue.value--;
     }
+  }
+
+  void navigatedAToCategory() {
+    Get.toNamed(Routes.CATEGORY);
   }
 
   @override
