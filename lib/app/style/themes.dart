@@ -4,7 +4,7 @@ import 'package:tatarupiah/app/style/colors.dart';
 class AppTheme {
   static ThemeData themeData = ThemeData(
     useMaterial3: true,
-    scaffoldBackgroundColor: light,
+    scaffoldBackgroundColor: Colors.white,
     colorSchemeSeed: dark,
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: normal,
