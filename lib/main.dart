@@ -14,12 +14,11 @@ Future<void> main() async {
   Intl.defaultLocale = 'id_ID';
   runApp(
     GetMaterialApp(
-      home: EditProfileView(),
-      // title: "Application",
-      // debugShowCheckedModeBanner: false,
-      // initialRoute: AppPages.INITIAL,
-      // getPages: AppPages.routes,
-      // theme: AppTheme.themeData,
+      title: "Application",
+      debugShowCheckedModeBanner: false,
+      initialRoute: AppPages.INITIAL,
+      getPages: AppPages.routes,
+      theme: AppTheme.themeData,
     ),
   );
 }
