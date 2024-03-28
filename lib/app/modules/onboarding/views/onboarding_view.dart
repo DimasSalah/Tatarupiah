@@ -17,7 +17,8 @@ class OnboardingView extends GetView<OnboardingController> {
     return Scaffold(
       backgroundColor: darker,
       appBar: AppBar(
-        backgroundColor: light,
+        // backgroundColor: light,
+        backgroundColor: Colors.white,
       ),
       body: Column(
         children: [
@@ -27,7 +28,7 @@ class OnboardingView extends GetView<OnboardingController> {
                 Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: light,
+                    color: Colors.white,
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(30),
                       bottomRight: Radius.circular(30),
@@ -78,7 +79,7 @@ class OnboardingView extends GetView<OnboardingController> {
             padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
             width: double.infinity,
             decoration: BoxDecoration(
-              color: light,
+              color: Colors.white,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(30),
                 topRight: Radius.circular(30),
