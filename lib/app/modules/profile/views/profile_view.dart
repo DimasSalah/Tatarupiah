@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:tatarupiah/app/modules/profile/views/componnets/CustomTextContainer.dart';
@@ -17,15 +18,22 @@ class ProfileView extends GetView<ProfileController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-          title: Text('Profil Saya', style: semiBold.copyWith(fontSize: 20)),
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(Icons.arrow_back_ios),
-          )
-          // centerTitle: true,
+        leading: IconButton(
+          icon: SvgPicture.asset(
+            'assets/icons/arrow_left.svg',
+            // width: 12,
           ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
+        title: Text(
+          'Profil Saya',
+          style: semiBold.copyWith(fontSize: 20),
+        ),
+
+        // centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 23),
         child: Column(
@@ -101,13 +109,19 @@ class ProfileView extends GetView<ProfileController> {
                   text: '21 Februari 2024',
                   style: regular.copyWith(fontSize: 13, color: darkHover)),
             ])),
-            TextButton(
-                onPressed: () {},
-                child: Text('Keluar',
-                    style: medium.copyWith(
-                      fontSize: 20,
-                      color: error,
-                    )))
+            GestureDetector(
+              onTap: () => Get.offAllNamed(Routes.EDITPROFILE),
+              child: Text('Keluar',
+                  style: medium.copyWith(fontSize: 20, color: error)),
+            ),
+            // GestureDitector(child: Text('Keluar', style: medium.copyWith(fontSize: 20, color: error)))
+            // TextButton(
+            //     onPressed: () {},
+            //     child: Text('Keluar',
+            //         style: medium.copyWith(
+            //           fontSize: 20,
+            //           color: error,
+            //         )))
           ],
         ),
       ),
