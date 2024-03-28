@@ -1,15 +1,24 @@
 import 'package:get/get.dart';
+import 'package:tatarupiah/app/modules/home/category/views/add_category_view.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/views/auth_view.dart';
 import '../modules/chatAi/bindings/chat_ai_binding.dart';
 import '../modules/chatAi/views/chat_ai_view.dart';
 import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/category/bindings/category_binding.dart';
+import '../modules/home/category/views/category_view.dart';
+import '../modules/home/history/bindings/history_binding.dart';
+import '../modules/home/history/views/history_view.dart';
 import '../modules/home/transaction/bindings/transaction_binding.dart';
 import '../modules/home/transaction/views/transaction_view.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/main/bindings/main_binding.dart';
+import '../modules/main/views/main_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
 import '../modules/statistics/bindings/statistics_binding.dart';
 import '../modules/statistics/views/statistics_view.dart';
 
@@ -18,7 +27,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.MAIN;
 
   static final routes = [
     GetPage(
@@ -31,6 +40,20 @@ class AppPages {
           page: () => const TransactionView(),
           binding: TransactionBinding(),
         ),
+        GetPage(
+          name: _Paths.HISTORY,
+          page: () => const HistoryView(),
+          binding: HistoryBinding(),
+        ),
+        GetPage(
+          name: _Paths.CATEGORY,
+          page: () => const CategoryView(),
+          binding: CategoryBinding(),
+        ),
+        GetPage(
+            name: _Paths.ADDCATEGORY,
+            page: () => const AddCategory(),
+            binding: CategoryBinding())
       ],
     ),
     GetPage(
@@ -52,6 +75,16 @@ class AppPages {
       name: _Paths.CHAT_AI,
       page: () => const ChatAiView(),
       binding: ChatAiBinding(),
+    ),
+    GetPage(
+      name: _Paths.MAIN,
+      page: () => const MainView(),
+      binding: MainBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
     ),
   ];
 }
