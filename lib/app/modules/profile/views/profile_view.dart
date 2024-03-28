@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -14,10 +15,17 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Profil Saya'),
-        // centerTitle: true,
-      ),
+          title: Text('Profil Saya', style: semiBold.copyWith(fontSize: 20)),
+          leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(Icons.arrow_back_ios),
+          )
+          // centerTitle: true,
+          ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 23),
         child: Column(
@@ -56,22 +64,22 @@ class ProfileView extends GetView<ProfileController> {
             SizedBox(
               height: 33,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Informasi',
-                  style: medium.copyWith(fontSize: 16, color: dark),
-                ),
-                TextButton(
-                    onPressed: () {
-                      Get.toNamed(Routes.EDITPROFILE);
-                    },
-                    child: Text('Edit',
-                        style:
-                            medium.copyWith(fontSize: 13, color: lightActive))),
-              ],
-            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text(
+                'Informasi',
+                style: medium.copyWith(
+                    fontSize: 16,
+                    color: dark,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.normal),
+              ),
+              GestureDetector(
+                onTap: () => Get.offAllNamed(Routes.EDITPROFILE),
+                child: Text('Edit Profile',
+                    style: medium.copyWith(fontSize: 13, color: lightActive)),
+              ),
+            ]),
+            SizedBox(height: 15),
             CustomTextContainer(
               text: '081902652049',
             ),

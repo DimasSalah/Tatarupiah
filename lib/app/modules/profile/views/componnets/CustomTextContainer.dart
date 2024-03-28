@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tatarupiah/app/style/colors.dart';
+import 'package:tatarupiah/app/style/text_style.dart';
 
 class CustomTextContainer extends StatelessWidget {
   final String text;
@@ -19,6 +20,7 @@ class CustomTextContainer extends StatelessWidget {
       height: 44,
       width: double.infinity,
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
         color: light,
         border: Border.all(
           color: lighter,
@@ -26,13 +28,7 @@ class CustomTextContainer extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 20, top: 11, bottom: 13),
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        child: Text(text, style: regular.copyWith(fontSize: 13, color: dark)),
       ),
     );
   }
