@@ -15,6 +15,10 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: semiBold.copyWith(
+        fontSize: 16,
+        color: darkHover,
+      ),
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,

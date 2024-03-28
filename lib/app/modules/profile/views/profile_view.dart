@@ -31,8 +31,6 @@ class ProfileView extends GetView<ProfileController> {
           'Profil Saya',
           style: semiBold.copyWith(fontSize: 20),
         ),
-
-        // centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 23),
