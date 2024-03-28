@@ -16,7 +16,11 @@ Future<void> main() async {
     GetMaterialApp(
       title: "Application",
       debugShowCheckedModeBanner: false,
+<<<<<<< HEAD
       initialRoute: Routes.PROFILE,
+=======
+      initialRoute: AppPages.INITIAL,
+>>>>>>> efd4d41d45dab2a50346d6a90702726f34ed523e
       getPages: AppPages.routes,
       theme: AppTheme.themeData,
     ),

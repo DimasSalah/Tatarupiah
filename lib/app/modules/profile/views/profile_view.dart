@@ -114,14 +114,6 @@ class ProfileView extends GetView<ProfileController> {
               child: Text('Keluar',
                   style: medium.copyWith(fontSize: 20, color: error)),
             ),
-            // GestureDitector(child: Text('Keluar', style: medium.copyWith(fontSize: 20, color: error)))
-            // TextButton(
-            //     onPressed: () {},
-            //     child: Text('Keluar',
-            //         style: medium.copyWith(
-            //           fontSize: 20,
-            //           color: error,
-            //         )))
           ],
         ),
       ),
