@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
+import 'package:rive/rive.dart';
+import 'package:tatarupiah/app/routes/app_pages.dart';
+import 'package:tatarupiah/app/style/colors.dart';
+import 'package:tatarupiah/app/style/text_style.dart';
 
+import '../../home/views/components/header_bar.dart';
 import '../controllers/chat_ai_controller.dart';
 
 class ChatAiView extends GetView<ChatAiController> {
@@ -9,14 +13,84 @@ class ChatAiView extends GetView<ChatAiController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ChatAiView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'ChatAiView is working',
-          style: TextStyle(fontSize: 20),
+      body: SafeArea(
+        child: Column(
+          children: [
+            HeaderBar(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 13),
+              child: Container(
+                  height: 380,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40), color: dark),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 24,
+                      right: 24,
+                      top: 24,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('AI Assistent.',
+                            style: medium.copyWith(fontSize: 25, color: light)),
+                        Center(
+                          child: Container(
+                            height: 300,
+                            width: 500,
+                            child: RiveAnimation.asset(
+                              'assets/icons/robot_ai.riv',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
+            ),
+            SizedBox(height: 19),
+            Center(
+              child: Text(
+                '''Percepat alokasi anggaranmu 
+dengan bantuan Ai''',
+                textAlign: TextAlign.center,
+                style: medium.copyWith(fontSize: 20, color: dark),
+              ),
+            ),
+            Center(
+              child: Text(
+                '''Rasakan pengalaman baru dengan AI untuk 
+mengelola dana secara efisien dan hemat waktu.''',
+                textAlign: TextAlign.center,
+                style: regular.copyWith(fontSize: 13, color: lightActive),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 19),
+              child: Container(
+                height: 64,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: light,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                    child: GestureDetector(
+                  onTap: () => Get.toNamed(Routes.RECOMENDATION),
+                  child: Text(
+                    'Mulai Obrolan',
+                    style: medium.copyWith(color: lightActive, fontSize: 16),
+                  ),
+                )),
+              ),
+            ),
+            Center(
+              child: Text(
+                "Mulai",
+                style: semiBold.copyWith(fontSize: 20, color: white),
+              ),
+            ),
+          ],
         ),
       ),
     );

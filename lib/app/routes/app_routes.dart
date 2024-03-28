@@ -14,6 +14,7 @@ abstract class Routes {
   static const HISTORY = _Paths.HOME + _Paths.HISTORY;
   static const CATEGORY = _Paths.HOME + _Paths.CATEGORY;
   static const ADDCATEGORY = _Paths.HOME + _Paths.ADDCATEGORY;
+  static const RECOMENDATION = _Paths.CHAT_AI + _Paths.RECOMENDATION;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const HISTORY = '/history';
   static const CATEGORY = '/category';
   static const ADDCATEGORY = '/addcategory';
+  static const RECOMENDATION = '/recomendation';
 }
