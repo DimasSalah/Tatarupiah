@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
 
 class OnboardingController extends GetxController {
   //TODO: Implement OnboardingController
+  RxBool isCompleted = false.obs;
   RxInt currentPage = 0.obs;
   RxList<String> imagePaths = [
     'assets/icons/onboarding1.svg',
@@ -23,6 +26,13 @@ class OnboardingController extends GetxController {
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeIn,
     );
+  }
+
+  void onCompleted() {
+    isCompleted.value = true;
+    if (isCompleted.value == true) {
+      GetStorage().write('isOnBoardingCompleted', true);
+    }
   }
 
   @override

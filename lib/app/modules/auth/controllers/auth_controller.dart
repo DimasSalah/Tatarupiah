@@ -1,27 +1,58 @@
 import 'package:get/get.dart';
+import 'package:tatarupiah/app/data/api/auth_service.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
 
 class AuthController extends GetxController {
-  //TODO: Implement AuthController
-
   // Variabel untuk menyimpan nilai input dari form
-  var email = ''.obs;
-  var password = ''.obs;
-
+  RxString email = ''.obs;
+  RxString password = ''.obs;
+  RxString name = ''.obs;
   // Variabel untuk menyimpan pesan kesalahan validasi
   var emailError = RxString('');
   var passwordError = RxString('');
 
+  // Fungsi untuk mengubah nilai input form
+  void onEmailChanged(String value) {
+    email.value = value;
+  }
+
+  //
+  void onPasswordChanged(String value) {
+    password.value = value;
+  }
+
+  // Fungsi untuk mengosongkan pesan kesalahan validasi
+  void clearErrors() {
+    emailError.value = '';
+    passwordError.value = '';
+  }
+
+  // Fungsi untuk mengosongkan nilai input form
+  void clearFields() {
+    email.value = '';
+    password.value = '';
+  }
+
+// Fungsi untuk navigasi ke halaman pendaftaran
+  void navigationToRegister() {
+    Get.toNamed(Routes.REGISTER);
+  }
+
+  Future<void> login() async {
+    final authService = AuthService();
+    authService.login(email.value, password.value);
+  }
+
   var validator;
 
-  // Fungsi untuk mengirim data pendaftaran dan melakukan validasi
-  void register() {
-    if (!validateEmail()) return;
-    if (!validatePassword()) return;
+  // // Fungsi untuk mengirim data pendaftaran dan melakukan validasi
+  // void register() {
+  //   if (!validateEmail()) return;
+  //   if (!validatePassword()) return;
 
-    // Setelah pendaftaran berhasil, navigasikan pengguna ke halaman login
-    Get.toNamed(Routes.AUTH);
-  }
+  //   // Setelah pendaftaran berhasil, navigasikan pengguna ke halaman login
+  //   Get.toNamed(Routes.AUTH);
+  // }
 
   // Fungsi untuk validasi email
   bool validateEmail() {
@@ -49,39 +80,5 @@ class AuthController extends GetxController {
       passwordError.value = '';
       return true;
     }
-  }
-
-  // Fungsi untuk mengosongkan pesan kesalahan validasi
-  void clearErrors() {
-    emailError.value = '';
-    passwordError.value = '';
-  }
-
-  // Fungsi untuk mengosongkan nilai input form
-  void clearFields() {
-    email.value = '';
-    password.value = '';
-  }
-
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
-
-  void navigationToRegister() {
-    Get.toNamed(Routes.REGISTER);
   }
 }

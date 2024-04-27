@@ -40,15 +40,17 @@ class HomeView extends GetView<HomeController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           //dropdown
-                          
+
                           SvgPicture.asset(
-                            'assets/icons/calendar.svg',height: 34,
+                            'assets/icons/calendar.svg',
+                            height: 34,
                           ),
                         ],
                       ),
                       Text(
                         "Rp 1.000.000",
-                        style: bold.copyWith(fontSize: 33, color: light),)
+                        style: bold.copyWith(fontSize: 33, color: light),
+                      )
                     ],
                   ),
                 ),
@@ -172,11 +174,11 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
           DropdownOption(
-                            label: "Pendapatan",
-                            onItemSelected: (value) {
-                              print(value);
-                            },
-                          )
+            label: "Pendapatan",
+            onItemSelected: (value) {
+              print(value);
+            },
+          )
         ],
       )),
     );

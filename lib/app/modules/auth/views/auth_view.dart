@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
@@ -12,7 +13,7 @@ class AuthView extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: white,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(right: 29, left: 29, top: 36),
@@ -41,13 +42,13 @@ class AuthView extends GetView<AuthController> {
                   CustomTextFieldContainer(
                     labelText: 'email',
                     hintText: 'Masukkan Email',
-                    onChanged: (value) => controller.email = value,
+                    onChanged: controller.onEmailChanged,
                   ),
                   SizedBox(height: 11),
                   CustomTextFieldContainer(
                     labelText: 'password',
                     hintText: 'Masukkan Password',
-                    onChanged: (value) => controller.password = value,
+                    onChanged: controller.onPasswordChanged,
                   ),
                   SizedBox(height: 11),
                   Align(
@@ -58,20 +59,26 @@ class AuthView extends GetView<AuthController> {
                     ),
                   ),
                   SizedBox(height: 26),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 141, vertical: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    width: double.infinity,
-                    height: 64,
-                    child: Text(
-                      'Masuk',
-                      style:
-                          regular.copyWith(fontSize: 16, color: Colors.white),
-                      textAlign: TextAlign.center,
+                  InkWell(
+                    onTap: () {
+                      controller.login();
+                      print('masuk');
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 141, vertical: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      width: double.infinity,
+                      height: 64,
+                      child: Text(
+                        'Masuk',
+                        style:
+                            regular.copyWith(fontSize: 16, color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                   SizedBox(height: 100),

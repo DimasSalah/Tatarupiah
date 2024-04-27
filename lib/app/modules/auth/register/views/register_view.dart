@@ -14,8 +14,7 @@ class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // backgroundColor: light,
-        backgroundColor: Colors.white,
+        backgroundColor: white,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(right: 29, left: 29, top: 36),
@@ -43,32 +42,29 @@ class RegisterView extends GetView<RegisterController> {
                   CustomTextFieldContainer(
                     labelText: 'nama',
                     hintText: 'Masukkan Nama Lengkap',
-                    onChanged: (value) {
-                      controller.name = value;
-                    },
+                    onChanged: controller.onNameChanged,
                   ),
                   SizedBox(height: 11),
                   CustomTextFieldContainer(
                     labelText: 'email',
                     hintText: 'Masukkan Email',
-                    onChanged: (value) => controller.email = value,
+                    onChanged: controller.onEmailChanged,
                   ),
                   SizedBox(height: 11),
                   CustomTextFieldContainer(
-                    labelText: 'password',
-                    hintText: 'Masukkan Password',
-                    onChanged: (value) => controller.password = value,
-                  ),
+                      labelText: 'password',
+                      hintText: 'Masukkan Password',
+                      onChanged: controller.onPasswordChanged),
                   SizedBox(height: 11),
                   CustomTextFieldContainer(
-                    labelText: 'konfirm password',
-                    hintText: 'Masukkan Konfirmasi Password',
-                    onChanged: (value) => controller.confirmPassword = value,
-                  ),
+                      labelText: 'konfirm password',
+                      hintText: 'Masukkan Konfirmasi Password',
+                      onChanged: controller.onConfirmPasswordChanged),
                   SizedBox(height: 26),
-                  GestureDetector(
+                  InkWell(
                     onTap: () {
                       controller.register();
+                      print('berhasil register');
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(

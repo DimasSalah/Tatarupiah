@@ -105,6 +105,7 @@ class OnboardingView extends GetView<OnboardingController> {
                 GestureDetector(
                   onTap: () {
                     controller.navigationToRegister();
+                    controller.onCompleted();
                   },
                   child: Container(
                     padding:

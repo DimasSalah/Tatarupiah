@@ -1,4 +1,7 @@
+import 'package:email_validator/email_validator.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tatarupiah/app/data/api/auth_service.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
 
 class RegisterController extends GetxController {
@@ -16,18 +19,77 @@ class RegisterController extends GetxController {
   var passwordError = RxString('');
   var confirmPasswordError = RxString('');
 
-  var validator;
-
-  // Fungsi untuk mengirim data pendaftaran dan melakukan validasi
-  void register() {
-    if (!validateName()) return;
-    if (!validateEmail()) return;
-    if (!validatePassword()) return;
-    if (!validateConfirmPassword()) return;
-
-    // Setelah pendaftaran berhasil, navigasikan pengguna ke halaman login
-    Get.toNamed(Routes.AUTH);
+  void onNameChanged(String value) {
+    name.value = value;
   }
+
+  void onEmailChanged(String value) {
+    email.value = value;
+  }
+
+  void onPasswordChanged(String value) {
+    password.value = value;
+  }
+
+  void onConfirmPasswordChanged(String value) {
+    confirmPassword.value = value;
+  }
+
+  Future<void> register() async {
+    final authService = AuthService();
+    print(name.value);
+    print(email.value);
+    print(password.value);
+    print('confirm password: ${confirmPassword.value}');
+    final bool isSamePassword = password.value == confirmPassword.value;
+    final bool isValid = EmailValidator.validate(email.value);
+    if (!isValid) {
+      Get.dialog(
+        AlertDialog(
+          title: Text('Email tidak valid'),
+          content: Text('Silahkan masukkan email yang valid'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } else if (!isSamePassword) {
+      Get.dialog(
+        AlertDialog(
+          title: Text('Password tidak sama'),
+          content: Text('Silahkan masukkan password yang sama'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } else {
+      authService.register(
+          name.value, email.value, password.value, confirmPassword.value);
+      Get.offNamed(Routes.HOME);
+    }
+  }
+
+  // // Fungsi untuk mengirim data pendaftaran dan melakukan validasi
+  // void register() {
+  //   if (!validateName()) return;
+  //   // if (!validateEmail()) return;
+  //   if (!validatePassword()) return;
+  //   if (!validateConfirmPassword()) return;
+
+  //   // Setelah pendaftaran berhasil, navigasikan pengguna ke halaman login
+  //   Get.toNamed(Routes.AUTH);
+  // }
 
   // Fungsi untuk validasi nama
   bool validateName() {
@@ -36,20 +98,6 @@ class RegisterController extends GetxController {
       return false;
     } else {
       nameError.value = '';
-      return true;
-    }
-  }
-
-  // Fungsi untuk validasi email
-  bool validateEmail() {
-    if (email.isEmpty) {
-      emailError.value = 'Email harus diisi';
-      return false;
-    } else if (!validator.isEmail(email.value)) {
-      emailError.value = 'Format email tidak valid';
-      return false;
-    } else {
-      emailError.value = '';
       return true;
     }
   }
@@ -98,28 +146,15 @@ class RegisterController extends GetxController {
     confirmPassword.value = '';
   }
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
   void navigationToLogin() {
     Get.toNamed(Routes.AUTH);
   }
 
-  void navigationToRegister() {
-    Get.toNamed(Routes.REGISTER);
+  void samePassword() {
+    if (password.value != confirmPassword.value) {
+      confirmPasswordError.value = 'Password tidak sama';
+    } else {
+      confirmPasswordError.value = '';
+    }
   }
 }
