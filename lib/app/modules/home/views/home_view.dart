@@ -39,6 +39,7 @@ class HomeView extends GetView<HomeController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+<<<<<<< HEAD
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -53,6 +54,13 @@ class HomeView extends GetView<HomeController> {
                                 height: 34,
                               ),
                             ],
+=======
+                          //dropdown
+
+                          SvgPicture.asset(
+                            'assets/icons/calendar.svg',
+                            height: 34,
+>>>>>>> 3ebdb5be0b235d5fd99ac2fc284d6562b7e8566e
                           ),
                           Text(
                             "Rp 1.000.000",
@@ -60,6 +68,25 @@ class HomeView extends GetView<HomeController> {
                           )
                         ],
                       ),
+<<<<<<< HEAD
+=======
+                      Text(
+                        "Rp 1.000.000",
+                        style: bold.copyWith(fontSize: 33, color: light),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(
+                      top: 5, left: 25, right: 25, bottom: 25),
+                  height: 250,
+                  decoration: BoxDecoration(
+                    color: dark,
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(40),
+                      bottomRight: Radius.circular(40),
+>>>>>>> 3ebdb5be0b235d5fd99ac2fc284d6562b7e8566e
                     ),
                     Container(
                       padding: const EdgeInsets.only(
@@ -135,6 +162,7 @@ class HomeView extends GetView<HomeController> {
                   child: TransactionsCard()),
             ],
           ),
+<<<<<<< HEAD
         ),
       ),
       floatingActionButton: SizedBox(
@@ -163,6 +191,16 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
       ),
+=======
+          DropdownOption(
+            label: "Pendapatan",
+            onItemSelected: (value) {
+              print(value);
+            },
+          )
+        ],
+      )),
+>>>>>>> 3ebdb5be0b235d5fd99ac2fc284d6562b7e8566e
     );
   }
 }
