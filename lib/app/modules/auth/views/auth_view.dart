@@ -61,7 +61,7 @@ class AuthView extends GetView<AuthController> {
                   SizedBox(height: 26),
                   InkWell(
                     onTap: () {
-                      // controller.login();
+                      controller.login();
                       print('masuk');
                     },
                     child: Container(

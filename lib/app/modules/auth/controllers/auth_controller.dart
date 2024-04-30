@@ -12,8 +12,6 @@ class AuthController extends GetxController {
   var emailError = RxString('');
   var passwordError = RxString('');
   // Variabel untuk menyimpan data pengguna setelah login
-  Rx<UserModel> user = Rx<UserModel>(UserModel(
-      nama: ' ', email: ' ', namaToko: ' ', noHandphone: ' ', alamat: ' '));
 
   // Fungsi untuk mengubah nilai input form
   void onEmailChanged(String value) {
@@ -39,6 +37,11 @@ class AuthController extends GetxController {
 
 // Fungsi untuk navigasi ke halaman pendaftaran
 
+  Future<void> login() async {
+    final authService = AuthService();
+    authService.login(email.value, password.value);
+  }
+
   var validator;
 
   // // Fungsi untuk mengirim data pendaftaran dan melakukan validasi
@@ -51,9 +54,6 @@ class AuthController extends GetxController {
   // }
 
 // Metode untuk mendapatkan data pengguna
-  UserModel getCurrentUser() {
-    return user.value;
-  }
 
   // Fungsi untuk validasi email
   bool validateEmail() {

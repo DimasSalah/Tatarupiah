@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
@@ -16,7 +15,7 @@ class AuthService extends GetxService {
   Future<Response?> login(String email, String password) async {
     try {
       final response = await _dio.post(
-        baseUrl + '/login',
+        '$baseUrl/login',
         data: {
           'email': email,
           'password': password,
@@ -28,7 +27,6 @@ class AuthService extends GetxService {
         GetStorage().write('token', token);
         Get.offNamed(Routes.HOME);
         logger.i('Berhasil login');
-        print(response.data);
         // GetStorage().erase();
         return response.data;
       } else {
@@ -38,6 +36,7 @@ class AuthService extends GetxService {
     } catch (e) {
       print(e);
     }
+    return null;
   }
 
   Future<Response?> register(String nama, String email, String password,
@@ -72,5 +71,6 @@ class AuthService extends GetxService {
     } catch (e) {
       print(e);
     }
+    return null;
   }
 }

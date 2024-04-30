@@ -44,7 +44,7 @@ class OnboardingController extends GetxController {
     });
   }
 
-  // void navigationToRegister() {
-  //   Get.toNamed(Routes.REGISTER);
-  // }
+  void navigationToRegister() {
+    Get.toNamed(Routes.REGISTER);
+  }
 }

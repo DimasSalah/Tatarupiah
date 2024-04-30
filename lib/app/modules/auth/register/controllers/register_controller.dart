@@ -37,10 +37,6 @@ class RegisterController extends GetxController {
 
   Future<void> register() async {
     final authService = AuthService();
-    print(name.value);
-    print(email.value);
-    print(password.value);
-    print('confirm password: ${confirmPassword.value}');
     final bool isSamePassword = password.value == confirmPassword.value;
     final bool isValid = EmailValidator.validate(email.value);
     if (!isValid) {
@@ -76,7 +72,6 @@ class RegisterController extends GetxController {
     } else {
       authService.register(
           name.value, email.value, password.value, confirmPassword.value);
-      Get.offNamed(Routes.HOME);
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:tatarupiah/app/modules/profile/views/edit_profile_view.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/register/bindings/register_binding.dart';
@@ -26,7 +27,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.PROFILE;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -83,5 +84,11 @@ class AppPages {
       page: () => ProfileView(),
       binding: ProfileBinding(),
     ),
+    GetPage(
+      name: _Paths.EDITPROFILE,
+      page: () => EditProfileView(),
+      binding: ProfileBinding(),
+    ),
+    
   ];
 }

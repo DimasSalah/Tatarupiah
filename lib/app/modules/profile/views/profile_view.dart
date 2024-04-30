@@ -1,10 +1,10 @@
+import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 
-import '../../../routes/app_pages.dart';
 import '../../../style/colors.dart';
 import '../../../style/text_style.dart';
 import '../controllers/profile_controller.dart';
@@ -14,6 +14,7 @@ class ProfileView extends GetView<ProfileController> {
   ProfileView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    controller;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -54,12 +55,24 @@ class ProfileView extends GetView<ProfileController> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Toko',
-                          style: semiBold.copyWith(fontSize: 25, color: light),
-                        ),
-                        Text('Nama',
-                            style: medium.copyWith(fontSize: 16, color: light)),
+                        Obx(() {
+                          return Text(
+                            controller.name.value,
+                            style:
+                                semiBold.copyWith(fontSize: 25, color: light),
+                          );
+                        }),
+                        controller.storeName == ''
+                            ? Text(
+                                '',
+                                style: regular.copyWith(
+                                    fontSize: 13, color: lightActive),
+                              )
+                            : Text(
+                                controller.storeName.value,
+                                style: regular.copyWith(
+                                    fontSize: 13, color: lightActive),
+                              ),
                       ],
                     )
                   ],
@@ -79,22 +92,25 @@ class ProfileView extends GetView<ProfileController> {
                     fontWeight: FontWeight.normal),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  print('edit profile');
+                  controller.navigatedToEditProfile();
+                },
                 child: Text('Edit Profile',
                     style: medium.copyWith(fontSize: 13, color: lightActive)),
               ),
             ]),
             SizedBox(height: 15),
             CustomTextContainer(
-              text: 'Nama',
+              text: controller.phone.value,
             ),
             SizedBox(height: 14),
             CustomTextContainer(
-              text: 'email',
+              text: controller.email.value,
             ),
             SizedBox(height: 14),
             CustomTextContainer(
-              text: 'No Handphone',
+              text: controller.address.value ?? '',
             ),
             SizedBox(height: 280),
             RichText(
