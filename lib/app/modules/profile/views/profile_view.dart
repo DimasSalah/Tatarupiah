@@ -1,19 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
-import 'package:tatarupiah/app/modules/auth/controllers/auth_controller.dart';
-import 'package:tatarupiah/app/modules/profile/views/componnets/CustomTextContainer.dart';
-import 'package:tatarupiah/app/routes/app_pages.dart';
-import 'package:tatarupiah/app/style/colors.dart';
-import 'package:tatarupiah/app/style/text_style.dart';
 
+import '../../../routes/app_pages.dart';
+import '../../../style/colors.dart';
+import '../../../style/text_style.dart';
 import '../controllers/profile_controller.dart';
+import 'componnets/CustomTextContainer.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  final AuthController authController = Get.find();
   ProfileView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -58,10 +55,10 @@ class ProfileView extends GetView<ProfileController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          controller.userProfile.value.nama,
+                          'Toko',
                           style: semiBold.copyWith(fontSize: 25, color: light),
                         ),
-                        Text(controller.userProfile.value.namaToko,
+                        Text('Nama',
                             style: medium.copyWith(fontSize: 16, color: light)),
                       ],
                     )
@@ -82,22 +79,22 @@ class ProfileView extends GetView<ProfileController> {
                     fontWeight: FontWeight.normal),
               ),
               GestureDetector(
-                onTap: () => Get.offAllNamed(Routes.EDITPROFILE),
+                onTap: () {},
                 child: Text('Edit Profile',
                     style: medium.copyWith(fontSize: 13, color: lightActive)),
               ),
             ]),
             SizedBox(height: 15),
             CustomTextContainer(
-              text: controller.userProfile.value.noHandphone,
+              text: 'Nama',
             ),
             SizedBox(height: 14),
             CustomTextContainer(
-              text: controller.userProfile.value.email,
+              text: 'email',
             ),
             SizedBox(height: 14),
             CustomTextContainer(
-              text: controller.userProfile.value.alamat,
+              text: 'No Handphone',
             ),
             SizedBox(height: 280),
             RichText(
@@ -110,7 +107,7 @@ class ProfileView extends GetView<ProfileController> {
                   style: regular.copyWith(fontSize: 13, color: darkHover)),
             ])),
             GestureDetector(
-              onTap: () => Get.offAllNamed(Routes.AUTH),
+              onTap: () {},
               child: Text('Keluar',
                   style: medium.copyWith(fontSize: 20, color: error)),
             ),

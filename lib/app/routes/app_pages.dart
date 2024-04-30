@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:tatarupiah/app/modules/profile/bindings/edit_profile_binding.dart';
-import 'package:tatarupiah/app/modules/profile/views/edit_profile_view.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/register/bindings/register_binding.dart';
@@ -84,11 +82,6 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => ProfileView(),
       binding: ProfileBinding(),
-    ),
-    GetPage(
-      name: _Paths.EDITPROFILE,
-      page: () => const EditProfileView(),
-      binding: EditProfileBinding(),
     ),
   ];
 }
