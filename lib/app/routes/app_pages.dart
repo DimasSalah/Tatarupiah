@@ -3,6 +3,10 @@ import 'package:tatarupiah/app/modules/profile/bindings/edit_profile_binding.dar
 import 'package:tatarupiah/app/modules/profile/views/edit_profile_view.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
+import '../modules/auth/register/bindings/register_binding.dart';
+import '../modules/auth/register/views/register_view.dart';
+import '../modules/auth/splash/bindings/splash_binding.dart';
+import '../modules/auth/splash/views/splash_view.dart';
 import '../modules/auth/views/auth_view.dart';
 import '../modules/chatAi/bindings/chat_ai_binding.dart';
 import '../modules/chatAi/views/chat_ai_view.dart';
@@ -41,13 +45,25 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ONBOARDING,
-      page: () => const OnboardingView(),
+      page: () => OnboardingView(),
       binding: OnboardingBinding(),
     ),
     GetPage(
       name: _Paths.AUTH,
       page: () => const AuthView(),
       binding: AuthBinding(),
+      children: [
+        GetPage(
+          name: _Paths.REGISTER,
+          page: () => const RegisterView(),
+          binding: RegisterBinding(),
+        ),
+        GetPage(
+          name: _Paths.SPLASH,
+          page: () => const SplashView(),
+          binding: SplashBinding(),
+        ),
+      ],
     ),
     GetPage(
       name: _Paths.STATISTICS,
@@ -66,7 +82,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () => const ProfileView(),
+      page: () => ProfileView(),
       binding: ProfileBinding(),
     ),
     GetPage(

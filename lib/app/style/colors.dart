@@ -15,7 +15,7 @@ Color darker = const Color(0xFF151515);
 //accent colors
 Color greenAccent = const Color(0xFF84f269);
 Color yellowAccent = const Color(0xFFEBFF6D);
-Color greenYellow = const Color(0xFFEBFF6D);
+Color greenYellow = const Color(0xFFBBF46E);
 
 //error colors
 Color error = const Color(0xFFC61C1C);
