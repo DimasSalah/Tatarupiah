@@ -38,17 +38,6 @@ class AuthController extends GetxController {
   }
 
 // Fungsi untuk navigasi ke halaman pendaftaran
-  void navigationToRegister() {
-    Get.toNamed(Routes.REGISTER);
-  }
-
-  Future<void> login() async {
-    final authService = AuthService();
-    authService.login(email.value, password.value);
-    final userData = await authService.login(email.value, password.value);
-    // Simpan data pengguna ke dalam variabel user
-    user.value = userData as UserModel;
-  }
 
   var validator;
 
