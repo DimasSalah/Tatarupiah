@@ -46,10 +46,10 @@ class ProfileView extends GetView<ProfileController> {
                 padding: const EdgeInsets.only(top: 25, bottom: 26, left: 15),
                 child: Row(
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 50,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 36,
                     ),
                     Column(
@@ -64,7 +64,7 @@ class ProfileView extends GetView<ProfileController> {
                         }),
                         controller.storeName == ''
                             ? Text(
-                                '',
+                                'Nama Toko',
                                 style: regular.copyWith(
                                     fontSize: 13, color: lightActive),
                               )
@@ -79,7 +79,7 @@ class ProfileView extends GetView<ProfileController> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 33,
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -100,19 +100,34 @@ class ProfileView extends GetView<ProfileController> {
                     style: medium.copyWith(fontSize: 13, color: lightActive)),
               ),
             ]),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             CustomTextContainer(
-              text: controller.phone.value,
+              text: controller.phone.string == ''
+                  ? 'Nomor Handphone Kosong'
+                  : controller.phone.value,
+              style: controller.phone.string == ''
+                  ? regular.copyWith(fontSize: 13, color: lightActive)
+                  : regular.copyWith(fontSize: 13, color: darkHover),
             ),
-            SizedBox(height: 14),
+            const SizedBox(height: 14),
             CustomTextContainer(
-              text: controller.email.value,
+              text: controller.email.string == ''
+                  ? 'Email Kosong'
+                  : controller.email.value,
+              style: controller.email.string == ''
+                  ? regular.copyWith(fontSize: 13, color: lightActive)
+                  : regular.copyWith(fontSize: 13, color: darkHover),
             ),
-            SizedBox(height: 14),
+            const SizedBox(height: 14),
             CustomTextContainer(
-              text: controller.address.value ?? '',
+              text: controller.address.string == ''
+                  ? 'Alamat Kosong'
+                  : controller.address.value,
+              style: controller.address.string == ''
+                  ? regular.copyWith(fontSize: 13, color: lightActive)
+                  : regular.copyWith(fontSize: 13, color: darkHover),
             ),
-            SizedBox(height: 280),
+            const SizedBox(height: 280),
             RichText(
                 text: TextSpan(children: [
               TextSpan(

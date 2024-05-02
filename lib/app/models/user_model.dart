@@ -35,13 +35,12 @@ class UserModel {
 class Data {
     int id;
     String nama;
-    dynamic namaToko;
+    String namaToko;
     String email;
-    dynamic noHandphone;
+    String noHandphone;
     String role;
-    dynamic alamat;
+    String alamat;
     String image;
-    dynamic emailVerifiedAt;
     DateTime createdAt;
     DateTime updatedAt;
 
@@ -54,7 +53,6 @@ class Data {
         required this.role,
         required this.alamat,
         required this.image,
-        required this.emailVerifiedAt,
         required this.createdAt,
         required this.updatedAt,
     });
@@ -68,7 +66,6 @@ class Data {
         role: json["role"],
         alamat: json["alamat"],
         image: json["image"],
-        emailVerifiedAt: json["email_verified_at"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
     );
@@ -82,7 +79,6 @@ class Data {
         "role": role,
         "alamat": alamat,
         "image": image,
-        "email_verified_at": emailVerifiedAt,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
     };

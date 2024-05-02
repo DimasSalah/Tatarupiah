@@ -24,7 +24,7 @@ class ProfileService extends GetxService {
       );
       if (response.statusCode == 200) {
         logger.i(response.data);
-        return UserModel.fromJson(response.data['data']);
+        return UserModel.fromJson(response.data);
       } else {
         throw Exception('Failed to load profile');
       }

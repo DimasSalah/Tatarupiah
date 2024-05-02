@@ -4,13 +4,13 @@ import 'package:tatarupiah/app/style/text_style.dart';
 
 class CustomTextContainer extends StatelessWidget {
   final String text;
-  // final Color color;
+  final TextStyle style;
   // final Color shadowColor;
 
   const CustomTextContainer({
     Key? key,
     required this.text,
-    // this.color = Colors.white,
+    required this.style,
     // this.shadowColor = Colors.grey,
   }) : super(key: key);
 
@@ -28,7 +28,7 @@ class CustomTextContainer extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 20, top: 11, bottom: 13),
-        child: Text(text, style: regular.copyWith(fontSize: 13, color: dark)),
+        child: Text(text, style: style),
       ),
     );
   }
