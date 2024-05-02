@@ -52,29 +52,30 @@ class ProfileView extends GetView<ProfileController> {
                     const SizedBox(
                       width: 36,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Obx(() {
-                          return Text(
-                            controller.name.value,
+                    Obx(() {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            controller.name.string == ''
+                                ? 'Nama Kosong'
+                                : controller.name.value,
                             style:
-                                semiBold.copyWith(fontSize: 25, color: light),
-                          );
-                        }),
-                        controller.storeName == ''
-                            ? Text(
-                                'Nama Toko',
-                                style: regular.copyWith(
-                                    fontSize: 13, color: lightActive),
-                              )
-                            : Text(
-                                controller.storeName.value,
-                                style: regular.copyWith(
-                                    fontSize: 13, color: lightActive),
-                              ),
-                      ],
-                    )
+                                semiBold.copyWith(fontSize: 20, color: lighter),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            controller.storeName.string == ''
+                                ? 'Nama Toko Kosong'
+                                : controller.storeName.value,
+                            style:
+                                regular.copyWith(fontSize: 16, color: lighter),
+                          ),
+                        ],
+                      );
+                    })
                   ],
                 ),
               ),
@@ -101,31 +102,37 @@ class ProfileView extends GetView<ProfileController> {
               ),
             ]),
             const SizedBox(height: 15),
-            CustomTextContainer(
-              text: controller.phone.string == ''
-                  ? 'Nomor Handphone Kosong'
-                  : controller.phone.value,
-              style: controller.phone.string == ''
-                  ? regular.copyWith(fontSize: 13, color: lightActive)
-                  : regular.copyWith(fontSize: 13, color: darkHover),
+            Obx(
+              () => CustomTextContainer(
+                text: controller.phone.string == ''
+                    ? 'Nomor Handphone Kosong'
+                    : controller.phone.value,
+                style: controller.phone.string == ''
+                    ? regular.copyWith(fontSize: 13, color: lightActive)
+                    : regular.copyWith(fontSize: 13, color: darkHover),
+              ),
             ),
             const SizedBox(height: 14),
-            CustomTextContainer(
-              text: controller.email.string == ''
-                  ? 'Email Kosong'
-                  : controller.email.value,
-              style: controller.email.string == ''
-                  ? regular.copyWith(fontSize: 13, color: lightActive)
-                  : regular.copyWith(fontSize: 13, color: darkHover),
+            Obx(
+              () => CustomTextContainer(
+                text: controller.email.string == ''
+                    ? 'Email Kosong'
+                    : controller.email.value,
+                style: controller.email.string == ''
+                    ? regular.copyWith(fontSize: 13, color: lightActive)
+                    : regular.copyWith(fontSize: 13, color: darkHover),
+              ),
             ),
             const SizedBox(height: 14),
-            CustomTextContainer(
-              text: controller.address.string == ''
-                  ? 'Alamat Kosong'
-                  : controller.address.value,
-              style: controller.address.string == ''
-                  ? regular.copyWith(fontSize: 13, color: lightActive)
-                  : regular.copyWith(fontSize: 13, color: darkHover),
+            Obx(
+              () => CustomTextContainer(
+                text: controller.address.string == ''
+                    ? 'Alamat Kosong'
+                    : controller.address.value,
+                style: controller.address.string == ''
+                    ? regular.copyWith(fontSize: 13, color: lightActive)
+                    : regular.copyWith(fontSize: 13, color: darkHover),
+              ),
             ),
             const SizedBox(height: 280),
             RichText(

@@ -35,40 +35,44 @@ class EditProfileView extends GetView<ProfileController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
+              const Center(
                 child: CircleAvatar(
                   radius: 60,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 38,
               ),
               CustomTextFormField(
-                labelText: 'Nama',
+                initialValue: controller.name.value,
+                
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               CustomTextFormField(
-                labelText: 'Nama Toko',
+                initialValue: controller.storeName.string,
+                hintText: controller.storeName.string == '' ? 'Nama Toko' : controller.storeName.string,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               CustomTextFormField(
-                labelText: 'Email',
+                initialValue: controller.email.value,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               CustomTextFormField(
-                labelText: 'No Telp',
+                color: lightActive,
+                initialValue: controller.phone.string,
+                hintText: controller.phone.string == '' ? 'No Handphone' : controller.phone.string,
               ),
-              SizedBox(height: 33),
+              const SizedBox(height: 33),
               Text('Ganti Password', style: semiBold.copyWith(fontSize: 16)),
-              SizedBox(height: 10),
-              CustomTextFormField(
+              const SizedBox(height: 10),
+              const CustomTextFormField(
                 labelText: 'Password Lama',
               ),
-              SizedBox(height: 10),
-              CustomTextFormField(
+              const SizedBox(height: 10),
+              const CustomTextFormField(
                 labelText: 'Password Baru',
               ),
-              SizedBox(height: 46),
+              const SizedBox(height: 46),
               GestureDetector(
                 onTap: () {
                   Get.toNamed(Routes.PROFILE);
