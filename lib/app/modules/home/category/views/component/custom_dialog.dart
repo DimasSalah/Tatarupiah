@@ -20,53 +20,51 @@ class CustomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: light,
+      surfaceTintColor: Colors.transparent,
       title: Text(
       title,
         textAlign: TextAlign.center,
         style: semiBold.copyWith(fontSize: 22),
       ),
-      content: Container(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              content,
-              style: regular.copyWith(fontSize: 16),
-              textAlign: TextAlign.center,
-            ),
-            const Gap(20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Container(
-                    child: Text(
-                      'Batal',
-                      style: medium.copyWith(fontSize: 13, color: normal),
-                    ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            content,
+            style: regular.copyWith(fontSize: 16),
+            textAlign: TextAlign.center,
+          ),
+          const Gap(20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: Text(
+                  'Batal',
+                  style: medium.copyWith(fontSize: 13, color: normal),
+                ),
+              ),
+              GestureDetector(
+                onTap: onConfirm,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: dark,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    'Hapus',
+                    style: medium.copyWith(fontSize: 13, color: lighter),
                   ),
                 ),
-                GestureDetector(
-                  onTap: onConfirm,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: dark,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      'Hapus',
-                      style: medium.copyWith(fontSize: 13, color: lighter),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }

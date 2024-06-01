@@ -170,7 +170,7 @@ class CategoryView extends GetView<CategoryController> {
                                         onTap: () {
                                           controller.categoryId.value =
                                               category.id;
-                                            controller.navigatedToAddCategory();
+                                          controller.navigatedToAddCategory();
                                         },
                                       ),
                                       const Gap(8),
@@ -178,6 +178,18 @@ class CategoryView extends GetView<CategoryController> {
                                           .map(
                                             (subCategory) => SubCategoryCard(
                                               subName: subCategory.nama,
+                                              icon: subCategory.icon,
+                                              onTap: () {
+                                                print(subCategory.id);
+                                                print(subCategory.hargaJual);
+                                                print(subCategory.hargaPokok);
+                                                Get.back(result: {
+                                                  'hargaPokok':
+                                                      subCategory.hargaPokok,
+                                                  'hargaJual':
+                                                      subCategory.hargaJual,
+                                                });
+                                              },
                                               onDelete: () {
                                                 controller.deleteSubCategory(
                                                     subCategory.id);
