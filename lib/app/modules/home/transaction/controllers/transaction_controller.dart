@@ -60,7 +60,7 @@ class TransactionController extends GetxController {
   }
 
   void navigatedAToCategory() {
-    Get.toNamed(Routes.CATEGORY);
+    Get.toNamed(Routes.CATEGORY, arguments: {'type': selectedTab.value ? 'Pemasukan' : 'Pengeluaran'});
   }
 
   @override

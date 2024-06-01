@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:tatarupiah/app/modules/home/transaction/views/components/switch_mode.dart';
-import 'package:tatarupiah/app/style/colors.dart';
-import 'package:tatarupiah/app/style/text_style.dart';
 
 import '../../controllers/transaction_controller.dart';
 import 'cashier_mode.dart';

@@ -6,16 +6,18 @@ import '../../../../../style/text_style.dart';
 
 class SaveButton extends StatelessWidget {
   final String title;
+  final Function()? onTap;
 
   const SaveButton({
     super.key,
     required this.title,
+    this.onTap
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 24),
         width: Get.width,

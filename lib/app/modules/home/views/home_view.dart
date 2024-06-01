@@ -21,7 +21,13 @@ class HomeView extends GetView<HomeController> {
         child: SafeArea(
           child: Column(
             children: [
-              const HeaderBar(),
+              Obx(() => HeaderBar(
+                  avatar: controller.image.string == ''
+                      ? Icon(Icons.person,weight: 40,)
+                      : Image.network(
+                          controller.image.string,
+                          fit: BoxFit.cover,
+                        ))),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: Column(
@@ -149,8 +155,7 @@ class HomeView extends GetView<HomeController> {
               borderRadius: BorderRadius.circular(24),
             ),
             elevation: 0,
-            onPressed:
-                controller.navigationToTransaction,
+            onPressed: controller.navigationToTransaction,
             child: Container(
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(

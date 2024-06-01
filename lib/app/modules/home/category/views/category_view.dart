@@ -1,16 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
+import 'package:tatarupiah/app/data/api/category_service.dart';
+import 'package:tatarupiah/app/data/models/category_model.dart';
+import 'package:tatarupiah/app/modules/home/category/views/component/custom_dialog.dart';
 import 'package:tatarupiah/app/modules/home/transaction/views/components/SearchField.dart';
 import 'package:tatarupiah/app/style/colors.dart';
-
-import '../../../../style/gradient.dart';
 import '../../../../style/text_style.dart';
 import '../controllers/category_controller.dart';
+import 'component/adding_category.dart';
+import 'component/name_category.dart';
+import 'component/subcategory_card.dart';
 
 class CategoryView extends GetView<CategoryController> {
   const CategoryView({Key? key}) : super(key: key);
@@ -34,7 +36,7 @@ class CategoryView extends GetView<CategoryController> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 23),
+          padding: const EdgeInsets.symmetric(horizontal: 23),
           child: Column(
             children: [
               const Gap(8),
@@ -47,37 +49,13 @@ class CategoryView extends GetView<CategoryController> {
                         !controller.isAddCategory.value;
                   },
                   child: controller.isAddCategory.value
-                      ? Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 10,
-                              ),
-                              decoration: BoxDecoration(
-                                gradient: primary,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: SvgPicture.asset(
-                                'assets/icons/add.svg',
-                                width: 14,
-                              ),
-                            ),
-                            const Gap(20),
-                            Text(
-                              'Tambah Kategori',
-                              style: regular.copyWith(
-                                fontSize: 16,
-                                color: dark,
-                              ),
-                            ),
-                          ],
-                        )
+                      ? const AddingCategory()
                       : Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Expanded(
                               child: TextField(
+                                onChanged: controller.newCategory,
                                 decoration: InputDecoration(
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
@@ -113,6 +91,11 @@ class CategoryView extends GetView<CategoryController> {
                             ),
                             const Gap(10),
                             GestureDetector(
+                              onTap: () {
+                                controller.addNewCategory();
+                                controller.isAddCategory.value =
+                                    !controller.isAddCategory.value;
+                              },
                               child: Text(
                                 'Tambah',
                                 style: regular.copyWith(
@@ -126,53 +109,97 @@ class CategoryView extends GetView<CategoryController> {
                 ),
               ),
               const Gap(20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Makanan',
-                    style: regular.copyWith(fontSize: 16, color: lightActive),
-                  ),
-                  GestureDetector(
-                    onTap: controller.navigatedToAddCategory,
-                    child: SvgPicture.asset(
-                      'assets/icons/add.svg',
-                      width: 15,
-                    ),
-                  ),
-                ],
+              GetBuilder<CategoryController>(
+                id: 'category',
+                builder: (controller) {
+                  return FutureBuilder<CategoryModel>(
+                      future: CategoryService().getCategory(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<CategoryModel> snapshot) {
+                        if (snapshot.hasData) {
+                          final categoryListItems = snapshot.data!.data
+                              .where((category) =>
+                                  category.type ==
+                                  controller.categoryType.value)
+                              .toList();
+                          controller.categoryList.value = categoryListItems;
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: categoryListItems.length,
+                            itemBuilder: (context, index) {
+                              final category = categoryListItems[index];
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Dismissible(
+                                  confirmDismiss: (direction) async {
+                                    if (direction ==
+                                        DismissDirection.endToStart) {
+                                      Get.dialog(
+                                        CustomDialog(
+                                          title: 'Hapus Kategori',
+                                          content:
+                                              'Apakah anda yakin ingin menghapus kategori ini?',
+                                          onConfirm: () {
+                                            controller
+                                                .deleteCategory(category.id);
+                                            Get.back();
+                                          },
+                                        ),
+                                      );
+                                    }
+                                    return null;
+                                  },
+                                  background: Container(
+                                    padding: const EdgeInsets.only(left: 20),
+                                    alignment: Alignment.centerLeft,
+                                    decoration: BoxDecoration(
+                                        color: error.withOpacity(0.3),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: error,
+                                      size: 30,
+                                    ),
+                                  ),
+                                  key: ValueKey(category),
+                                  child: Column(
+                                    children: [
+                                      NameCategory(
+                                        name: category.nama,
+                                        onTap: () {
+                                          controller.categoryId.value =
+                                              category.id;
+                                            controller.navigatedToAddCategory();
+                                        },
+                                      ),
+                                      const Gap(8),
+                                      ...category.subCategories
+                                          .map(
+                                            (subCategory) => SubCategoryCard(
+                                              subName: subCategory.nama,
+                                              onDelete: () {
+                                                controller.deleteSubCategory(
+                                                    subCategory.id);
+                                                Get.snackbar('Sub Kategori',
+                                                    'Berhasil menghapus sub kategori');
+                                              },
+                                            ),
+                                          )
+                                          .toList(),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        } else {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                      });
+                },
               ),
-              const Gap(8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    height: 48,
-                    width: 48,
-                    decoration: BoxDecoration(
-                      color: dark,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: Icon(
-                      Icons.drive_eta_outlined,
-                      color: light,
-                    ),
-                  ),
-                  const Gap(20),
-                  Expanded(
-                    child: Text(
-                      'Transportasi',
-                      style: regular.copyWith(fontSize: 14, color: dark),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: SvgPicture.asset(
-                      'assets/icons/delete.svg',
-                    ),
-                  ),
-                ],
-              )
             ],
           ),
         ),

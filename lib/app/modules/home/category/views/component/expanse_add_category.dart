@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import '../../../../../style/colors.dart';
 import '../../../../../style/text_style.dart';
 import '../../../transaction/views/components/amount_input.dart';
+import '../../../transaction/views/components/save_button.dart';
 
 
 class ExpanseAddCategoryTab extends StatelessWidget {
@@ -70,6 +71,14 @@ class ExpanseAddCategoryTab extends StatelessWidget {
           color: error,
           onChanged: (value) => print(value),
         ),
+        const Spacer(),
+        Padding(
+          padding: const EdgeInsets.only(left: 23,right: 23,bottom: 16),
+          child: SaveButton(
+            title: 'Simpan',
+            onTap: () {},
+          ),
+        )
       ],
     );
   }

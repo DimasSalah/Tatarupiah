@@ -1,5 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:tatarupiah/app/data/api/profile_service.dart';
 import 'package:tatarupiah/app/modules/home/views/components/bar%20graph/bar_data.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
 
@@ -7,6 +9,15 @@ class HomeController extends GetxController {
   RxDouble maxY = 200.0.obs;
   RxInt selectedBarIndex = 0.obs;
   RxString dropdownValue = "Pemasukan".obs;
+  RxString image = "".obs;
+  RxString name = "".obs;
+
+  Future<void> getProfile() async {
+    final profileService = ProfileService();
+    await profileService.getUser().then((value) {
+      image.value = value.data.image;
+    });
+  }
 
   void navigationToTransaction() {
     Get.toNamed(Routes.TRANSACTION);
@@ -55,6 +66,6 @@ class HomeController extends GetxController {
     super.onInit();
     mybarData.initializeBarData();
     dropdownValue.value = "Pemasukan";
-
+    getProfile();
   }
 }

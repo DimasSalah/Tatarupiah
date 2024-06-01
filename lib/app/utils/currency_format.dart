@@ -9,7 +9,6 @@ class CurrencyInputFormatter extends TextInputFormatter {
     if (newValue.selection.baseOffset == 0) {
       return newValue;
     }
-
     final int value = int.parse(newValue.text.replaceAll(',', ''));
     final String newText = NumberFormat.currency(locale: 'id', decimalDigits: 0, symbol: '').format(value);
     

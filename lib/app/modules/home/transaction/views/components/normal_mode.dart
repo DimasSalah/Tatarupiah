@@ -39,7 +39,7 @@ class NormalMode extends StatelessWidget {
                       border: Border.all(color: lightActive),
                     ),
                     child: Text(
-                      'Pilihan Kategori',
+                      'Pilih Kategori',
                       style: regular.copyWith(
                           fontSize: 13, color: lightActive),
                     ),

@@ -6,8 +6,10 @@ import '../../../../style/text_style.dart';
 import '../../../../utils/date_format.dart';
 
 class HeaderBar extends StatelessWidget {
+  final Widget avatar;
   const HeaderBar({
     super.key,
+    required this.avatar,
   });
 
   @override
@@ -20,6 +22,9 @@ class HeaderBar extends StatelessWidget {
             CircleAvatar(
               radius: 26,
               backgroundColor: lighter,  
+              child: ClipOval(
+                child: avatar,
+              )
             ),
             Text(
               appBarDate(
