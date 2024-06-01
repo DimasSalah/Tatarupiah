@@ -200,7 +200,7 @@ class TransactionView extends GetView<TransactionController> {
                     AmountInput(
                       label: 'Nominal Pengeluaran',
                       color: error,
-                      onChanged: controller.expenseAmount,
+                      onChanged: controller.outcomeAmount,
                     ),
                     const SizedBox(
                       height: 16,

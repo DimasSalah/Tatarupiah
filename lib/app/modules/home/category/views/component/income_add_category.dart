@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:tatarupiah/app/modules/home/category/views/component/amount_input_category.dart';
 import 'package:tatarupiah/app/modules/home/transaction/views/components/save_button.dart';
 
 import '../../../../../style/colors.dart';
 import '../../../../../style/text_style.dart';
-import '../../../transaction/views/components/amount_input.dart';
 import '../../controllers/category_controller.dart';
 
 class IncomeAddCategoryTab extends StatelessWidget {
@@ -138,13 +138,13 @@ class IncomeAddCategoryTab extends StatelessWidget {
             ],
           ),
         ),
-        AmountInput(
+        AmountInputCategory(
           label: 'Nominal Penjualan',
           color: success,
           onChanged: (value) => controller.setIncomeAmount(value),
         ),
         const Gap(10),
-        AmountInput(
+        AmountInputCategory(
           label: 'Nominal Pengeluaran / Harga Pokok',
           color: error,
           onChanged: (value) => controller.setExpanseAmount(value),
@@ -155,7 +155,6 @@ class IncomeAddCategoryTab extends StatelessWidget {
           child: SaveButton(
             title: 'Simpan',
             onTap: () {
-              print('test');
               controller.submitSubCategoty();
             },
           ),

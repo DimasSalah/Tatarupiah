@@ -5,14 +5,12 @@ import '../../../../../style/colors.dart';
 import '../../../../../style/text_style.dart';
 import '../../../../../utils/currency_format.dart';
 
-class AmountInput extends StatelessWidget {
-  TextEditingController? controller;
+class AmountInputCategory extends StatelessWidget {
   final String label;
   final Color color;
   final void Function(String) onChanged;
-  AmountInput({
+  const AmountInputCategory({
     super.key,
-    this.controller,
     required this.label,
     required this.color,
     required this.onChanged,
@@ -47,10 +45,9 @@ class AmountInput extends StatelessWidget {
               const SizedBox(width: 5),
               Expanded(
                 child: TextFormField(
-                  controller: controller,
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
-                    // CurrencyInputFormatter()
+                    CurrencyInputFormatter()
                   ],
                   keyboardType: TextInputType.number,
                   onChanged: onChanged,

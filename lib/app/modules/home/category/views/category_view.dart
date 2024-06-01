@@ -180,11 +180,8 @@ class CategoryView extends GetView<CategoryController> {
                                               subName: subCategory.nama,
                                               icon: subCategory.icon,
                                               onTap: () {
-                                                print(subCategory.id);
-                                                print(subCategory.hargaJual);
-                                                print(subCategory.hargaPokok);
                                                 Get.back(result: {
-                                                  'hargaPokok':
+                                                  'hargaBeli':
                                                       subCategory.hargaPokok,
                                                   'hargaJual':
                                                       subCategory.hargaJual,

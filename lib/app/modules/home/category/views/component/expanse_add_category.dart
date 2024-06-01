@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:tatarupiah/app/modules/home/category/views/component/amount_input_category.dart';
 
 import '../../../../../style/colors.dart';
 import '../../../../../style/text_style.dart';
@@ -66,7 +67,7 @@ class ExpanseAddCategoryTab extends StatelessWidget {
             ],
           ),
         ),
-        AmountInput(
+        AmountInputCategory(
           label: 'Nominal Pengeluaran',
           color: error,
           onChanged: (value) => print(value),

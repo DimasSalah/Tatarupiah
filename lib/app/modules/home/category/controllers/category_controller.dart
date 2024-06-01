@@ -28,6 +28,11 @@ class CategoryController extends GetxController
     Get.toNamed(Routes.ADDCATEGORY);
   }
 
+  void resultfromAddCategory() async {
+    await Get.to(Routes.ADDCATEGORY, arguments: {'type': categoryType.value});
+  }
+
+
   void deleteCategory(int id) async {
     final categoryService = CategoryService();
     await categoryService.deleteCategory(id);
