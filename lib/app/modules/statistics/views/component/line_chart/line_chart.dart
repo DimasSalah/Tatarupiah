@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import '../../../controllers/statistics_controller.dart';
 import '../../../../../style/colors.dart';
 
 class LineChartWidget extends StatelessWidget {
@@ -8,119 +9,78 @@ class LineChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final StatisticsController controller = Get.put(StatisticsController());
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       width: 340,
       height: 250,
-      child: LineChart(
-        LineChartData(
-          lineTouchData: LineTouchData(
-            touchTooltipData: LineTouchTooltipData(
-              tooltipBgColor: Colors.transparent,
-              // getTooltipItems: (List<LineBarSpot> touchedSpots) {
-              //   return touchedSpots.map((LineBarSpot touchedSpot) {
-              //     final TextStyle textStyle = TextStyle(
-              //       color: white,
-              //       fontWeight: FontWeight.bold,
-              //       fontSize: 14,
-              //     );
-              //     return LineTooltipItem(
-              //       touchedSpot.y.toString(),
-              //       textStyle,
-              //     );
-              //   }).toList();
-              // },
+      child: Obx(() {
+        if (controller.incomeData.isEmpty || controller.expenseData.isEmpty || controller.profitData.isEmpty) {
+          return Center(child: CircularProgressIndicator()); // Show a loading indicator while data is being loaded
+        }
+
+        return LineChart(
+          LineChartData(
+            lineTouchData: LineTouchData(
+              touchTooltipData: LineTouchTooltipData(
+                tooltipBgColor: Colors.transparent,
+              ),
+              handleBuiltInTouches: true,
             ),
-            handleBuiltInTouches: true,
+            gridData: const FlGridData(show: false),
+            borderData: FlBorderData(show: false),
+            titlesData: FlTitlesData(
+              bottomTitles: AxisTitles(
+                sideTitles: bottomTitles(),
+              ),
+              rightTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
+              topTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
+              leftTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false), // Hide left titles
+              ),
+            ),
+            lineBarsData: [
+              createLineChartBarData(
+                controller.incomeData,
+                color: greenAccent,
+              ),
+              createLineChartBarData(
+                controller.expenseData,
+                color: error,
+              ),
+              createLineChartBarData(
+                controller.profitData,
+                color: white,
+              ),
+            ],
+            minY: 0,
+            maxY: 4,
           ),
-          gridData: const FlGridData(show: false),
-          borderData: FlBorderData(show: false),
-          titlesData: FlTitlesData(
-            bottomTitles: AxisTitles(
-              sideTitles: bottomTitles(),
-            ),
-            rightTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
-            ),
-            topTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
-            ),
-            leftTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
-              // leftTitles(),
-            ),
-          ),
-          lineBarsData: [
-            expanseLineChart,
-            incomeLineChart,
-            profitLinechart,
-          ],
-          minY: 0,
-          maxY: 4,
-        ),
-      ),
+        );
+      }),
     );
   }
 
-  LineChartBarData get incomeLineChart => LineChartBarData(
-        isCurved: true,
-        color: greenAccent,
-        barWidth: 8,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: true,
-          getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
-              radius: 8, color: greenAccent.withOpacity(0.5)),
-        ),
-        belowBarData: BarAreaData(show: false),
-        spots: [
-          //angka pertama x dan angka kedua y
-          const FlSpot(0, 1.6),
-          const FlSpot(1, 2.7),
-          const FlSpot(2, 1),
-          const FlSpot(3, 1.6),
-        ],
-      );
-
-  LineChartBarData get expanseLineChart => LineChartBarData(
-        isCurved: true,
-        color: error,
-        barWidth: 8,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: true,
-          getDotPainter: (spot, percent, barData, index) =>
-              FlDotCirclePainter(radius: 8, color: error.withOpacity(0.5)),
-        ),
-        belowBarData: BarAreaData(show: false),
-        spots: [
-          //angka pertama x dan angka kedua y
-          const FlSpot(0, 0.5),
-          const FlSpot(1, 2),
-          const FlSpot(2, 3.2),
-          const FlSpot(3, 1.9),
-        ],
-      );
-
-  LineChartBarData get profitLinechart => LineChartBarData(
-        isCurved: true,
-        color: white,
-        barWidth: 8,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: true,
-          getDotPainter: (spot, percent, barData, index) =>
-              FlDotCirclePainter(radius: 8, color: white.withOpacity(0.5)),
-        ),
-        belowBarData: BarAreaData(show: false),
-        spots: [
-          //angka pertama x dan angka kedua y
-          const FlSpot(0, 2),
-          const FlSpot(1, 1),
-          const FlSpot(2, 2),
-          const FlSpot(3, 0.8),
-        ],
-      );
+  LineChartBarData createLineChartBarData(List<FlSpot> spots, {required Color color}) {
+    return LineChartBarData(
+      isCurved: true,
+      color: color,
+      barWidth: 8,
+      isStrokeCapRound: true,
+      dotData: FlDotData(
+        show: true,
+        getDotPainter: (spot, percent, barData, index) =>
+            FlDotCirclePainter(radius: 8, color: color.withOpacity(0.5)),
+      ),
+      belowBarData: BarAreaData(show: false),
+      spots: spots,
+    );
+  }
 
   Widget leftTitleWidget(double value, TitleMeta meta) {
     const style = TextStyle(
@@ -155,7 +115,7 @@ class LineChartWidget extends StatelessWidget {
 
   SideTitles leftTitles() => SideTitles(
         getTitlesWidget: leftTitleWidget,
-        showTitles: true,
+        showTitles: false, // Hide left titles
         interval: 1,
         reservedSize: 28,
       );
