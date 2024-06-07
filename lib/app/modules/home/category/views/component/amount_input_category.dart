@@ -50,6 +50,7 @@ class AmountInputCategory extends StatelessWidget {
                     CurrencyInputFormatter()
                   ],
                   keyboardType: TextInputType.number,
+                  autofocus: true,
                   onChanged: onChanged,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.zero,

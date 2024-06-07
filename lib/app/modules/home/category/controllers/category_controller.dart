@@ -3,11 +3,9 @@ import 'package:tatarupiah/app/data/models/category_model.dart';
 import 'package:tatarupiah/app/modules/home/category/mixins/icon_mixin.dart';
 import 'package:tatarupiah/app/modules/home/category/views/component/custom_dialog_single.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
-
 import '../../../../data/api/category_service.dart';
 import '../../../../data/api/subcategory_service.dart';
 import '../mixins/add_category_mixin.dart';
-import '../views/component/custom_dialog.dart';
 
 class CategoryController extends GetxController
     with IconMixin, AddCategoryMixin {
@@ -56,7 +54,14 @@ class CategoryController extends GetxController
     await categoryService.getCategory();
   }
 
-  void submitSubCategoty() {
+  void submitSubCategory() { //for income sub category
+  print(categoryId.value);
+  print(categoryType.value);
+  print(iconSelected.value);
+  print(subCategoryName.value);
+  print(incomeAmount.value);
+  print(expanseAmount.value);
+  print(outcomeAmount.value);
     if (iconSelected.value.isEmpty || subCategoryName.value.isEmpty) {
       Get.dialog(
         CustomDialogSingle(
@@ -75,7 +80,7 @@ class CategoryController extends GetxController
         name: subCategoryName.value,
         icon: iconSelected.value,
         income: int.parse(incomeAmount.value.replaceAll('.', '')),
-        expanse: int.parse(expanseAmount.value.replaceAll('.', '')),
+        expanse: int.parse(expanseAmount.value.replaceAll('.', '')), // ganti jika expanse tabbar value
       );
       Future.delayed(const Duration(milliseconds: 1500), () {
         update(['category']);

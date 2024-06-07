@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tatarupiah/app/modules/home/transaction/views/components/switch_mode.dart';
 
-import '../../controllers/transaction_controller.dart';
+import '../../../controllers/transaction_controller.dart';
 import 'cashier_mode.dart';
 import 'normal_mode.dart';
-import 'save_button.dart';
+import '../save_button.dart';
 
 class IncomeTabBar extends StatelessWidget {
   const IncomeTabBar({

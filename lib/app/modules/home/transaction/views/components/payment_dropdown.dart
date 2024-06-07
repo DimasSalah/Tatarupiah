@@ -50,7 +50,7 @@ class PaymentDropdown extends StatelessWidget {
               ),
               side: BorderSide(
                 color: lightActive,
-                width: 2,
+                width: 1,
               ),
             ),
           ),

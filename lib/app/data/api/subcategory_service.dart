@@ -54,7 +54,6 @@ class SubCategoryService extends GetxService {
       }
       rethrow;
     } catch (e) {
-      print(e);
       logger.e(e);
       rethrow;
     }

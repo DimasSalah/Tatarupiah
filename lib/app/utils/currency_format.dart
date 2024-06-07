@@ -21,7 +21,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
 
 String currencyViewFormatter(String value) {
     if (value.isEmpty) return '0';
-    final formatter = NumberFormat.currency(locale: 'id', decimalDigits: 0, symbol: '');
+    final formatter = NumberFormat.currency(locale: 'id', decimalDigits: 0, symbol: 'Rp');
     final amount = int.parse(value);
     return formatter.format(amount).trim();
   }

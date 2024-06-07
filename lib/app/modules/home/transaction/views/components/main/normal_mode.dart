@@ -3,11 +3,11 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:tatarupiah/app/modules/home/transaction/views/components/amount_input.dart';
 
-import '../../../../../style/colors.dart';
-import '../../../../../style/text_style.dart';
-import '../../../../../utils/currency_format.dart';
-import '../../controllers/transaction_controller.dart';
-import 'payment_dropdown.dart';
+import '../../../../../../style/colors.dart';
+import '../../../../../../style/text_style.dart';
+import '../../../../../../utils/currency_format.dart';
+import '../../../controllers/transaction_controller.dart';
+import '../payment_dropdown.dart';
 
 class NormalMode extends StatelessWidget {
   const NormalMode({
@@ -37,9 +37,15 @@ class NormalMode extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: lightActive),
                   ),
-                  child: Text(
-                    'Pilih Kategori',
-                    style: regular.copyWith(fontSize: 13, color: lightActive),
+                  child: Obx(
+                    () => Text(
+                      controller.subCategoryName.value.isEmpty
+                          ? 'Pilih Kategori'
+                          : controller.subCategoryName.value,
+                      style: regular.copyWith(fontSize: 13, color: lightActive),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               ),
@@ -67,18 +73,18 @@ class NormalMode extends StatelessWidget {
           ),
         ),
         AmountInput(
-            controller: controller.incomeController ,
-            label: 'Nominal Penjualan',
-            color: success,
-            onChanged: controller.incomeAmount,
-          ),
+          controller: controller.incomeController,
+          label: 'Nominal Penjualan',
+          color: success,
+          onChanged: controller.incomeAmount,
+        ),
         const Gap(10),
         AmountInput(
-            controller: controller.expenseController,
-            label: 'Nominal Pengeluaran / Harga Pokok',
-            color: error,
-            onChanged: controller.outcomeAmount,
-          ),
+          controller: controller.expenseController,
+          label: 'Nominal Pengeluaran / Harga Pokok',
+          color: error,
+          onChanged: controller.outcomeAmount,
+        ),
         Obx(
           () => Container(
             padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 4),
@@ -92,7 +98,7 @@ class NormalMode extends StatelessWidget {
                   style: medium.copyWith(fontSize: 13, color: success),
                 ),
                 Text(
-                  currencyViewFormatter(controller.keuntungan.value.toString()),
+                  currencyViewFormatter(controller.profit.value.toString()),
                   style: semiBold.copyWith(fontSize: 13, color: success),
                 ),
               ],

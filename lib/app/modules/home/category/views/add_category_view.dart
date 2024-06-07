@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../../style/text_style.dart';
 import '../controllers/category_controller.dart';
-import 'component/expanse_add_category.dart';
+import 'component/expense_add_category.dart';
 import 'component/income_add_category.dart';
 
 class AddCategory extends GetView<CategoryController> {
@@ -30,8 +30,12 @@ class AddCategory extends GetView<CategoryController> {
           ),
         ),
         body: controller.categoryType.value == 'Pemasukan'
-            ? const IncomeAddCategoryTab()
-            : const ExpanseAddCategoryTab(),
+            ? IncomeAddCategoryTab(
+                controller: controller,
+              )
+            : ExpanseAddCategoryTab(
+                controller: controller,
+              ),
       ),
     );
   }

@@ -3,19 +3,20 @@ import 'package:get/get.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
 import 'package:tatarupiah/app/utils/currency_format.dart';
 
-import '../../category/views/category_view.dart';
+import '../mixin/cashier_mixin.dart';
 
-class TransactionController extends GetxController {
+class TransactionController extends GetxController with CashierMixin {
   RxBool switchMode = false.obs;
   RxInt selectedIndex = 0.obs;
   RxBool selectedTab = true.obs;
   RxString incomeValue = '0'.obs; //value for incomeValue tab bar
   RxString expenseValue = '0'.obs; //value for incomeValue tab bar
   RxString outcomeValue = '0'.obs; // value for outcomeValue tab bar
-  RxInt keuntungan = 0.obs;
+  RxInt profit = 0.obs;
   RxString incomeCurentValue = '100'.obs;
   RxString outcomeCurentValue = ''.obs;
-  RxInt orderValue = 0.obs;
+  Rx<DateTime> date = DateTime.now().obs; //calendar date
+  RxString subCategoryName = ''.obs;
 
   late TextEditingController incomeController;
   late TextEditingController expenseController;
@@ -28,19 +29,12 @@ class TransactionController extends GetxController {
     int outcomeValueValue = expenseValue.value.isEmpty
         ? 0
         : int.parse(expenseValue.value.replaceAll('.', ''));
-    keuntungan.value = incomeValueValue - outcomeValueValue;
+    profit.value = incomeValueValue - outcomeValueValue;
   }
 
   void incomeAmount(String value) {
     incomeValue.value = value;
   }
-
-  //initial value for textformfield
-  // void initialValue(){
-  //   incomeCurentValue.value = incomeValue.value;
-  //   outcomeCurentValue.value = outcomeValue.value;
-  //   outcome1CurentValue.value = outcome.value;
-  // }
 
   void expenseAmount(String value) {
     expenseValue.value = value;
@@ -60,26 +54,20 @@ class TransactionController extends GetxController {
     switchMode.value = value;
   }
 
-  void incrementOrder() {
-    orderValue.value++;
-  }
-
-  void decrementOrder() {
-    if (orderValue.value > 0) {
-      orderValue.value--;
-    }
+  void selectedDate(DateTime value) {
+    date.value = value;
   }
 
   void navigatedToCategory() async {
     final result = await Get.toNamed(Routes.CATEGORY,
-        arguments: {'type': selectedTab.value ? 'Pemasukan' : 'Pengeluaran'});
-
+        arguments: {'type': selectedIndex.value == 0 ? 'Pemasukan' : 'Pengeluaran'});
     if (result != null) {
+      subCategoryName.value = result['namaSubKategori'];
       incomeValue.value = result['hargaBeli'];
       expenseValue.value = result['hargaJual'];
-      print(incomeValue.value);
-      print(expenseValue.value);
+      outcomeValue.value = result['hargaJual'];
     }
+    print(outcomeValue.value);
   }
 
   @override

@@ -42,6 +42,7 @@ class CategoryView extends GetView<CategoryController> {
               const Gap(8),
               const SearchField(),
               const Gap(16),
+              //add category
               Obx(
                 () => GestureDetector(
                   onTap: () {
@@ -181,11 +182,14 @@ class CategoryView extends GetView<CategoryController> {
                                               icon: subCategory.icon,
                                               onTap: () {
                                                 Get.back(result: {
+                                                  'namaSubKategori':
+                                                      subCategory.nama,
                                                   'hargaBeli':
                                                       subCategory.hargaPokok,
                                                   'hargaJual':
                                                       subCategory.hargaJual,
                                                 });
+                                                print(subCategory.hargaJual);
                                               },
                                               onDelete: () {
                                                 controller.deleteSubCategory(

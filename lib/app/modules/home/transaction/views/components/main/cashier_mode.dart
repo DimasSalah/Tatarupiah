@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-import '../../../../../style/colors.dart';
-import '../../../../../style/text_style.dart';
-import '../../controllers/transaction_controller.dart';
-import 'SearchField.dart';
-import 'card_cashier_mode.dart';
+import '../../../../../../style/colors.dart';
+import '../../../../../../style/text_style.dart';
+import '../../../controllers/transaction_controller.dart';
+import '../SearchField.dart';
+import '../card_cashier_mode.dart';
 class CashierMode extends StatelessWidget {
   const CashierMode({
     super.key,
