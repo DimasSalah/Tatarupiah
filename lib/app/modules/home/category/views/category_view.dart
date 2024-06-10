@@ -185,11 +185,11 @@ class CategoryView extends GetView<CategoryController> {
                                                   'namaSubKategori':
                                                       subCategory.nama,
                                                   'hargaBeli':
-                                                      subCategory.hargaPokok,
+                                                      subCategory.nominalPenjualan,
                                                   'hargaJual':
-                                                      subCategory.hargaJual,
+                                                      subCategory.nominalPengeluaran,
                                                 });
-                                                print(subCategory.hargaJual);
+                                                print(subCategory.nominalPengeluaran);
                                               },
                                               onDelete: () {
                                                 controller.deleteSubCategory(

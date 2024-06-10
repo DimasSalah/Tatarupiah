@@ -36,8 +36,8 @@ class SubCategoryService extends GetxService {
           'type': type,
           'nama': name,
           'icon': icon,
-          'harga_pokok': income,
-          'harga_jual': expanse
+          'nominal_penjualan': income,
+          'nominal_pengeluaran': expanse
         },
       );
       if (response.statusCode == 200) {

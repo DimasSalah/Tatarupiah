@@ -34,7 +34,6 @@ class CategoryModel {
 
 class Category {
     int id;
-    String userId;
     String nama;
     String type;
     String createdAt;
@@ -43,7 +42,6 @@ class Category {
 
     Category({
         required this.id,
-        required this.userId,
         required this.nama,
         required this.type,
         required this.createdAt,
@@ -53,7 +51,6 @@ class Category {
 
     factory Category.fromJson(Map<String, dynamic> json) => Category(
         id: json["id"],
-        userId: json["user_id"],
         nama: json["nama"],
         type: json["type"],
         createdAt: json["created_at"],
@@ -63,7 +60,6 @@ class Category {
 
     Map<String, dynamic> toJson() => {
         "id": id,
-        "user_id": userId,
         "nama": nama,
         "type": type,
         "created_at": createdAt,
@@ -77,8 +73,8 @@ class SubCategory {
     String kategoriId;
     String nama;
     String icon;
-    String hargaPokok;
-    String hargaJual;
+    String nominalPenjualan;
+    String nominalPengeluaran;
     String createdAt;
     String updatedAt;
 
@@ -87,8 +83,8 @@ class SubCategory {
         required this.kategoriId,
         required this.nama,
         required this.icon,
-        required this.hargaPokok,
-        required this.hargaJual,
+        required this.nominalPenjualan,
+        required this.nominalPengeluaran,
         required this.createdAt,
         required this.updatedAt,
     });
@@ -98,8 +94,8 @@ class SubCategory {
         kategoriId: json["kategori_id"],
         nama: json["nama"],
         icon: json["icon"],
-        hargaPokok: json["harga_pokok"],
-        hargaJual: json["harga_jual"],
+        nominalPenjualan: json["nominal_penjualan"],
+        nominalPengeluaran: json["nominal_pengeluaran"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
     );
@@ -109,8 +105,8 @@ class SubCategory {
         "kategori_id": kategoriId,
         "nama": nama,
         "icon": icon,
-        "harga_pokok": hargaPokok,
-        "harga_jual": hargaJual,
+        "nominal_penjualan": nominalPenjualan,
+        "nominal_pengeluaran": nominalPengeluaran,
         "created_at": createdAt,
         "updated_at": updatedAt,
     };
