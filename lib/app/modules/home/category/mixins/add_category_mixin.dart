@@ -18,6 +18,7 @@ mixin AddCategoryMixin on GetxController {
 
   void setOutcomeAmount(value) {
     outcomeAmount.value = value;
+    print(outcomeAmount.value);
   }
 
   void setIncomeAmount(value) {

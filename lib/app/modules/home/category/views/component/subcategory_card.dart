@@ -23,25 +23,26 @@ class SubCategoryCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: const EdgeInsets.only(bottom: 10),
-            padding: const EdgeInsets.all(8),
-            height: 50,
-            width: 50,
-            decoration: BoxDecoration(
-              color: dark,
-              borderRadius: BorderRadius.circular(24),
-            ),
-            child: SvgPicture.asset(
-              icon,
-            )
-          ),
+              margin: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.all(8),
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                color: dark,
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: SvgPicture.asset(
+                icon,
+              )),
           const Gap(20),
           Expanded(
             child: Text(
               subName,
+              textAlign: TextAlign.start,
               style: regular.copyWith(fontSize: 14, color: dark),
             ),
           ),

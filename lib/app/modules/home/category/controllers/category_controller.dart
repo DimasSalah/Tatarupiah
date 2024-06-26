@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:tatarupiah/app/data/models/category_model.dart';
+import 'package:tatarupiah/app/modules/home/category/data/models/category_model.dart';
 import 'package:tatarupiah/app/modules/home/category/mixins/icon_mixin.dart';
 import 'package:tatarupiah/app/modules/home/category/views/component/custom_dialog_single.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
-import '../../../../data/api/category_service.dart';
-import '../../../../data/api/subcategory_service.dart';
+import '../data/services/category_service.dart';
+import '../data/services/subcategory_service.dart';
 import '../mixins/add_category_mixin.dart';
 
 class CategoryController extends GetxController
@@ -30,7 +30,6 @@ class CategoryController extends GetxController
     await Get.to(Routes.ADDCATEGORY, arguments: {'type': categoryType.value});
   }
 
-
   void deleteCategory(int id) async {
     final categoryService = CategoryService();
     await categoryService.deleteCategory(id);
@@ -54,15 +53,10 @@ class CategoryController extends GetxController
     await categoryService.getCategory();
   }
 
-  void submitSubCategory() { //for income sub category
-  print(categoryId.value);
-  print(categoryType.value);
-  print(iconSelected.value);
-  print(subCategoryName.value);
-  print(incomeAmount.value);
-  print(expanseAmount.value);
-  print(outcomeAmount.value);
-    if (iconSelected.value.isEmpty || subCategoryName.value.isEmpty) {
+  void submitSubCategory() {
+    //for income sub category
+    if (iconSelected.value.isEmpty ||
+        subCategoryName.value.isEmpty ) {
       Get.dialog(
         CustomDialogSingle(
           title: 'Gagal',
@@ -72,16 +66,18 @@ class CategoryController extends GetxController
           },
         ),
       );
-    } else {
       final subCategoryService = SubCategoryService();
       subCategoryService.postSubCategory(
-        categoryId: categoryId.value,
-        type: categoryType.value,
-        name: subCategoryName.value,
-        icon: iconSelected.value,
-        income: int.parse(incomeAmount.value.replaceAll('.', '')),
-        expanse: int.parse(expanseAmount.value.replaceAll('.', '')), // ganti jika expanse tabbar value
-      );
+          categoryId: categoryId.value,
+          type: categoryType.value,
+          name: subCategoryName.value,
+          icon: iconSelected.value,
+          income: int.parse(incomeAmount.value.replaceAll('.', '')),
+          expanse: categoryType.value == "Pemasukan"
+              ? int.parse(expanseAmount.value.replaceAll('.', ''))
+              : int.parse(outcomeAmount.value
+                  .replaceAll('.', '')) // ganti jika expanse tabbar value
+          );
       Future.delayed(const Duration(milliseconds: 1500), () {
         update(['category']);
       });

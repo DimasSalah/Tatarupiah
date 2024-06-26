@@ -5,7 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:tatarupiah/app/data/endpoint.dart';
 
-import '../../style/colors.dart';
+import '../../../../../style/colors.dart';
 
 class SubCategoryService extends GetxService {
   final Dio _dio = Dio();

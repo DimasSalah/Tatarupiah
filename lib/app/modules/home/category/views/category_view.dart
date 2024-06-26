@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
-import 'package:tatarupiah/app/data/api/category_service.dart';
-import 'package:tatarupiah/app/data/models/category_model.dart';
+import 'package:tatarupiah/app/modules/home/category/data/services/category_service.dart';
+import 'package:tatarupiah/app/modules/home/category/data/models/category_model.dart';
 import 'package:tatarupiah/app/modules/home/category/views/component/custom_dialog.dart';
 import 'package:tatarupiah/app/modules/home/transaction/views/components/SearchField.dart';
 import 'package:tatarupiah/app/style/colors.dart';
@@ -182,6 +182,8 @@ class CategoryView extends GetView<CategoryController> {
                                               icon: subCategory.icon,
                                               onTap: () {
                                                 Get.back(result: {
+                                                  'idSubKategori':
+                                                      subCategory.id,
                                                   'namaSubKategori':
                                                       subCategory.nama,
                                                   'hargaBeli':

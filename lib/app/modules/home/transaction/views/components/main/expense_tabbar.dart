@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../../../../style/colors.dart';
 import '../../../../../../style/text_style.dart';
 import '../../../../../../utils/date_format.dart';
@@ -6,7 +7,6 @@ import '../../../controllers/transaction_controller.dart';
 import '../amount_input.dart';
 import '../payment_dropdown.dart';
 import '../save_button.dart';
-
 
 class ExpenseTabBar extends StatelessWidget {
   const ExpenseTabBar({
@@ -32,48 +32,50 @@ class ExpenseTabBar extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                      statusDate(controller.date.value),
-                      style: medium.copyWith(fontSize: 13, color: normal),
-                    ),
+                        statusDate(controller.date.value),
+                        style: medium.copyWith(fontSize: 13, color: normal),
+                      ),
                       const SizedBox(
                         width: 8,
                       ),
                       GestureDetector(
-                      onTap: () async {
-                        final selectdate = await showDatePicker(
+                        onTap: () async {
+                          final selectdate = await showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
                             firstDate: DateTime(2021),
                             lastDate: DateTime(2050),
                             builder: (context, child) {
-                              return Theme(data: 
-                              ThemeData.dark().copyWith(
-                                colorScheme:  ColorScheme.dark(
-                                  primary: dark,
-                                  onPrimary: white,
-                                  surface: white,
-                                  onSurface: dark,
-                                  onBackground: white,
-                                ),
-                                primaryColor: dark,
-                                textSelectionTheme: TextSelectionThemeData(cursorColor: error),
-                                buttonTheme: ButtonThemeData(
-                                  buttonColor: error,
-                                  textTheme: ButtonTextTheme.primary,
-                                ),
-                              ), child: child!);
+                              return Theme(
+                                  data: ThemeData.dark().copyWith(
+                                    colorScheme: ColorScheme.dark(
+                                      primary: dark,
+                                      onPrimary: white,
+                                      surface: white,
+                                      onSurface: dark,
+                                      onBackground: white,
+                                    ),
+                                    primaryColor: dark,
+                                    textSelectionTheme: TextSelectionThemeData(
+                                        cursorColor: error),
+                                    buttonTheme: ButtonThemeData(
+                                      buttonColor: error,
+                                      textTheme: ButtonTextTheme.primary,
+                                    ),
+                                  ),
+                                  child: child!);
                             },
                           );
-                        if (selectdate != null) {
-                          controller.selectedDate(selectdate);
-                        }
-                      },
-                      child: Icon(
-                        Icons.edit,
-                        color: lightActive,
-                        size: 24,
-                      ),
-                    )
+                          if (selectdate != null) {
+                            controller.selectedDate(selectdate);
+                          }
+                        },
+                        child: Icon(
+                          Icons.edit,
+                          color: lightActive,
+                          size: 24,
+                        ),
+                      )
                     ],
                   ),
                   const SizedBox(
@@ -86,19 +88,24 @@ class ExpenseTabBar extends StatelessWidget {
                           controller.navigatedToCategory();
                         },
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: light.withOpacity(0.8),
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: lightActive),
-                          ),
-                          child: Text(
-                            'Pilihan Kategori',
-                            style: regular.copyWith(
-                                fontSize: 13, color: lightActive),
-                          ),
-                        ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: light.withOpacity(0.8),
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: lightActive),
+                            ),
+                            child: Obx(
+                              () => Text(
+                                controller.subCategoryName.value.isEmpty
+                                    ? 'Pilih Kategori'
+                                    : controller.subCategoryName.value,
+                                style: regular.copyWith(
+                                    fontSize: 13, color: lightActive),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            )),
                       ),
                       const SizedBox(
                         width: 10,
@@ -108,12 +115,11 @@ class ExpenseTabBar extends StatelessWidget {
                           decoration: InputDecoration(
                             isDense: true,
                             hintText: 'Catatan',
-                            hintStyle: regular.copyWith(
-                                fontSize: 13, color: dark),
+                            hintStyle:
+                                regular.copyWith(fontSize: 13, color: dark),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  BorderSide(color: lightActive),
+                              borderSide: BorderSide(color: lightActive),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),

@@ -23,7 +23,6 @@ class BarGraph extends StatelessWidget {
             borderData: FlBorderData(
               show: false,
             ),
-            
             barTouchData: BarTouchData(
               enabled: true,
               touchCallback: controller.setSelectedBarIndex,
@@ -51,7 +50,9 @@ class BarGraph extends StatelessWidget {
               rightTitles:
                   AxisTitles(sideTitles: SideTitles(showTitles: false)),
               leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-              bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, getTitlesWidget: getBottomTitle)),
+              bottomTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                      showTitles: true, getTitlesWidget: getBottomTitle)),
             ),
             barGroups: controller.mybarData.barData
                 .map(
@@ -60,7 +61,7 @@ class BarGraph extends StatelessWidget {
                     barRods: [
                       BarChartRodData(
                         toY: data.y,
-                        width: 49,
+                        width: Get.width / 8.5,
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(14),
                           topRight: Radius.circular(14),
@@ -89,7 +90,6 @@ class BarGraph extends StatelessWidget {
     );
   }
 }
-
 
 Widget getBottomTitle(double value, TitleMeta meta) {
   const style = TextStyle(
@@ -142,7 +142,8 @@ Widget getBottomTitle(double value, TitleMeta meta) {
       );
       break;
     default:
-      text = const SizedBox(); // Jika nilai tidak sesuai, kembalikan widget kosong
+      text =
+          const SizedBox(); // Jika nilai tidak sesuai, kembalikan widget kosong
       break;
   }
   return SideTitleWidget(child: text, axisSide: meta.axisSide);

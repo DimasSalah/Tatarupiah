@@ -13,10 +13,9 @@ class TransactionController extends GetxController with CashierMixin {
   RxString expenseValue = '0'.obs; //value for incomeValue tab bar
   RxString outcomeValue = '0'.obs; // value for outcomeValue tab bar
   RxInt profit = 0.obs;
-  RxString incomeCurentValue = '100'.obs;
-  RxString outcomeCurentValue = ''.obs;
   Rx<DateTime> date = DateTime.now().obs; //calendar date
   RxString subCategoryName = ''.obs;
+  RxInt subCategoryId = 0.obs;
 
   late TextEditingController incomeController;
   late TextEditingController expenseController;
@@ -59,15 +58,22 @@ class TransactionController extends GetxController with CashierMixin {
   }
 
   void navigatedToCategory() async {
-    final result = await Get.toNamed(Routes.CATEGORY,
-        arguments: {'type': selectedIndex.value == 0 ? 'Pemasukan' : 'Pengeluaran'});
+    final result = await Get.toNamed(Routes.CATEGORY, arguments: {
+      'type': selectedIndex.value == 0 ? 'Pemasukan' : 'Pengeluaran'
+    });
     if (result != null) {
+      print('id sub kategori: ${result['idSubKategori']}');
+      subCategoryId.value = result['idSubKategori'];
       subCategoryName.value = result['namaSubKategori'];
       incomeValue.value = result['hargaBeli'];
-      expenseValue.value = result['hargaJual'];
-      outcomeValue.value = result['hargaJual'];
+      selectedIndex.value == 0 //jika tab bar pengeluaran maka expenseValue 0
+          ? expenseValue.value = result['hargaBeli']
+          : expenseValue.value = '0';
+      selectedIndex.value ==
+              0 //fungsi untuk mengisi expanse atau outcome terganung dari tab bar
+          ? expenseValue.value = result['hargaJual']
+          : outcomeValue.value = result['hargaJual'];
     }
-    print(outcomeValue.value);
   }
 
   @override

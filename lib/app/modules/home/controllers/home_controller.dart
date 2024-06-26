@@ -25,20 +25,19 @@ class HomeController extends GetxController {
 
   void navigationToHistory() {
     Get.toNamed(Routes.HISTORY);
-  } 
-  
+  }
 
   void setSelectedBarIndex(FlTouchEvent event, BarTouchResponse? response) {
     if (response != null && response.spot != null) {
-    final int tappedIndex = response.spot!.touchedBarGroupIndex;
-    selectedBarIndex.value = tappedIndex;
-    update();
-  }
+      final int tappedIndex = response.spot!.touchedBarGroupIndex;
+      selectedBarIndex.value = tappedIndex;
+      update();
+    }
   }
 
-  void setSelected(String value){
-     dropdownValue.value = value;
-   }
+  void setSelected(String value) {
+    dropdownValue.value = value;
+  }
 
   Bardata mybarData = Bardata(
     sunAmmount: 25.40,
@@ -54,7 +53,8 @@ class HomeController extends GetxController {
     // Periksa apakah nilai baru melebihi maxY
     if (newData.any((value) => value > maxY.value)) {
       // Jika iya, atur nilai maxY ke nilai terbesar newData
-      maxY.value = newData.reduce((value, element) => value > element ? value : element);
+      maxY.value =
+          newData.reduce((value, element) => value > element ? value : element);
     }
     // Set nilai newData ke mybardata
     mybarData.sunAmmount = newData[0];
