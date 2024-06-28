@@ -8,6 +8,7 @@ import '../../../../../../style/text_style.dart';
 import '../../../../../../utils/currency_format.dart';
 import '../../../controllers/transaction_controller.dart';
 import '../payment_dropdown.dart';
+import '../save_button.dart';
 
 class NormalMode extends StatelessWidget {
   const NormalMode({
@@ -19,105 +20,128 @@ class NormalMode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding:
-              const EdgeInsets.only(left: 23, right: 23, top: 10, bottom: 14),
-          child: Row(
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: controller.navigatedToCategory,
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: light.withOpacity(0.8),
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: lightActive),
-                  ),
-                  child: Obx(
-                    () => Text(
-                      controller.subCategoryName.value.isEmpty
-                          ? 'Pilih Kategori'
-                          : controller.subCategoryName.value,
-                      style: regular.copyWith(fontSize: 13, color: lightActive),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 23, right: 23, top: 10, bottom: 14),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: controller.navigatedToCategory,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: light.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: lightActive),
+                        ),
+                        child: Obx(
+                          () => Text(
+                            controller.subCategoryName.value.isEmpty
+                                ? 'Pilih Kategori'
+                                : controller.subCategoryName.value,
+                            style: regular.copyWith(
+                                fontSize: 13, color: lightActive),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ),
                     ),
+                    const Gap(10),
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.noteController,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          hintText: 'Catatan',
+                          hintStyle:
+                              regular.copyWith(fontSize: 13, color: dark),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: lightActive),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: dark),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 8),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              AmountInput(
+                controller: controller.incomeController,
+                label: 'Nominal Penjualan',
+                color: success,
+                onChanged: controller.incomeAmount,
+              ),
+              const Gap(10),
+              AmountInput(
+                controller: controller.expenseController,
+                label: 'Nominal Pengeluaran / Harga Pokok',
+                color: error,
+                onChanged: controller.expenseAmount,
+              ),
+              Obx(
+                () => Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 23, vertical: 4),
+                  width: double.infinity,
+                  color: const Color(0xFF84F269).withOpacity(0.35),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Keuntungan',
+                        style: medium.copyWith(fontSize: 13, color: success),
+                      ),
+                      Text(
+                        currencyViewFormatter(
+                            controller.profit.value.toString()),
+                        style: semiBold.copyWith(fontSize: 13, color: success),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              const Gap(10),
-              Expanded(
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    isDense: true,
-                    hintText: 'Catatan',
-                    hintStyle: regular.copyWith(fontSize: 13, color: dark),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: lightActive),
+              const SizedBox(
+                height: 16,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 23),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    PaymentDropdown(
+                      selectedPayment: controller.selectedPayment,
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: dark),
-                    ),
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  ),
+                  ],
                 ),
-              )
+              ),
             ],
           ),
-        ),
-        AmountInput(
-          controller: controller.incomeController,
-          label: 'Nominal Penjualan',
-          color: success,
-          onChanged: controller.incomeAmount,
-        ),
-        const Gap(10),
-        AmountInput(
-          controller: controller.expenseController,
-          label: 'Nominal Pengeluaran / Harga Pokok',
-          color: error,
-          onChanged: controller.outcomeAmount,
-        ),
-        Obx(
-          () => Container(
-            padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 4),
-            width: double.infinity,
-            color: const Color(0xFF84F269).withOpacity(0.35),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Keuntungan',
-                  style: medium.copyWith(fontSize: 13, color: success),
-                ),
-                Text(
-                  currencyViewFormatter(controller.profit.value.toString()),
-                  style: semiBold.copyWith(fontSize: 13, color: success),
-                ),
-              ],
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 23, vertical: 20),
+            child: SaveButton(
+              onTap: () {
+                controller.submitTransaction();
+              },
+              title: 'Simpan Transaksi',
             ),
           ),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 23),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              PaymentDropdown(),
-            ],
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
