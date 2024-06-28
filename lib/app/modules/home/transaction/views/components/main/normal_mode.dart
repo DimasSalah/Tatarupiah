@@ -29,7 +29,7 @@ class NormalMode extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                    left: 23, right: 23, top: 10, bottom: 14),
+                    left: 23, right: 23, top: 12, bottom: 14),
                 child: Row(
                   children: [
                     GestureDetector(

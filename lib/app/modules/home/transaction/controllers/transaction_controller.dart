@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
 import 'package:tatarupiah/app/utils/currency_format.dart';
 
+import '../data/models/transaction_request.dart';
+import '../data/services/transaction_services.dart';
 import '../mixin/cashier_mixin.dart';
 
 class TransactionController extends GetxController with CashierMixin {
@@ -16,10 +21,13 @@ class TransactionController extends GetxController with CashierMixin {
   Rx<DateTime> date = DateTime.now().obs; //calendar date
   RxString subCategoryName = ''.obs;
   RxInt subCategoryId = 0.obs;
+  RxString payment = 'Tunai'.obs;
+  RxString note = ''.obs;
 
   late TextEditingController incomeController;
   late TextEditingController expenseController;
   late TextEditingController outcomeController;
+  TextEditingController noteController = TextEditingController();
 
   void calculateProfit() {
     int incomeValueValue = incomeValue.value.isEmpty
@@ -46,15 +54,28 @@ class TransactionController extends GetxController with CashierMixin {
   //function to change main tab bar index incomeValue/outcomeValue
   void changeTabIndex(int index) {
     selectedIndex.value = index;
+    incomeValue.value = '0';
+    expenseValue.value = '0';
+    outcomeValue.value = '0';
+    subCategoryId.value = 0;
+    subCategoryName.value = '';
+    noteController.clear();
   }
 
-  void switchButton(bool value) {
+  void switchButton(bool value) async {
     //function to switch button kasir/normal mode
     switchMode.value = value;
+    switchMode.value ? await getCategory() : categoryCashierList.clear();
+
+    switchMode.value ? filterCategory("") : null;
   }
 
   void selectedDate(DateTime value) {
     date.value = value;
+  }
+
+  void selectedPayment(dynamic value) {
+    payment.value = value;
   }
 
   void navigatedToCategory() async {
@@ -62,8 +83,8 @@ class TransactionController extends GetxController with CashierMixin {
       'type': selectedIndex.value == 0 ? 'Pemasukan' : 'Pengeluaran'
     });
     if (result != null) {
-      print('id sub kategori: ${result['idSubKategori']}');
       subCategoryId.value = result['idSubKategori'];
+
       subCategoryName.value = result['namaSubKategori'];
       incomeValue.value = result['hargaBeli'];
       selectedIndex.value == 0 //jika tab bar pengeluaran maka expenseValue 0
@@ -73,6 +94,64 @@ class TransactionController extends GetxController with CashierMixin {
               0 //fungsi untuk mengisi expanse atau outcome terganung dari tab bar
           ? expenseValue.value = result['hargaJual']
           : outcomeValue.value = result['hargaJual'];
+    }
+  }
+
+  Future<void> submitTransaction() async {
+    try {
+      isLoading.value = true;
+      final transactionServices = TransactionServices();
+      await transactionServices.postTransaction(
+        DateFormat('yyyy-MM-dd').format(date.value),
+        selectedIndex.value == 0 ? 'Pemasukan' : 'Pengeluaran',
+        noteController.text,
+        subCategoryId.value,
+        int.parse(incomeValue.value.replaceAll('.', '')),
+        selectedIndex.value == 0
+            ? int.parse(expenseValue.value.replaceAll('.', ''))
+            : int.parse(outcomeValue.value.replaceAll('.', '')),
+        payment.value,
+      );
+    } catch (e) {
+      Get.snackbar('Error', 'Gagal menambahkan transaksi',
+          backgroundColor: Colors.red, colorText: Colors.white);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void postTransaction() async {
+    // Prepare data from categories/subcategories
+    List<TransactionItem> items = [];
+    for (var category in categoryCashierList) {
+      for (var subCategory in category.subCategories) {
+        if (subCategory.orderCount > 0) {
+          items.add(TransactionItem(
+            nominalPenjualan:
+                int.parse(subCategory.nominalPenjualan.replaceAll('.', '')),
+            qty: subCategory.orderCount,
+            subKategoriId: subCategory.id,
+          ));
+        }
+      }
+      // Example of fixed data for tanggal, pembayaran, catatan (replace with your logic)
+      // print("Tanggal: $DateFormat('yyyy-MM-dd').format(date.value)");
+      // print("Pembayaran: $payment.value");
+      // print("Catatan: $noteController.text");
+      // print("Items: $items");
+
+    }
+    try {
+      await transactionService.postTransactionCashier(
+        TransactionRequest(
+          tanggal: DateFormat('yyyy-MM-dd').format(date.value),
+          pembayaran: payment.value,
+          catatan: noteController.text,
+          items: items,
+        ),
+      );
+    } catch (e) {
+      Get.snackbar('Gagal', e.toString());
     }
   }
 
@@ -100,9 +179,5 @@ class TransactionController extends GetxController with CashierMixin {
     outcomeValue.listen((value) {
       outcomeController.text = currencyWithoutSymbol(value.toString());
     });
-
-    // incomeValue.listen((_) => initialValue());
-    // outcomeValue.listen((_) => initialValue());
-    // outcome.listen((_) => initialValue());
   }
 }

@@ -1,8 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:tatarupiah/app/modules/home/category/data/services/category_service.dart';
 import 'package:tatarupiah/app/modules/home/category/data/models/category_model.dart';
 import 'package:tatarupiah/app/modules/home/category/views/component/custom_dialog.dart';
@@ -12,6 +15,7 @@ import '../../../../style/text_style.dart';
 import '../controllers/category_controller.dart';
 import 'component/adding_category.dart';
 import 'component/name_category.dart';
+import 'component/skeleton_category.dart';
 import 'component/subcategory_card.dart';
 
 class CategoryView extends GetView<CategoryController> {
@@ -110,25 +114,18 @@ class CategoryView extends GetView<CategoryController> {
                 ),
               ),
               const Gap(20),
-              GetBuilder<CategoryController>(
-                id: 'category',
-                builder: (controller) {
-                  return FutureBuilder<CategoryModel>(
-                      future: CategoryService().getCategory(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<CategoryModel> snapshot) {
-                        if (snapshot.hasData) {
-                          final categoryListItems = snapshot.data!.data
-                              .where((category) =>
-                                  category.type ==
-                                  controller.categoryType.value)
-                              .toList();
-                          controller.categoryList.value = categoryListItems;
+              Obx(
+                () => controller.isLoading.value
+                    ? const SkeletonCategory()
+                    : GetBuilder<CategoryController>(
+                        init: CategoryController(),
+                        id: 'category',
+                        builder: (controller) {
                           return ListView.builder(
                             shrinkWrap: true,
-                            itemCount: categoryListItems.length,
+                            itemCount: controller.categoryList.length,
                             itemBuilder: (context, index) {
-                              final category = categoryListItems[index];
+                              final category = controller.categoryList[index];
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 10),
                                 child: Dismissible(
@@ -186,12 +183,13 @@ class CategoryView extends GetView<CategoryController> {
                                                       subCategory.id,
                                                   'namaSubKategori':
                                                       subCategory.nama,
-                                                  'hargaBeli':
-                                                      subCategory.nominalPenjualan,
-                                                  'hargaJual':
-                                                      subCategory.nominalPengeluaran,
+                                                  'hargaBeli': subCategory
+                                                      .nominalPenjualan,
+                                                  'hargaJual': subCategory
+                                                      .nominalPengeluaran,
                                                 });
-                                                print(subCategory.nominalPengeluaran);
+                                                print(subCategory
+                                                    .nominalPengeluaran);
                                               },
                                               onDelete: () {
                                                 controller.deleteSubCategory(
@@ -208,13 +206,8 @@ class CategoryView extends GetView<CategoryController> {
                               );
                             },
                           );
-                        } else {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
-                      });
-                },
-              ),
+                        }),
+              )
             ],
           ),
         ),

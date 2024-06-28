@@ -112,6 +112,7 @@ class ExpenseTabBar extends StatelessWidget {
                       ),
                       Expanded(
                         child: TextFormField(
+                          controller: controller.noteController,
                           decoration: InputDecoration(
                             isDense: true,
                             hintText: 'Catatan',
@@ -144,25 +145,30 @@ class ExpenseTabBar extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 23),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 23),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  PaymentDropdown(),
+                  PaymentDropdown(
+                    selectedPayment: controller.selectedPayment,
+                  ),
                 ],
               ),
             ),
           ],
         ),
-        const Positioned(
+        Positioned(
           bottom: 40,
           left: 0,
           right: 0,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 23),
+            padding: const EdgeInsets.symmetric(horizontal: 23),
             child: SaveButton(
               title: 'Simpan Transaksi',
+              onTap: () {
+                controller.submitTransaction();
+              },
             ),
           ),
         )

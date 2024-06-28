@@ -19,32 +19,16 @@ class IncomeTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Stack(
+      () => Column(
         children: [
-          Column(
-            children: [
-              SwitchMode(controller: controller),
-              controller.switchMode.value
-                  //mode kasir
-                  ? CashierMode(controller: controller)
-                  //mode normal
-                  : NormalMode(controller: controller)
-            ],
-          ),
-          const Positioned(
-            bottom: 40,
-            left: 0,
-            right: 0,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 23),
-              child: SaveButton(
-                title: 'Simpan Transaksi',
-              ),
-            ),
-          )
+          SwitchMode(controller: controller),
+          controller.switchMode.value
+              //mode kasir
+              ? CashierMode(controller: controller)
+              //mode normal
+              : NormalMode(controller: controller)
         ],
       ),
     );
   }
 }
-

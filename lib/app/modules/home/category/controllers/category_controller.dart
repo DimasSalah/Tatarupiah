@@ -1,22 +1,20 @@
 import 'package:get/get.dart';
-import 'package:tatarupiah/app/modules/home/category/data/models/category_model.dart';
 import 'package:tatarupiah/app/modules/home/category/mixins/icon_mixin.dart';
 import 'package:tatarupiah/app/modules/home/category/views/component/custom_dialog_single.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
+import '../data/models/category_model.dart';
 import '../data/services/category_service.dart';
 import '../data/services/subcategory_service.dart';
 import '../mixins/add_category_mixin.dart';
+import '../mixins/category_data_mixin.dart';
 
 class CategoryController extends GetxController
-    with IconMixin, AddCategoryMixin {
+    with IconMixin, AddCategoryMixin, CategoryData {
   //for category
   RxBool isAddCategory = true.obs;
-  RxString categoryType = ''.obs;
-  RxString categoryValue = ''.obs;
   RxInt categoryId = 0.obs;
   RxInt subCategoryId = 0.obs;
   RxString categoryName = ''.obs;
-  RxList<Category> categoryList = <Category>[].obs;
 
   void newCategory(value) {
     categoryValue.value = value;
@@ -26,37 +24,42 @@ class CategoryController extends GetxController
     Get.toNamed(Routes.ADDCATEGORY);
   }
 
-  void resultfromAddCategory() async {
-    await Get.to(Routes.ADDCATEGORY, arguments: {'type': categoryType.value});
+  void incrementOrder(SubCategory subCategory) {
+    subCategory.orderCount++;
+    update(['order_${subCategory.id}']); // Memanggil update untuk memberitahu GetX bahwa ada perubahan pada subCategory tertentu
+  }
+
+  void decrementOrder(SubCategory subCategory) {
+    if (subCategory.orderCount > 0) {
+      subCategory.orderCount--;
+      update(['order_${subCategory.id}']); // Memanggil update untuk memberitahu GetX bahwa ada perubahan pada subCategory tertentu
+    }
+  }
+
+  Future<void> addNewCategory() async {
+    final categoryService = CategoryService();
+    await categoryService.postCategory(categoryValue.value, categoryType.value);
+    getCategory();
+    update(['category']);
   }
 
   void deleteCategory(int id) async {
     final categoryService = CategoryService();
     await categoryService.deleteCategory(id);
+    getCategory();
     update(['category']);
   }
 
   void deleteSubCategory(int id) async {
     final subCategoryService = SubCategoryService();
     await subCategoryService.deleteSubCategory(id);
+    getCategory();
     update(['category']);
-  }
-
-  Future<void> addNewCategory() async {
-    final categoryService = CategoryService();
-    await categoryService.postCategory(categoryValue.value, categoryType.value);
-    update(['category']);
-  }
-
-  Future<void> getAllCategory() async {
-    final categoryService = CategoryService();
-    await categoryService.getCategory();
   }
 
   void submitSubCategory() {
-    //for income sub category
-    if (iconSelected.value.isEmpty ||
-        subCategoryName.value.isEmpty ) {
+    // for income sub category
+    if (iconSelected.value.isEmpty || subCategoryName.value.isEmpty) {
       Get.dialog(
         CustomDialogSingle(
           title: 'Gagal',
@@ -66,19 +69,21 @@ class CategoryController extends GetxController
           },
         ),
       );
+    } else {
       final subCategoryService = SubCategoryService();
       subCategoryService.postSubCategory(
-          categoryId: categoryId.value,
-          type: categoryType.value,
-          name: subCategoryName.value,
-          icon: iconSelected.value,
-          income: int.parse(incomeAmount.value.replaceAll('.', '')),
-          expanse: categoryType.value == "Pemasukan"
-              ? int.parse(expanseAmount.value.replaceAll('.', ''))
-              : int.parse(outcomeAmount.value
-                  .replaceAll('.', '')) // ganti jika expanse tabbar value
-          );
+        categoryId: categoryId.value,
+        type: categoryType.value,
+        name: subCategoryName.value,
+        icon: iconSelected.value,
+        income: int.parse(incomeAmount.value.replaceAll('.', '')),
+        expanse: categoryType.value == "Pemasukan"
+            ? int.parse(expanseAmount.value.replaceAll('.', ''))
+            : int.parse(outcomeAmount.value
+                .replaceAll('.', '')), // ganti jika expanse tabbar value
+      );
       Future.delayed(const Duration(milliseconds: 1500), () {
+        getCategory();
         update(['category']);
       });
       closeAddCategory();
@@ -86,9 +91,11 @@ class CategoryController extends GetxController
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     final arguments = Get.arguments as Map<String, dynamic>;
     categoryType.value = arguments['type'];
+    print(categoryType.value);
+    await getCategory();
     super.onInit();
   }
 }

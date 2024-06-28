@@ -12,13 +12,16 @@ List paymentItems = [
 ];
 
 class PaymentDropdown extends StatelessWidget {
-  const PaymentDropdown({
+  final Function(dynamic)? selectedPayment;
+   const PaymentDropdown({
     super.key,
+    this.selectedPayment,
   });
 
   @override
   Widget build(BuildContext context) {
     return DropdownMenu(
+      onSelected: selectedPayment,
       width: 160,
         hintText: 'Pembayaran',
         trailingIcon: SvgPicture.asset(
@@ -43,7 +46,7 @@ class PaymentDropdown extends StatelessWidget {
           contentPadding: EdgeInsets.symmetric(horizontal: 13),
         ),
         menuStyle: MenuStyle(
-          shape: MaterialStateProperty.all(
+          shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: const BorderRadius.all(
                 Radius.circular(10),
@@ -59,10 +62,10 @@ class PaymentDropdown extends StatelessWidget {
           for (int index = 0; index < paymentItems.length; index++)
             DropdownMenuEntry(
               style: ButtonStyle(
-                textStyle: MaterialStatePropertyAll(
+                textStyle: WidgetStatePropertyAll(
                   regular.copyWith(fontSize: 13, color: dark),
                 ),
-                backgroundColor: MaterialStatePropertyAll(light),
+                backgroundColor: WidgetStatePropertyAll(light),
               ),
               value: paymentItems[index],
               label: paymentItems[index],

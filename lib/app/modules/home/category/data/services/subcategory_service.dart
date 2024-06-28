@@ -8,22 +8,22 @@ import 'package:tatarupiah/app/data/endpoint.dart';
 import '../../../../../style/colors.dart';
 
 class SubCategoryService extends GetxService {
-  final Dio _dio = Dio();
+  final Dio dio = Dio();
   final token = GetStorage().read('token');
   final logger = Logger();
   final baseUrl = baseurl;
 
-  Future<Response> postSubCategory(
-      {
-        required int categoryId,
-        required String type,
-        required String name,
-        required String icon,
-        required int income,
-        required int expanse,
-      }) async {
+  Future<Response> postSubCategory({
+    required int categoryId,
+    required String type,
+    required String name,
+    required String icon,
+    required int income,
+    required int expanse,
+  }) async {
+    print('masuk');
     try {
-      final response = await _dio.post(
+      final response = await dio.post(
         '$baseUrl/sub-kategori',
         options: Options(
           headers: {
@@ -50,7 +50,7 @@ class SubCategoryService extends GetxService {
       }
     } on DioException catch (e) {
       if (e.response != null && e.response!.statusCode == 409) {
-        Get.snackbar('Error', 'Sub Category already exists',colorText: error);
+        Get.snackbar('Error', 'Sub Category already exists', colorText: error);
       }
       rethrow;
     } catch (e) {
@@ -61,7 +61,7 @@ class SubCategoryService extends GetxService {
 
   Future<void> deleteSubCategory(int id) async {
     try {
-      final response = await _dio.delete(
+      final response = await dio.delete(
         '$baseUrl/sub-kategori/$id',
         options: Options(
           headers: {

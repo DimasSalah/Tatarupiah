@@ -34,12 +34,17 @@ class IncomeAddCategoryTab extends StatelessWidget {
                       backgroundColor: light,
                       surfaceTintColor: light,
                       scrollable: true,
-                      title: Text('Pilih Icon', style: medium.copyWith(fontSize: 22),textAlign: TextAlign.center,),
+                      title: Text(
+                        'Pilih Icon',
+                        style: medium.copyWith(fontSize: 22),
+                        textAlign: TextAlign.center,
+                      ),
                       content: SizedBox(
                         width: double.maxFinite,
                         height: Get.height * 0.4,
                         child: PageView.builder(
-                            itemCount: (controller.iconPacks.length / 20).ceil(),
+                            itemCount:
+                                (controller.iconPacks.length / 20).ceil(),
                             itemBuilder: (context, pageIndex) {
                               final startIndex = pageIndex * 20;
                               final endIndex = startIndex + 20;
@@ -60,15 +65,14 @@ class IncomeAddCategoryTab extends StatelessWidget {
                                 itemBuilder: (context, iconIndex) {
                                   return GestureDetector(
                                     onTap: () {
-                                      controller.pickIcon(iconsToShow[iconIndex]);
+                                      controller
+                                          .pickIcon(iconsToShow[iconIndex]);
                                       Get.back();
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.all(14),
                                       decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: dark
-                                      ),
+                                          shape: BoxShape.circle, color: dark),
                                       child: SvgPicture.asset(
                                         iconsToShow[iconIndex],
                                       ),
@@ -83,31 +87,35 @@ class IncomeAddCategoryTab extends StatelessWidget {
                           onPressed: () {
                             Get.back();
                           },
-                          child: Text('Tutup',style: regular.copyWith(fontSize: 13,color: normal),),
+                          child: Text(
+                            'Tutup',
+                            style:
+                                regular.copyWith(fontSize: 13, color: normal),
+                          ),
                         ),
                       ],
                     ),
                   );
                 },
                 child: Container(
-                  height: 63,
-                  width: 63,
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: dark,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: lighter,
+                    height: 63,
+                    width: 63,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: dark,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: lighter,
+                      ),
                     ),
-                  ),
-                  child: Obx(
-                    () => SvgPicture.asset(
-                      controller.iconSelected.value == ''
-                          ? 'assets/icons/gallery.svg'
-                          : controller.iconSelected.value,
-                          width: 35,
-                    ),)
-                ),
+                    child: Obx(
+                      () => SvgPicture.asset(
+                        controller.iconSelected.value == ''
+                            ? 'assets/icons/gallery.svg'
+                            : controller.iconSelected.value,
+                        width: 35,
+                      ),
+                    )),
               ),
               const Gap(8),
               Expanded(
@@ -158,6 +166,7 @@ class IncomeAddCategoryTab extends StatelessWidget {
           child: SaveButton(
             title: 'Simpan',
             onTap: () {
+              print('submit');
               controller.submitSubCategory();
             },
           ),

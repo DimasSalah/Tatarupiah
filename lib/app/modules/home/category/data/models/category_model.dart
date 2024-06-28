@@ -3,6 +3,7 @@
 //     final categoryModel = categoryModelFromJson(jsonString);
 
 import 'dart:convert';
+import 'dart:ffi';
 
 CategoryModel categoryModelFromJson(String str) => CategoryModel.fromJson(json.decode(str));
 
@@ -77,16 +78,17 @@ class SubCategory {
     String nominalPengeluaran;
     String createdAt;
     String updatedAt;
-
+    int orderCount;
     SubCategory({
         required this.id,
         required this.kategoriId,
         required this.nama,
         required this.icon,
         required this.nominalPenjualan,
-        required this.nominalPengeluaran,
+      required this.nominalPengeluaran,   
         required this.createdAt,
         required this.updatedAt,
+        this.orderCount = 0,  
     });
 
     factory SubCategory.fromJson(Map<String, dynamic> json) => SubCategory(
