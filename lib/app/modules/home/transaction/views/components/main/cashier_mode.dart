@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+import 'package:tatarupiah/app/routes/app_pages.dart';
 import 'package:tatarupiah/app/style/colors.dart';
 import 'package:tatarupiah/app/style/text_style.dart';
 import '../../../../../../style/gradient.dart';
+import '../../../../../../utils/currency_format.dart';
 import '../../../controllers/transaction_controller.dart';
 import '../SearchField.dart';
 import '../card_cashier_mode.dart';
 import '../category_list_card.dart';
+import '../payment_option.dart';
 import '../skeleton_transaction.dart';
 
 class CashierMode extends StatelessWidget {
@@ -96,43 +100,207 @@ class CashierMode extends StatelessWidget {
                     right: 35,
                     child: GestureDetector(
                       onTap: () {
-                        // Tampilkan dialog dengan daftar kategori yang dipilih
-                        Get.dialog(
-                          AlertDialog(
-                            title: const Text('Daftar Transaksi'),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                if (controller.selectedSubCategories.isNotEmpty)
-                                  ...controller.selectedSubCategories
-                                      .map((subCategory) {
-                                    return ListTile(
-                                      title: Text(subCategory.nama),
-                                      subtitle: Text(
-                                          'Jumlah: ${subCategory.orderCount}'),
-                                    );
-                                  }).toList()
-                                else
-                                  const Text('Tidak ada item yang dipilih.'),
-                              ],
+                        Get.bottomSheet(
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(25)),
                             ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Get.back();
-                                },
-                                child: const Text('Batal'),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Total',
+                                      style: medium.copyWith(fontSize: 20)),
+                                  Text(
+                                    currencyViewFormatter(
+                                        '${controller.getTotalPrice()}'),
+                                    style: semiBold.copyWith(fontSize: 25),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  if (controller
+                                      .selectedSubCategories.isNotEmpty)
+                                    Column(
+                                      children: controller.selectedSubCategories
+                                          .map((subCategory) {
+                                        return Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 6),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                flex: 2,
+                                                child: Text(subCategory.nama,
+                                                    style: regular.copyWith(
+                                                        fontSize: 16)),
+                                              ),
+                                              const SizedBox(width: 10),
+                                              Text(
+                                                '× ${subCategory.orderCount}',
+                                                style: regular.copyWith(
+                                                    fontSize: 16),
+                                              ),
+                                              const Spacer(),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Text(
+                                                  currencyViewFormatter(
+                                                      '${int.parse(subCategory.nominalPenjualan) * subCategory.orderCount}'),
+                                                  style: semiBold.copyWith(
+                                                      fontSize: 16),
+                                                  textAlign: TextAlign.right,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }).toList(),
+                                    )
+                                  else
+                                    Text(
+                                      'Tidak ada item yang dipilih.',
+                                      style: regular.copyWith(fontSize: 16),
+                                    ),
+                                  const Gap(20),
+                                  Divider(
+                                    color: normal,
+                                    thickness: 2,
+                                  ),
+                                  const Gap(10),
+                                  TextFormField(
+                                    controller: controller.noteController,
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      hintText: 'Catatan',
+                                      filled: true,
+                                      fillColor: light,
+                                      hintStyle: regular.copyWith(
+                                          fontSize: 13, color: dark),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide:
+                                            BorderSide(color: lightActive),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(color: dark),
+                                      ),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 8),
+                                    ),
+                                  ),
+                                  const Gap(14),
+                                  Obx(() {
+                                    return PaymentOption(
+                                      selectedIndex:
+                                          controller.selectPayment.value,
+                                      onTap: (index) {
+                                        controller.paymentIndex(index);
+                                      },
+                                    );
+                                  }),
+                                  Gap(20),
+                                  GestureDetector(
+                                    onTap: () {
+                                      if (controller
+                                          .selectedSubCategories.isNotEmpty) {
+                                        controller.postTransaction();
+                                      } else {
+                                        null;
+                                        // Get.snackbar(
+                                        //   'Peringatan',
+                                        //   'Pilih minimal satu item',
+                                        //   backgroundColor: error,
+                                        //   colorText: white,
+                                        // );
+                                      }
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 9),
+                                      decoration: BoxDecoration(
+                                        color: controller.selectedSubCategories
+                                                .isNotEmpty
+                                            ? dark
+                                            : lightActive,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      width: double.infinity,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const SizedBox(width: 5),
+                                          Text(
+                                            'Tambah Transaksi',
+                                            style: regular.copyWith(
+                                                fontSize: 16, color: light),
+                                          ),
+                                          Container(
+                                            padding: const EdgeInsets.all(14),
+                                            decoration: BoxDecoration(
+                                              gradient: primary,
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            child: SvgPicture.asset(
+                                              'assets/icons/left_arrow.svg',
+                                              height: 20,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              TextButton(
-                                onPressed: () {
-                                  // controller.postTransaction();
-                                  Get.back();
-                                },
-                                child: const Text('Ya'),
-                              ),
-                            ],
+                            ),
                           ),
+                          isScrollControlled: true,
                         );
+
+                        // Get.dialog(
+                        //   AlertDialog(
+                        //     title: Text('Daftar Transaksi',
+                        //         style: semiBold.copyWith(fontSize: 19),
+                        //         textAlign: TextAlign.center),
+                        //     content: Column(
+                        //       mainAxisSize: MainAxisSize.min,
+                        //       children: [
+                        //         if (controller.selectedSubCategories.isNotEmpty)
+                        //           ...controller.selectedSubCategories
+                        //               .map((subCategory) {
+                        //             return ListTile(
+                        //               title: Text(subCategory.nama),
+                        //               subtitle: Text(
+                        //                   'Jumlah: ${subCategory.orderCount}'),
+                        //             );
+                        //           }).toList()
+                        //         else
+                        //           const Text('Tidak ada item yang dipilih.'),
+                        //       ],
+                        //     ),
+                        //     actions: [
+                        //       TextButton(
+                        //         onPressed: () {
+                        //           Get.back();
+                        //         },
+                        //         child: const Text('Batal'),
+                        //       ),
+                        //       TextButton(
+                        //         onPressed: () {
+                        //           // controller.postTransaction();
+                        //           Get.back();
+                        //         },
+                        //         child: const Text('Ya'),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // );
                       },
                       child: Container(
                         padding: const EdgeInsets.all(6),

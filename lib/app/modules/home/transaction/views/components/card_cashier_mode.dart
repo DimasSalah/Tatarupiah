@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:get/route_manager.dart';
 import 'package:tatarupiah/app/utils/currency_format.dart';
 
 import '../../../../../style/colors.dart';
@@ -53,9 +54,14 @@ class CardCashierMode extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: medium.copyWith(fontSize: 13, color: normal),
+                  Container(
+                    constraints: BoxConstraints(maxWidth: Get.width * 0.4),
+                    child: Text(
+                      title,
+                      style: medium.copyWith(fontSize: 13, color: normal),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   const Gap(2),
                   Text(

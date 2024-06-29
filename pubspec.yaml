@@ -23,6 +23,7 @@ dependencies:
   logger: ^2.2.0
   email_validator: ^2.1.17
   skeletonizer: ^1.3.0
+  lottie: ^3.1.2
 
 dev_dependencies: 
   flutter_lints: ^2.0.0
@@ -34,6 +35,7 @@ flutter:
     - assets/icons/
     - assets/icons/packs/
     - assets/images/
+    - assets/animations/
   fonts: 
     - family: Poppins
       fonts: 

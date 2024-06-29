@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
 import 'package:tatarupiah/app/utils/currency_format.dart';
 
@@ -65,6 +66,7 @@ class TransactionController extends GetxController with CashierMixin {
   void switchButton(bool value) async {
     //function to switch button kasir/normal mode
     switchMode.value = value;
+    noteController.clear();
     switchMode.value ? await getCategory() : categoryCashierList.clear();
 
     switchMode.value ? filterCategory("") : null;
@@ -134,20 +136,27 @@ class TransactionController extends GetxController with CashierMixin {
           ));
         }
       }
-      // Example of fixed data for tanggal, pembayaran, catatan (replace with your logic)
-      // print("Tanggal: $DateFormat('yyyy-MM-dd').format(date.value)");
-      // print("Pembayaran: $payment.value");
-      // print("Catatan: $noteController.text");
-      // print("Items: $items");
-
     }
     try {
-      await transactionService.postTransactionCashier(
-        TransactionRequest(
-          tanggal: DateFormat('yyyy-MM-dd').format(date.value),
-          pembayaran: payment.value,
-          catatan: noteController.text,
-          items: items,
+      // await transactionService.postTransactionCashier(
+      //   TransactionRequest(
+      //     tanggal: DateFormat('yyyy-MM-dd').format(date.value),
+      //     pembayaran: paymentMethod(),
+      //     catatan: noteController.text,
+      //     items: items,
+      //   ),
+      // );
+      Get.back();
+      Get.dialog(
+        AlertDialog(
+          content: Lottie.asset(
+            'assets/animations/Animation - 1719666456953.json',
+            onLoaded: (composition) {
+              Future.delayed(composition.duration, () {
+                Get.offAllNamed(Routes.MAIN);
+              });
+            },
+          ),
         ),
       );
     } catch (e) {

@@ -12,6 +12,7 @@ mixin CashierMixin on GetxController {
   RxBool isLoading = false.obs;
   RxInt orderValue = 0.obs;
   RxBool isButtonVisible = true.obs;
+  RxInt selectPayment = 0.obs;
   final ScrollController scrollController = ScrollController();
   final transactionService = TransactionServices();
 
@@ -29,6 +30,10 @@ mixin CashierMixin on GetxController {
         'order_${subCategory.id}'
       ]); // Memanggil update untuk memberitahu GetX bahwa ada perubahan pada subCategory tertentu
     }
+  }
+
+  void paymentIndex(int index) {
+    selectPayment.value = index;
   }
 
   Future<void> getCategory() async {
@@ -102,8 +107,26 @@ mixin CashierMixin on GetxController {
     return selected;
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  int getTotalPrice() {
+    int total = 0;
+    for (var subCategory in selectedSubCategories) {
+      total += int.parse(subCategory.nominalPenjualan) * subCategory.orderCount;
+    }
+    return total;
+  }
+
+  String paymentMethod() {
+    switch (selectPayment.value) {
+      case 0:
+        return "Tunai";
+      case 1:
+        return "Debit";
+      case 2:
+        return "Qris";
+      case 3:
+        return "E-Wallet";
+      default:
+        return "Tunai";
+    }
   }
 }
