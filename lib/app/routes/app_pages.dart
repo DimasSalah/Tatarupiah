@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:tatarupiah/app/modules/profile/views/edit_profile_view.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/register/bindings/register_binding.dart';
@@ -18,6 +17,7 @@ import '../modules/main/views/main_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/edit_profile_view.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/statistics/bindings/statistics_binding.dart';
 import '../modules/statistics/views/statistics_view.dart';
@@ -89,6 +89,5 @@ class AppPages {
       page: () => EditProfileView(),
       binding: ProfileBinding(),
     ),
-    
   ];
 }

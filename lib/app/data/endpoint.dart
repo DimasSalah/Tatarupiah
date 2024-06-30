@@ -1,1 +1,1 @@
-String baseurl = 'https://tatarupiah-backend-tatarupiah.koyeb.app/api';
+String baseurl = 'https://tatarupiah.my.id/api';

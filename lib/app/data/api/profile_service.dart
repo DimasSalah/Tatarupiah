@@ -36,32 +36,40 @@ class ProfileService extends GetxService {
     }
   }
 
-  // Future<UserModel> updateUserProfile(UserModel user) async {
-  //   try {
-  //     final response = await dio.put(
-  //       baseUrl + '/user',
-  //       data: {
-  //         'nama': user.nama,
-  //         'email': user.email,
-  //         'nama_toko': user.namaToko,
-  //         'no_handphone': user.noHandphone,
-  //         'alamat': user.alamat,
-  //       },
-  //       options: Options(
-  //         headers: {
-  //           'Authorization': 'Bearer ${token}',
-  //         },
-  //       ),
-  //     );
-  //     if (response.statusCode == 200) {
-  //       print(response.data);
-  //       return response;
-  //     } else {
-  //       throw Exception('Failed to update profile');
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-
-  // }
+  Future<void> postProfile({
+    required String name,
+    required String email,
+    required String storeName,
+    required String phone,
+    required String address,
+  }) async {
+    try {
+      final response = await dio.post(
+        baseUrl + '/user',
+        data: {
+          '_method': 'PUT',
+          'nama': name,
+          'email': email,
+          'nama_toko': storeName,
+          'no_handphone': phone,
+          'alamat': address,
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${token}',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        logger.i(response.data);
+      } else {
+        throw Exception('Failed to update profile');
+      }
+    } catch (e) {
+      if (e is DioException) {
+        logger.e(e.response!.data);
+      }
+      throw Exception(e);
+    }
+  }
 }

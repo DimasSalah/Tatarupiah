@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../style/colors.dart';
 import '../../../style/text_style.dart';
@@ -58,7 +59,7 @@ class ProfileView extends GetView<ProfileController> {
                         children: [
                           Text(
                             controller.name.string == ''
-                                ? 'Nama Kosong'
+                                ? ''
                                 : controller.name.value,
                             style:
                                 semiBold.copyWith(fontSize: 20, color: lighter),
@@ -68,7 +69,7 @@ class ProfileView extends GetView<ProfileController> {
                           ),
                           Text(
                             controller.storeName.string == ''
-                                ? 'Nama Toko Kosong'
+                                ? ''
                                 : controller.storeName.value,
                             style:
                                 regular.copyWith(fontSize: 16, color: lighter),
@@ -104,9 +105,8 @@ class ProfileView extends GetView<ProfileController> {
             const SizedBox(height: 15),
             Obx(
               () => CustomTextContainer(
-                text: controller.phone.string == ''
-                    ? 'Nomor Handphone Kosong'
-                    : controller.phone.value,
+                text:
+                    controller.phone.string == '' ? '' : controller.phone.value,
                 style: controller.phone.string == ''
                     ? regular.copyWith(fontSize: 13, color: lightActive)
                     : regular.copyWith(fontSize: 13, color: darkHover),
@@ -115,9 +115,8 @@ class ProfileView extends GetView<ProfileController> {
             const SizedBox(height: 14),
             Obx(
               () => CustomTextContainer(
-                text: controller.email.string == ''
-                    ? 'Email Kosong'
-                    : controller.email.value,
+                text:
+                    controller.email.string == '' ? '' : controller.email.value,
                 style: controller.email.string == ''
                     ? regular.copyWith(fontSize: 13, color: lightActive)
                     : regular.copyWith(fontSize: 13, color: darkHover),
@@ -127,7 +126,7 @@ class ProfileView extends GetView<ProfileController> {
             Obx(
               () => CustomTextContainer(
                 text: controller.address.string == ''
-                    ? 'Alamat Kosong'
+                    ? ''
                     : controller.address.value,
                 style: controller.address.string == ''
                     ? regular.copyWith(fontSize: 13, color: lightActive)
@@ -141,7 +140,8 @@ class ProfileView extends GetView<ProfileController> {
                   text: 'Bergabung ',
                   style: regular.copyWith(fontSize: 13, color: lightActive)),
               TextSpan(
-                  text: '21 Februari 2024',
+                  text: DateFormat('dd MMMM yyyy')
+                      .format(controller.creadtedAt.value),
                   style: regular.copyWith(fontSize: 13, color: darkHover)),
             ])),
             GestureDetector(

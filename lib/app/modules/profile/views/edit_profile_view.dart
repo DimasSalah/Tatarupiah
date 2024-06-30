@@ -45,12 +45,13 @@ class EditProfileView extends GetView<ProfileController> {
               ),
               CustomTextFormField(
                 initialValue: controller.name.value,
-                
               ),
               const SizedBox(height: 10),
               CustomTextFormField(
                 initialValue: controller.storeName.string,
-                hintText: controller.storeName.string == '' ? 'Nama Toko' : controller.storeName.string,
+                hintText: controller.storeName.string == ''
+                    ? 'Nama Toko'
+                    : controller.storeName.string,
               ),
               const SizedBox(height: 10),
               CustomTextFormField(
@@ -60,7 +61,9 @@ class EditProfileView extends GetView<ProfileController> {
               CustomTextFormField(
                 color: lightActive,
                 initialValue: controller.phone.string,
-                hintText: controller.phone.string == '' ? 'No Handphone' : controller.phone.string,
+                hintText: controller.phone.string == ''
+                    ? 'No Handphone'
+                    : controller.phone.string,
               ),
               const SizedBox(height: 33),
               Text('Ganti Password', style: semiBold.copyWith(fontSize: 16)),
@@ -75,7 +78,7 @@ class EditProfileView extends GetView<ProfileController> {
               const SizedBox(height: 46),
               GestureDetector(
                 onTap: () {
-                  Get.toNamed(Routes.PROFILE);
+                  controller.updateProfile();
                 },
                 child: Container(
                   width: double.infinity,
