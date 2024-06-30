@@ -21,6 +21,7 @@ class HomeController extends GetxController {
   RxBool hasMoreData = true.obs;
   RxList<TransactionHistory> transactionsList = <TransactionHistory>[].obs;
   RxInt totalProfit = 0.obs;
+  RxInt totalTransaction = 0.obs;
   RxInt currentPage = 1.obs;
 
   final ScrollController scrollController = ScrollController();
@@ -37,7 +38,11 @@ class HomeController extends GetxController {
     try {
       isLoading.value = true;
       final transaction = await transactionService.getTransaction(
-          DateFormat('yyyy-MM-dd').format(DateTime.now()), currentPage.value);
+          DateFormat('yyyy-MM-dd').format(DateTime.now()),
+          DateFormat('yyyy-MM-dd').format(DateTime.now()),
+          currentPage.value);
+      print("Total from response: ${transaction.data.total}");
+      totalTransaction.value = transaction.data.total;
       transactionsList.addAll(transaction.data.data);
       getProfit();
     } catch (e) {
@@ -48,29 +53,30 @@ class HomeController extends GetxController {
   }
 
   Future<void> fetchMoreTransactions() async {
-  final transactionService = TransactionService();
-  try {
-    isFetchingMore.value = true;
-    currentPage.value++;
-    final value = await transactionService.getTransaction(
-      DateFormat('yyyy-MM-dd').format(DateTime.now()),
-      currentPage.value,
-    );
-    if (value.data.data.isNotEmpty) {
-      transactionsList.addAll(value.data.data);
-      if (value.data.data.length < 15) { // Asumsikan 15 adalah jumlah item per halaman
+    final transactionService = TransactionService();
+    try {
+      isFetchingMore.value = true;
+      currentPage.value++;
+      final value = await transactionService.getTransaction(
+        DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        currentPage.value,
+      );
+      if (value.data.data.isNotEmpty) {
+        transactionsList.addAll(value.data.data);
+
+        if (value.data.data.length < 15) {
+          hasMoreData.value = false;
+        }
+      } else {
         hasMoreData.value = false;
       }
-    } else {
-      hasMoreData.value = false;
+    } catch (e) {
+      print(e);
+    } finally {
+      isFetchingMore.value = false;
     }
-  } catch (e) {
-    print(e);
-  } finally {
-    isFetchingMore.value = false;
   }
-}
-
 
   void _scrollListener() {
     if (scrollController.position.pixels ==

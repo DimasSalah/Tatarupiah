@@ -1,8 +1,10 @@
 import 'dart:math';
 
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:tatarupiah/app/modules/home/data/models/transaction_model.dart';
@@ -65,9 +67,12 @@ class HomeView extends GetView<HomeController> {
                                         controller.dropdownValue.string,
                                     onItemSelected: controller.setSelected),
                               ),
-                              SvgPicture.asset(
-                                'assets/icons/calendar.svg',
-                                height: 34,
+                              GestureDetector(
+                                onTap: () => GetStorage().erase(),
+                                child: SvgPicture.asset(
+                                  'assets/icons/calendar.svg',
+                                  height: 34,
+                                ),
                               ),
                             ],
                           ),
@@ -97,12 +102,24 @@ class HomeView extends GetView<HomeController> {
               Padding(
                 padding: const EdgeInsets.only(left: 18, right: 18, top: 18),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       "Transaksi",
                       style: semiBold.copyWith(fontSize: 20, color: normal),
                     ),
+                    Gap(10),
+                    CircleAvatar(
+                      backgroundColor: dark,
+                      radius: 15,
+                      child: Obx(
+                        () => Text(
+                          controller.totalTransaction.toString(),
+                          style: regular.copyWith(fontSize: 13, color: white),
+                        ),
+                      ),
+                    ),
+                    Spacer(),
                     GestureDetector(
                       onTap: controller.navigationToHistory,
                       child: Text(
