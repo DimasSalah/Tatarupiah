@@ -1,12 +1,19 @@
+import 'dart:math';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+import 'package:tatarupiah/app/modules/home/data/models/transaction_model.dart';
+import 'package:tatarupiah/app/modules/home/data/services/transaction_service.dart';
 import 'package:tatarupiah/app/modules/home/views/components/TransactionCard.dart';
 
 import 'package:tatarupiah/app/modules/home/views/components/bar%20graph/bar_graph.dart';
 import 'package:tatarupiah/app/modules/home/views/components/dropdown_option.dart';
 import 'package:tatarupiah/app/style/colors.dart';
 import 'package:tatarupiah/app/style/gradient.dart';
+import 'package:tatarupiah/app/utils/currency_format.dart';
 import 'package:tatarupiah/app/utils/date_format.dart';
 import '../../../style/text_style.dart';
 import '../controllers/home_controller.dart';
@@ -18,12 +25,16 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        controller: controller.scrollController,
         child: SafeArea(
           child: Column(
             children: [
               Obx(() => HeaderBar(
                   avatar: controller.image.string == ''
-                      ? Icon(Icons.person,weight: 40,)
+                      ? const Icon(
+                          Icons.person,
+                          weight: 40,
+                        )
                       : Image.network(
                           controller.image.string,
                           fit: BoxFit.cover,
@@ -120,11 +131,14 @@ class HomeView extends GetView<HomeController> {
                         const SizedBox(
                           width: 10,
                         ),
-                        Text(
-                          "Rp 27.000",
-                          style:
-                              semiBold.copyWith(fontSize: 25, color: success),
-                        ),
+                        Obx(
+                          () => Text(
+                            currencyViewFormatter(
+                                controller.totalProfit.value.toString()),
+                            style: semiBold.copyWith(
+                                fontSize: 25, color: greenAccent),
+                          ),
+                        )
                       ],
                     ),
                     Text(
@@ -136,9 +150,62 @@ class HomeView extends GetView<HomeController> {
                   ],
                 ),
               ),
-              const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-                  child: TransactionsCard()),
+              Obx(
+                () => controller.isLoading.value
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 5,
+                        itemBuilder: (context, index) {
+                          return const Skeletonizer(
+                            child: TransactionCard(
+                              icon: 'assets/icons/food.svg',
+                              title: 'Loading Title',
+                              subtitle: 'Makanan',
+                              price: '10000',
+                              type: 'Pemasukan',
+                            ),
+                          );
+                        },
+                      )
+                    : controller.transactionsList.isEmpty
+                        ? const Center(
+                            child: Text("Data Kosong"),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: controller.transactionsList.length +
+                                (controller.hasMoreData.value
+                                    ? 1
+                                    : 0), // Tambahkan item untuk indikator jika ada lebih banyak data
+                            itemBuilder: (context, index) {
+                              if (index < controller.transactionsList.length) {
+                                final transaction =
+                                    controller.transactionsList[index];
+                                return TransactionCard(
+                                  icon: transaction.icon,
+                                  title: transaction.subKategori,
+                                  subtitle: transaction.kategori,
+                                  price: transaction.type == 'Pemasukan'
+                                      ? transaction.nominalPenjualan.toString()
+                                      : transaction.nominalPengeluaran
+                                          .toString(),
+                                  type: transaction.type,
+                                );
+                              } else {
+                                // Indikator loading hanya muncul jika masih ada data yang akan dimuat
+                                if (controller.hasMoreData.value) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              }
+                            },
+                          ),
+              )
             ],
           ),
         ),

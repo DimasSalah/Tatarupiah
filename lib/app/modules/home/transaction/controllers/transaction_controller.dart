@@ -1,12 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
 import 'package:tatarupiah/app/utils/currency_format.dart';
-
 import '../data/models/transaction_request.dart';
 import '../data/services/transaction_services.dart';
 import '../mixin/cashier_mixin.dart';
@@ -114,6 +112,18 @@ class TransactionController extends GetxController with CashierMixin {
             : int.parse(outcomeValue.value.replaceAll('.', '')),
         payment.value,
       );
+      Get.dialog(
+        AlertDialog(
+          content: Lottie.asset(
+            'assets/animations/Animation - 1719666456953.json',
+            onLoaded: (composition) {
+              Future.delayed(composition.duration, () {
+                Get.offAllNamed(Routes.MAIN);
+              });
+            },
+          ),
+        ),
+      );
     } catch (e) {
       Get.snackbar('Error', 'Gagal menambahkan transaksi',
           backgroundColor: Colors.red, colorText: Colors.white);
@@ -129,8 +139,6 @@ class TransactionController extends GetxController with CashierMixin {
       for (var subCategory in category.subCategories) {
         if (subCategory.orderCount > 0) {
           items.add(TransactionItem(
-            nominalPenjualan:
-                int.parse(subCategory.nominalPenjualan.replaceAll('.', '')),
             qty: subCategory.orderCount,
             subKategoriId: subCategory.id,
           ));
@@ -138,14 +146,14 @@ class TransactionController extends GetxController with CashierMixin {
       }
     }
     try {
-      // await transactionService.postTransactionCashier(
-      //   TransactionRequest(
-      //     tanggal: DateFormat('yyyy-MM-dd').format(date.value),
-      //     pembayaran: paymentMethod(),
-      //     catatan: noteController.text,
-      //     items: items,
-      //   ),
-      // );
+      await transactionService.postTransactionCashier(
+        TransactionRequest(
+          tanggal: DateFormat('yyyy-MM-dd').format(date.value),
+          pembayaran: paymentMethod(),
+          catatan: noteController.text,
+          items: items,
+        ),
+      );
       Get.back();
       Get.dialog(
         AlertDialog(

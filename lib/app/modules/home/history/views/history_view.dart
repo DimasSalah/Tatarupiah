@@ -64,12 +64,11 @@ class HistoryView extends GetView<HistoryController> {
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 23),
-            child: TransactionsCard(),
-          ),
+          // const Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: 23),
+          //   child: TransactionsCard(),
+          // ),
           Gap(10),
-          
         ],
       ),
     );

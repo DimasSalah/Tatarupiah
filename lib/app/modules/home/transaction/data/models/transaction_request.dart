@@ -24,19 +24,16 @@ class TransactionRequest {
 }
 
 class TransactionItem {
-  final int nominalPenjualan;
   final int qty;
   final int subKategoriId;
 
   TransactionItem({
-    required this.nominalPenjualan,
     required this.qty,
     required this.subKategoriId,
   });
 
   Map<String, dynamic> toJson() {
     return {
-      "nominal_penjualan": nominalPenjualan,
       "qty": qty,
       "sub_kategori_id": subKategoriId,
     };
