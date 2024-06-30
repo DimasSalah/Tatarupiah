@@ -1,9 +1,13 @@
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:tatarupiah/app/data/api/profile_service.dart';
+import 'package:tatarupiah/app/modules/home/data/models/transaction_model.dart';
 import 'package:tatarupiah/app/modules/home/views/components/bar%20graph/bar_data.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
+
+import '../data/services/transaction_service.dart';
 
 class HomeController extends GetxController {
   RxDouble maxY = 200.0.obs;
@@ -11,6 +15,15 @@ class HomeController extends GetxController {
   RxString dropdownValue = "Pemasukan".obs;
   RxString image = "".obs;
   RxString name = "".obs;
+  RxBool isVisible = false.obs;
+  RxBool isLoading = false.obs;
+  RxBool isFetchingMore = false.obs;
+  RxBool hasMoreData = true.obs;
+  RxList<TransactionHistory> transactionsList = <TransactionHistory>[].obs;
+  RxInt totalProfit = 0.obs;
+  RxInt currentPage = 1.obs;
+
+  final ScrollController scrollController = ScrollController();
 
   Future<void> getProfile() async {
     final profileService = ProfileService();
@@ -19,12 +32,71 @@ class HomeController extends GetxController {
     });
   }
 
+  Future<void> fetchTransaction() async {
+    final transactionService = TransactionService();
+    try {
+      isLoading.value = true;
+      final transaction = await transactionService.getTransaction(
+          DateFormat('yyyy-MM-dd').format(DateTime.now()), currentPage.value);
+      transactionsList.addAll(transaction.data.data);
+      getProfit();
+    } catch (e) {
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> fetchMoreTransactions() async {
+  final transactionService = TransactionService();
+  try {
+    isFetchingMore.value = true;
+    currentPage.value++;
+    final value = await transactionService.getTransaction(
+      DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      currentPage.value,
+    );
+    if (value.data.data.isNotEmpty) {
+      transactionsList.addAll(value.data.data);
+      if (value.data.data.length < 15) { // Asumsikan 15 adalah jumlah item per halaman
+        hasMoreData.value = false;
+      }
+    } else {
+      hasMoreData.value = false;
+    }
+  } catch (e) {
+    print(e);
+  } finally {
+    isFetchingMore.value = false;
+  }
+}
+
+
+  void _scrollListener() {
+    if (scrollController.position.pixels ==
+            scrollController.position.maxScrollExtent &&
+        hasMoreData.value &&
+        !isFetchingMore.value) {
+      print('Reached the bottom of the list');
+      fetchMoreTransactions();
+    }
+  }
+
   void navigationToTransaction() {
     Get.toNamed(Routes.TRANSACTION);
   }
 
   void navigationToHistory() {
     Get.toNamed(Routes.HISTORY);
+  }
+
+  int getProfit() {
+    totalProfit.value = 0;
+    for (var transaction in transactionsList) {
+      totalProfit +=
+          transaction.nominalPenjualan - transaction.nominalPengeluaran;
+    }
+    return totalProfit.value;
   }
 
   void setSelectedBarIndex(FlTouchEvent event, BarTouchResponse? response) {
@@ -63,9 +135,11 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    scrollController.addListener(_scrollListener);
     super.onInit();
     mybarData.initializeBarData();
     dropdownValue.value = "Pemasukan";
     getProfile();
+    fetchTransaction();
   }
 }
