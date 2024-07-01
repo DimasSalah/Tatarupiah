@@ -211,12 +211,6 @@ class CashierMode extends StatelessWidget {
                                         controller.postTransaction();
                                       } else {
                                         null;
-                                        // Get.snackbar(
-                                        //   'Peringatan',
-                                        //   'Pilih minimal satu item',
-                                        //   backgroundColor: error,
-                                        //   colorText: white,
-                                        // );
                                       }
                                     },
                                     child: Container(
@@ -262,45 +256,6 @@ class CashierMode extends StatelessWidget {
                           ),
                           isScrollControlled: true,
                         );
-
-                        // Get.dialog(
-                        //   AlertDialog(
-                        //     title: Text('Daftar Transaksi',
-                        //         style: semiBold.copyWith(fontSize: 19),
-                        //         textAlign: TextAlign.center),
-                        //     content: Column(
-                        //       mainAxisSize: MainAxisSize.min,
-                        //       children: [
-                        //         if (controller.selectedSubCategories.isNotEmpty)
-                        //           ...controller.selectedSubCategories
-                        //               .map((subCategory) {
-                        //             return ListTile(
-                        //               title: Text(subCategory.nama),
-                        //               subtitle: Text(
-                        //                   'Jumlah: ${subCategory.orderCount}'),
-                        //             );
-                        //           }).toList()
-                        //         else
-                        //           const Text('Tidak ada item yang dipilih.'),
-                        //       ],
-                        //     ),
-                        //     actions: [
-                        //       TextButton(
-                        //         onPressed: () {
-                        //           Get.back();
-                        //         },
-                        //         child: const Text('Batal'),
-                        //       ),
-                        //       TextButton(
-                        //         onPressed: () {
-                        //           // controller.postTransaction();
-                        //           Get.back();
-                        //         },
-                        //         child: const Text('Ya'),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // );
                       },
                       child: Container(
                         padding: const EdgeInsets.all(6),

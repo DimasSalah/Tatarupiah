@@ -32,3 +32,20 @@ String currencyWithoutSymbol(String value) {
     final amount = int.parse(value);
     return formatter.format(amount);
   }
+
+String currencyFormatWithK(String value) {
+  if (value.isEmpty) return '0';
+  final amount = int.parse(value);
+  if (amount < 1000) {
+    // If less than 1000, return the number as is.
+    return '$amount';
+  } else if (amount < 1000000) {
+    // If 1000 or more but less than 1 million, format with 'k'.
+    final formatter = NumberFormat("#,##0.0", "id");
+    return "${formatter.format(amount / 1000)}k";
+  } else {
+    // For 1 million or more, you can extend this to use 'M', 'B', etc.
+    final formatter = NumberFormat("#,##0.0", "id");
+    return "${formatter.format(amount / 1000000)}M";
+  }
+}

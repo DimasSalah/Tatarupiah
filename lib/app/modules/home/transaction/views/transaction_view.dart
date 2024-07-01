@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:get/get.dart';
-import 'package:tatarupiah/app/modules/home/transaction/views/components/tab_item.dart';
-
 import '../../../../style/colors.dart';
 import '../../../../style/text_style.dart';
-import '../../../../utils/date_format.dart';
 import '../controllers/transaction_controller.dart';
-import 'components/amount_input.dart';
 import 'components/main/expense_tabbar.dart';
 import 'components/main/income_tabbar.dart';
-import 'components/payment_dropdown.dart';
-import 'components/save_button.dart';
+import 'components/tab_item.dart';
 
 class TransactionView extends GetView<TransactionController> {
   const TransactionView({Key? key}) : super(key: key);

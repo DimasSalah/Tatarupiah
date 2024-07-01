@@ -107,6 +107,5 @@ class AppPages {
       page: () => EditProfileView(),
       binding: ProfileBinding(),
     ),
-    
   ];
 }

@@ -1,22 +1,17 @@
-import 'dart:math';
-
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:tatarupiah/app/modules/home/data/models/transaction_model.dart';
-import 'package:tatarupiah/app/modules/home/data/services/transaction_service.dart';
 import 'package:tatarupiah/app/modules/home/views/components/TransactionCard.dart';
-
 import 'package:tatarupiah/app/modules/home/views/components/bar%20graph/bar_graph.dart';
 import 'package:tatarupiah/app/modules/home/views/components/dropdown_option.dart';
 import 'package:tatarupiah/app/style/colors.dart';
 import 'package:tatarupiah/app/style/gradient.dart';
 import 'package:tatarupiah/app/utils/currency_format.dart';
 import 'package:tatarupiah/app/utils/date_format.dart';
+import '../../../routes/app_pages.dart';
 import '../../../style/text_style.dart';
 import '../controllers/home_controller.dart';
 import 'components/header_bar.dart';
@@ -108,7 +103,7 @@ class HomeView extends GetView<HomeController> {
                       "Transaksi",
                       style: semiBold.copyWith(fontSize: 20, color: normal),
                     ),
-                    Gap(10),
+                    const Gap(10),
                     CircleAvatar(
                       backgroundColor: dark,
                       radius: 15,
@@ -119,9 +114,11 @@ class HomeView extends GetView<HomeController> {
                         ),
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     GestureDetector(
-                      onTap: controller.navigationToHistory,
+                      onTap: () {
+                        Get.toNamed(Routes.HISTORY);
+                      },
                       child: Text(
                         "Lihat Semua",
                         style:
@@ -193,7 +190,8 @@ class HomeView extends GetView<HomeController> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: controller.transactionsList.length +
-                                (controller.hasMoreData.value
+                                (controller.hasMoreData.value &&
+                                        controller.isFetchingMore.value
                                     ? 1
                                     : 0), // Tambahkan item untuk indikator jika ada lebih banyak data
                             itemBuilder: (context, index) {
@@ -211,13 +209,13 @@ class HomeView extends GetView<HomeController> {
                                   type: transaction.type,
                                 );
                               } else {
-                                // Indikator loading hanya muncul jika masih ada data yang akan dimuat
-                                if (controller.hasMoreData.value) {
+                                if (controller.hasMoreData.value &&
+                                    controller.isFetchingMore.value) {
                                   return const Center(
                                     child: CircularProgressIndicator(),
                                   );
                                 } else {
-                                  return Container();
+                                  return Container(); // Return an empty container if no more data
                                 }
                               }
                             },

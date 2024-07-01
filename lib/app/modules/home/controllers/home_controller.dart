@@ -34,13 +34,14 @@ class HomeController extends GetxController {
   }
 
   Future<void> fetchTransaction() async {
+    hasMoreData.value = true;
     final transactionService = TransactionService();
     try {
       isLoading.value = true;
       final transaction = await transactionService.getTransaction(
-          DateFormat('yyyy-MM-dd').format(DateTime.now()),
-          DateFormat('yyyy-MM-dd').format(DateTime.now()),
-          currentPage.value);
+          startDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+          endDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+          page: currentPage.value);
       print("Total from response: ${transaction.data.total}");
       totalTransaction.value = transaction.data.total;
       transactionsList.addAll(transaction.data.data);
@@ -58,14 +59,14 @@ class HomeController extends GetxController {
       isFetchingMore.value = true;
       currentPage.value++;
       final value = await transactionService.getTransaction(
-        DateFormat('yyyy-MM-dd').format(DateTime.now()),
-        DateFormat('yyyy-MM-dd').format(DateTime.now()),
-        currentPage.value,
+        startDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        endDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        page: currentPage.value,
       );
       if (value.data.data.isNotEmpty) {
         transactionsList.addAll(value.data.data);
-
         if (value.data.data.length < 15) {
+          // Asumsikan 15 adalah jumlah item per halaman
           hasMoreData.value = false;
         }
       } else {
@@ -90,10 +91,6 @@ class HomeController extends GetxController {
 
   void navigationToTransaction() {
     Get.toNamed(Routes.TRANSACTION);
-  }
-
-  void navigationToHistory() {
-    Get.toNamed(Routes.HISTORY);
   }
 
   int getProfit() {
