@@ -10,16 +10,9 @@ class SplashController extends GetxController {
     checkLogin();
   }
 
-  // void checkLogin() async {
-  //   final getToken = await GetStorage().read('token');
-  //   token.value = getToken;
-  //   print(token.value);
-  //   Future.delayed(Duration(seconds: 3), () {
-  //     Get.offNamed(Routes.ONBOARDING);
-  //   });
-  // }
   void checkLogin() async {
     final getToken = await GetStorage().read('token');
+
     final isOnBoardingCompleted =
         await GetStorage().read('isOnBoardingCompleted');
     Future.delayed(Duration(seconds: 3), () {
@@ -32,7 +25,7 @@ class SplashController extends GetxController {
       } else {
         token.value = getToken;
 
-        Get.offNamed(Routes.HOME);
+        Get.offNamed(Routes.AUTH);
       }
     });
   }

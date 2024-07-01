@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
-import 'package:tatarupiah/app/modules/auth/register/views/components/CustomTextFormFieldContainer.dart';
+import 'package:tatarupiah/app/modules/auth/register/views/components/CustomTextFormField.dart';
 import 'package:tatarupiah/app/style/colors.dart';
 import 'package:tatarupiah/app/style/text_style.dart';
 
@@ -62,27 +62,39 @@ class RegisterView extends GetView<RegisterController> {
                       onChanged: controller.onConfirmPasswordChanged),
                   SizedBox(height: 26),
                   InkWell(
-                    onTap: () {
-                      controller.register();
-                      print('berhasil register');
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 141, vertical: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      width: double.infinity,
-                      height: 64,
-                      child: Text(
-                        'Daftar',
-                        style:
-                            regular.copyWith(fontSize: 16, color: Colors.white),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
+                      onTap: () {
+                        controller.register();
+                        Get.dialog(
+                          Obx(
+                            () {
+                              return AlertDialog(
+                                content: Container(
+                                  alignment: Alignment.center,
+                                  height: 100,
+                                  width: 100,
+                                  child: controller.isLoading.value
+                                      ? CircularProgressIndicator()
+                                      : Text('Register Gagal'),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 141, vertical: 20),
+                          decoration: BoxDecoration(
+                            color: dark,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          width: double.infinity,
+                          height: 64,
+                          child: Text(
+                            'Daftar',
+                            style: regular.copyWith(fontSize: 16, color: white),
+                            textAlign: TextAlign.center,
+                          ))),
                   SizedBox(height: 16),
                   Center(
                     child: GestureDetector(

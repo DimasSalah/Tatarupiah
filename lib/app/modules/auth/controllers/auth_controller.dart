@@ -1,3 +1,5 @@
+import 'package:email_validator/email_validator.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tatarupiah/app/data/api/auth_service.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
@@ -7,6 +9,9 @@ class AuthController extends GetxController {
   RxString email = ''.obs;
   RxString password = ''.obs;
   RxString name = ''.obs;
+  RxString icon = ''.obs;
+  RxBool obscureText = true.obs;
+  RxBool isLoading = false.obs;
   // Variabel untuk menyimpan pesan kesalahan validasi
   var emailError = RxString('');
   var passwordError = RxString('');
@@ -16,7 +21,6 @@ class AuthController extends GetxController {
     email.value = value;
   }
 
-  //
   void onPasswordChanged(String value) {
     password.value = value;
   }
@@ -27,7 +31,6 @@ class AuthController extends GetxController {
     passwordError.value = '';
   }
 
-  // Fungsi untuk mengosongkan nilai input form
   void clearFields() {
     email.value = '';
     password.value = '';
@@ -38,21 +41,54 @@ class AuthController extends GetxController {
     Get.toNamed(Routes.REGISTER);
   }
 
+// Fungsi untuk login
   Future<void> login() async {
     final authService = AuthService();
-    authService.login(email.value, password.value);
+    isLoading.value = true;
+    try {
+      await authService.login(email.value, password.value);
+      print(isLoading.value);
+    } catch (e) {
+      print(e);
+    }
+    print(isLoading.value);
+    isLoading.value = false;
+    final bool isValid = EmailValidator.validate(email.value);
+    if (!isValid) {
+      Get.dialog(
+        AlertDialog(
+          title: const Text('Error'),
+          content: const Text('Email tidak valid'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } else if (!isValid) {
+      final bool isValid = validatePassword();
+      Get.dialog(
+        AlertDialog(
+          title: const Text('Error'),
+          content: const Text('Password tidak valid'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   var validator;
-
-  // // Fungsi untuk mengirim data pendaftaran dan melakukan validasi
-  // void register() {
-  //   if (!validateEmail()) return;
-  //   if (!validatePassword()) return;
-
-  //   // Setelah pendaftaran berhasil, navigasikan pengguna ke halaman login
-  //   Get.toNamed(Routes.AUTH);
-  // }
 
   // Fungsi untuk validasi email
   bool validateEmail() {

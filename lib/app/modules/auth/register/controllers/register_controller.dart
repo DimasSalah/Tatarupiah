@@ -5,13 +5,14 @@ import 'package:tatarupiah/app/data/api/auth_service.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
 
 class RegisterController extends GetxController {
-  //TODO: Implement RegisterController
-
   // Variabel untuk menyimpan nilai input dari form
-  var name = ''.obs;
-  var email = ''.obs;
-  var password = ''.obs;
-  var confirmPassword = ''.obs;
+  RxString name = ''.obs;
+  RxString email = ''.obs;
+  RxString password = ''.obs;
+  RxString confirmPassword = ''.obs;
+  RxString icon = ''.obs;
+  RxBool obscureText = true.obs;
+  RxBool isLoading = false.obs;
 
   // Variabel untuk menyimpan pesan kesalahan validasi
   var nameError = RxString('');
@@ -35,8 +36,19 @@ class RegisterController extends GetxController {
     confirmPassword.value = value;
   }
 
+// Fungsi untuk registrasi
   Future<void> register() async {
     final authService = AuthService();
+    isLoading.value = true;
+    try {
+      await authService.register(
+          name.value, email.value, password.value, confirmPassword.value);
+      print(isLoading.value);
+    } catch (e) {
+      print(e);
+    }
+    print(isLoading.value);
+    isLoading.value = false;
     print(name.value);
     print(email.value);
     print(password.value);
@@ -79,17 +91,6 @@ class RegisterController extends GetxController {
       Get.offNamed(Routes.HOME);
     }
   }
-
-  // // Fungsi untuk mengirim data pendaftaran dan melakukan validasi
-  // void register() {
-  //   if (!validateName()) return;
-  //   // if (!validateEmail()) return;
-  //   if (!validatePassword()) return;
-  //   if (!validateConfirmPassword()) return;
-
-  //   // Setelah pendaftaran berhasil, navigasikan pengguna ke halaman login
-  //   Get.toNamed(Routes.AUTH);
-  // }
 
   // Fungsi untuk validasi nama
   bool validateName() {
