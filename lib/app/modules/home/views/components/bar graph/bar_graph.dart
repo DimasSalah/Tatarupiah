@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
-import 'package:tatarupiah/app/style/gradient.dart';
 import 'package:tatarupiah/app/style/text_style.dart';
 import '../../../../../style/colors.dart';
+import '../../../../../style/gradient.dart';
+import '../../../../../utils/currency_format.dart';
 import '../../../controllers/home_controller.dart';
 
 class BarGraph extends StatelessWidget {
@@ -15,14 +16,10 @@ class BarGraph extends StatelessWidget {
       builder: (controller) {
         return BarChart(
           BarChartData(
-            maxY: 100,
+            maxY: controller.maxY.value,
             minY: 0,
-            gridData: FlGridData(
-              show: false,
-            ),
-            borderData: FlBorderData(
-              show: false,
-            ),
+            gridData: FlGridData(show: false),
+            borderData: FlBorderData(show: false),
             barTouchData: BarTouchData(
               enabled: true,
               touchCallback: controller.setSelectedBarIndex,
@@ -38,23 +35,39 @@ class BarGraph extends StatelessWidget {
                   int rodIndex,
                 ) {
                   return BarTooltipItem(
-                    rod.toY.round().toString(),
-                    semiBold.copyWith(color: light, fontSize: 20),
-                  );
+                      currencyFormatWithK(rod.toY.round().toString()),
+                      semiBold.copyWith(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ));
                 },
               ),
             ),
-            titlesData: const FlTitlesData(
+            titlesData: FlTitlesData(
               show: true,
               topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
               rightTitles:
                   AxisTitles(sideTitles: SideTitles(showTitles: false)),
               leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
               bottomTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                      showTitles: true, getTitlesWidget: getBottomTitle)),
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  getTitlesWidget: (double value, TitleMeta meta) {
+                    int index = value.toInt();
+                    return Text(
+                      controller.daysOfWeek.isNotEmpty
+                          ? controller.daysOfWeek[index]
+                          : '',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
-            barGroups: controller.mybarData.barData
+            barGroups: controller.barData.barData
                 .map(
                   (data) => BarChartGroupData(
                     x: data.x,
@@ -89,62 +102,4 @@ class BarGraph extends StatelessWidget {
       },
     );
   }
-}
-
-Widget getBottomTitle(double value, TitleMeta meta) {
-  const style = TextStyle(
-    color: Colors.white,
-    fontSize: 12,
-  );
-
-  Widget text;
-  switch (value.toInt()) {
-    case 0:
-      text = const Text(
-        'min',
-        style: style,
-      );
-      break;
-    case 1:
-      text = const Text(
-        'sen',
-        style: style,
-      );
-      break;
-    case 2:
-      text = const Text(
-        'sel',
-        style: style,
-      );
-      break;
-    case 3:
-      text = const Text(
-        'rab',
-        style: style,
-      );
-      break;
-    case 4:
-      text = const Text(
-        'kam',
-        style: style,
-      );
-      break;
-    case 5:
-      text = const Text(
-        'jum',
-        style: style,
-      );
-      break;
-    case 6:
-      text = const Text(
-        'sab',
-        style: style,
-      );
-      break;
-    default:
-      text =
-          const SizedBox(); // Jika nilai tidak sesuai, kembalikan widget kosong
-      break;
-  }
-  return SideTitleWidget(child: text, axisSide: meta.axisSide);
 }

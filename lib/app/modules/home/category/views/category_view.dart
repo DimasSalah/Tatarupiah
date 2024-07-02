@@ -122,6 +122,7 @@ class CategoryView extends GetView<CategoryController> {
                         id: 'category',
                         builder: (controller) {
                           return ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: controller.categoryList.length,
                             itemBuilder: (context, index) {

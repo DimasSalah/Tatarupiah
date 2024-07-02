@@ -28,9 +28,9 @@ class HomeView extends GetView<HomeController> {
             children: [
               Obx(() => HeaderBar(
                   avatar: controller.image.string == ''
-                      ? const Icon(
-                          Icons.person,
-                          weight: 40,
+                      ? Image.network(
+                          'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png',
+                          fit: BoxFit.cover,
                         )
                       : Image.network(
                           controller.image.string,
@@ -71,10 +71,12 @@ class HomeView extends GetView<HomeController> {
                               ),
                             ],
                           ),
-                          Text(
-                            "Rp 1.000.000",
-                            style: bold.copyWith(fontSize: 33, color: white),
-                          )
+                          Obx(() => Text(
+                                currencyViewFormatter(
+                                    controller.totalAmount.value.toString()),
+                                style:
+                                    bold.copyWith(fontSize: 33, color: white),
+                              )),
                         ],
                       ),
                     ),
@@ -173,7 +175,7 @@ class HomeView extends GetView<HomeController> {
                         itemBuilder: (context, index) {
                           return const Skeletonizer(
                             child: TransactionCard(
-                              icon: 'assets/icons/food.svg',
+                              icon: 'assets/icons/add.svg',
                               title: 'Loading Title',
                               subtitle: 'Makanan',
                               price: '10000',
