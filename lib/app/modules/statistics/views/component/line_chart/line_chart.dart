@@ -16,8 +16,12 @@ class LineChartWidget extends StatelessWidget {
       width: 340,
       height: 250,
       child: Obx(() {
-        if (controller.incomeData.isEmpty || controller.expenseData.isEmpty || controller.profitData.isEmpty) {
-          return Center(child: CircularProgressIndicator()); // Show a loading indicator while data is being loaded
+        if (controller.incomeData.isEmpty ||
+            controller.expenseData.isEmpty ||
+            controller.profitData.isEmpty) {
+          return Center(
+              child:
+                  CircularProgressIndicator()); // Show a loading indicator while data is being loaded
         }
 
         return LineChart(
@@ -59,14 +63,15 @@ class LineChartWidget extends StatelessWidget {
               ),
             ],
             minY: 0,
-            maxY: 4,
+            maxY: 100,
           ),
         );
       }),
     );
   }
 
-  LineChartBarData createLineChartBarData(List<FlSpot> spots, {required Color color}) {
+  LineChartBarData createLineChartBarData(List<FlSpot> spots,
+      {required Color color}) {
     return LineChartBarData(
       isCurved: true,
       color: color,
