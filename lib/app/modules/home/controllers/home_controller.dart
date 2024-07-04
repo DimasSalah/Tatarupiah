@@ -40,7 +40,7 @@ class HomeController extends GetxController with BarchartMixin {
           startDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
           endDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
           page: currentPage.value);
-      print("Total from response: ${transaction.data.total}");
+      // print("Total from response: ${transaction.data.total}");
       totalTransaction.value = transaction.data.total;
       transactionsList.addAll(transaction.data.data);
       getProfit();
@@ -99,9 +99,6 @@ class HomeController extends GetxController with BarchartMixin {
     }
     return totalProfit.value;
   }
-
- 
-
 
   @override
   void onInit() {

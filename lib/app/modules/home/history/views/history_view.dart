@@ -116,6 +116,8 @@ class HistoryView extends GetView<HistoryController> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     ProfitHeader(
+                                      countTransaction:
+                                          transactions.length.toString(),
                                       profit: currencyFormatWithK(transactions
                                           .fold(
                                               0,

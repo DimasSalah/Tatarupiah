@@ -63,7 +63,40 @@ class HomeView extends GetView<HomeController> {
                                     onItemSelected: controller.setSelected),
                               ),
                               GestureDetector(
-                                onTap: () => GetStorage().erase(),
+                                onTap: () async {
+                                  final selectdate = await showDatePicker(
+                                    locale: const Locale('id', 'ID'),
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2021),
+                                    lastDate: DateTime(2050),
+                                    builder: (context, child) {
+                                      return Theme(
+                                          data: ThemeData.dark().copyWith(
+                                            colorScheme: ColorScheme.dark(
+                                              primary: dark,
+                                              onPrimary: white,
+                                              surface: white,
+                                              onSurface: dark,
+                                              onBackground: white,
+                                            ),
+                                            primaryColor: dark,
+                                            textSelectionTheme:
+                                                TextSelectionThemeData(
+                                                    cursorColor: error),
+                                            buttonTheme: ButtonThemeData(
+                                              buttonColor: error,
+                                              textTheme:
+                                                  ButtonTextTheme.primary,
+                                            ),
+                                          ),
+                                          child: child!);
+                                    },
+                                  );
+                                  if (selectdate != null) {
+                                    controller.selectedDate(selectdate);
+                                  }
+                                },
                                 child: SvgPicture.asset(
                                   'assets/icons/calendar.svg',
                                   height: 34,

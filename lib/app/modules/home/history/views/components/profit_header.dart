@@ -6,10 +6,12 @@ import '../../../../../style/text_style.dart';
 class ProfitHeader extends StatelessWidget {
   final String profit;
   final String date;
+  final String countTransaction;
   const ProfitHeader({
     super.key,
     required this.profit,
     required this.date,
+    required this.countTransaction,
   });
 
   @override
@@ -29,6 +31,14 @@ class ProfitHeader extends StatelessWidget {
             'Rp $profit',
             style: semiBold.copyWith(fontSize: 25, color: success),
           ),
+          // CircleAvatar(
+          //   backgroundColor: dark,
+          //   radius: 15,
+          //   child: Text(
+          //     countTransaction,
+          //     style: regular.copyWith(fontSize: 13, color: white),
+          //   ),
+          // ),
           Text(
             date,
             style: medium.copyWith(fontSize: 13, color: normal),
