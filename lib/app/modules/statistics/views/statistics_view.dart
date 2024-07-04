@@ -7,7 +7,6 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:tatarupiah/app/modules/home/views/components/header_bar.dart';
 import 'package:tatarupiah/app/modules/statistics/views/component/line_chart/line_chart.dart';
 import 'package:tatarupiah/app/style/gradient.dart';
-
 import '../../../style/colors.dart';
 import '../../../style/text_style.dart';
 import '../controllers/statistics_controller.dart';
@@ -24,7 +23,11 @@ class StatisticsView extends GetView<StatisticsController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const HeaderBar(),
+              HeaderBar(
+                  avatar: Image.network(
+                'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png',
+                fit: BoxFit.cover,
+              )),
               //main content
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -77,11 +80,13 @@ class StatisticsView extends GetView<StatisticsController> {
                       children: [
                         Text(
                           "Rp 6.500.000/",
-                          style: medium.copyWith(fontSize: 16, color: lightActive),
+                          style:
+                              medium.copyWith(fontSize: 16, color: lightActive),
                         ),
                         Text(
                           "7.000.000",
-                          style: medium.copyWith(fontSize: 16, color: lightActive),
+                          style:
+                              medium.copyWith(fontSize: 16, color: lightActive),
                         ),
                         const Spacer(),
                         Icon(Icons.edit, color: lightActive, size: 22)

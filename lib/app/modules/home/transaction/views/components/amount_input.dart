@@ -6,17 +6,17 @@ import '../../../../../style/text_style.dart';
 import '../../../../../utils/currency_format.dart';
 
 class AmountInput extends StatelessWidget {
+  TextEditingController? controller;
   final String label;
   final Color color;
   final void Function(String) onChanged;
-  const AmountInput({
+  AmountInput({
     super.key,
+    this.controller,
     required this.label,
     required this.color,
     required this.onChanged,
   });
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +42,16 @@ class AmountInput extends StatelessWidget {
             children: [
               Text(
                 'Rp',
-                style:
-                    medium.copyWith(fontSize: 25, color: color),
+                style: medium.copyWith(fontSize: 25, color: color),
               ),
-              const SizedBox(
-                  width:
-                      5), 
+              const SizedBox(width: 5),
               Expanded(
                 child: TextFormField(
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly, CurrencyInputFormatter()],
+                  controller: controller,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    // CurrencyInputFormatter()
+                  ],
                   keyboardType: TextInputType.number,
                   onChanged: onChanged,
                   decoration: InputDecoration(
@@ -59,8 +60,7 @@ class AmountInput extends StatelessWidget {
                     isDense: true,
                     border: InputBorder.none,
                   ),
-                  style:
-                      medium.copyWith(fontSize: 25, color: dark),
+                  style: medium.copyWith(fontSize: 25, color: dark),
                 ),
               )
             ],

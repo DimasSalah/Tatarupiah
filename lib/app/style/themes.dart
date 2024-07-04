@@ -4,13 +4,16 @@ import 'package:tatarupiah/app/style/colors.dart';
 class AppTheme {
   static ThemeData themeData = ThemeData(
     useMaterial3: true,
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: white,
     colorSchemeSeed: dark,
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: normal,
       selectionColor: normal,
       selectionHandleColor: normal,
     ),
-    
+    appBarTheme: AppBarTheme(
+      backgroundColor: white,
+      surfaceTintColor: Colors.transparent,
+    ),
   );
 }

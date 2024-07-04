@@ -60,16 +60,47 @@ class SwitchMode extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      statusDate(DateTime.now()),
+                      statusDate(controller.date.value),
                       style: medium.copyWith(fontSize: 13, color: normal),
                     ),
                     const SizedBox(
                       width: 8,
                     ),
-                    Icon(
-                      Icons.edit,
-                      color: lightActive,
-                      size: 24,
+                    GestureDetector(
+                      onTap: () async {
+                        final selectdate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2021),
+                            lastDate: DateTime(2050),
+                            builder: (context, child) {
+                              return Theme(data: 
+                              ThemeData.dark().copyWith(
+                                colorScheme:  ColorScheme.dark(
+                                  primary: dark,
+                                  onPrimary: white,
+                                  surface: white,
+                                  onSurface: dark,
+                                  onBackground: white,
+                                ),
+                                primaryColor: dark,
+                                textSelectionTheme: TextSelectionThemeData(cursorColor: error),
+                                buttonTheme: ButtonThemeData(
+                                  buttonColor: error,
+                                  textTheme: ButtonTextTheme.primary,
+                                ),
+                              ), child: child!);
+                            },
+                          );
+                        if (selectdate != null) {
+                          controller.selectedDate(selectdate);
+                        }
+                      },
+                      child: Icon(
+                        Icons.edit,
+                        color: lightActive,
+                        size: 24,
+                      ),
                     )
                   ],
                 )
