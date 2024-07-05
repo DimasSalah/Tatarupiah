@@ -48,7 +48,8 @@ mixin BarchartMixin on GetxController {
   }
 
   void selectedDate(DateTime value) {
-    initialDate.value = DateFormat('yyyy-MM-dd').format(value);
+    initialDate.value =
+        DateFormat('yyyy-MM-dd').format(value.add(const Duration(days: 6)));
     fetchBarChartData();
   }
 
