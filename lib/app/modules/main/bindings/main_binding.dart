@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:tatarupiah/app/modules/home/controllers/home_controller.dart';
 
+import '../../statistics/controllers/statistics_controller.dart';
 import '../controllers/main_controller.dart';
 
 class MainBinding extends Bindings {
@@ -11,6 +12,9 @@ class MainBinding extends Bindings {
     );
     Get.lazyPut<HomeController>(
       () => HomeController(),
+    );
+    Get.lazyPut<StatisticsController>(
+      () => StatisticsController(),
     );
   }
 }

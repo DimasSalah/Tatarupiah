@@ -4,14 +4,17 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:tatarupiah/app/modules/home/views/components/header_bar.dart';
 import 'package:tatarupiah/app/modules/statistics/views/component/line_chart/line_chart.dart';
 import 'package:tatarupiah/app/style/gradient.dart';
+import 'package:tatarupiah/app/utils/currency_format.dart';
 import '../../../style/colors.dart';
 import '../../../style/text_style.dart';
 import '../controllers/statistics_controller.dart';
 import 'component/divider_line.dart';
 import 'component/finance_report.dart';
+import 'component/month_filter.dart';
 
 class StatisticsView extends GetView<StatisticsController> {
   const StatisticsView({Key? key}) : super(key: key);
@@ -50,9 +53,14 @@ class StatisticsView extends GetView<StatisticsController> {
                           DateFormat('MMMM').format(DateTime.now()),
                           style: medium.copyWith(fontSize: 25, color: white),
                         ),
-                        SvgPicture.asset(
-                          'assets/icons/calendar.svg',
-                          height: 34,
+                        GestureDetector(
+                          onTap: () {
+                            Get.dialog(MonthFilter());
+                          },
+                          child: SvgPicture.asset(
+                            'assets/icons/calendar.svg',
+                            height: 34,
+                          ),
                         )
                       ],
                     ),
@@ -63,7 +71,16 @@ class StatisticsView extends GetView<StatisticsController> {
               ),
               const Gap(20),
               const DividerLine(),
-              const FinanceReport(),
+              Obx(() {
+                return FinanceReport(
+                  income:
+                      currencyFormatWithK(controller.incomeAmount.toString()),
+                  expense:
+                      currencyFormatWithK(controller.expenseAmount.toString()),
+                  profit:
+                      currencyFormatWithK(controller.profitAmount.toString()),
+                );
+              }),
               const DividerLine(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 23),

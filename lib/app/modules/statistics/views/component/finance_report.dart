@@ -6,8 +6,14 @@ import '../../../../style/colors.dart';
 import '../../../../style/text_style.dart';
 
 class FinanceReport extends StatelessWidget {
+  final String income;
+  final String expense;
+  final String profit;
   const FinanceReport({
     super.key,
+    required this.income,
+    required this.expense,
+    required this.profit,
   });
 
   @override
@@ -18,95 +24,97 @@ class FinanceReport extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-        "Laporan Keuangan",
-        style: medium.copyWith(fontSize: 20, color: normal),
-      ),
-      const Gap(10),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
+            "Laporan Keuangan",
+            style: medium.copyWith(fontSize: 20, color: normal),
+          ),
+          const Gap(10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    height: 50,
-                    width: 50,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: darkHover,
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/icons/stream_up.svg',
-                      height: 20,
-                    ),
+                  Row(
+                    children: [
+                      Container(
+                        height: 50,
+                        width: 50,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: darkHover,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: SvgPicture.asset(
+                          'assets/icons/stream_up.svg',
+                          height: 20,
+                        ),
+                      ),
+                      const Gap(12),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Pendapatan",
+                            style: medium.copyWith(
+                                fontSize: 13, color: lightActive),
+                          ),
+                          Text(
+                            'Rp $income',
+                            style:
+                                semiBold.copyWith(fontSize: 20, color: normal),
+                          )
+                        ],
+                      )
+                    ],
                   ),
                   const Gap(12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
                     children: [
-                      Text(
-                        "Pendapatan",
-                        style: medium.copyWith(
-                            fontSize: 13, color: lightActive),
+                      Container(
+                        height: 50,
+                        width: 50,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: darkHover,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: SvgPicture.asset(
+                          'assets/icons/stream_down.svg',
+                        ),
                       ),
-                      Text(
-                        "Rp 1.3Jt",
-                        style: semiBold.copyWith(
-                            fontSize: 20, color: normal),
+                      const Gap(12),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Pendapatan",
+                            style: medium.copyWith(
+                                fontSize: 13, color: lightActive),
+                          ),
+                          Text(
+                            'Rp $expense',
+                            style:
+                                semiBold.copyWith(fontSize: 20, color: normal),
+                          )
+                        ],
                       )
                     ],
                   )
                 ],
               ),
-              const Gap(12),
-              Row(
+              Column(
                 children: [
-                  Container(
-                    height: 50,
-                    width: 50,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: darkHover,
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/icons/stream_down.svg',
-                    ),
+                  SvgPicture.asset(
+                    'assets/icons/coin.svg',
                   ),
-                  const Gap(12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Pendapatan",
-                        style: medium.copyWith(
-                            fontSize: 13, color: lightActive),
-                      ),
-                      Text(
-                        "Rp 1.3Jt",
-                        style: semiBold.copyWith(
-                            fontSize: 20, color: normal),
-                      )
-                    ],
-                  )
+                  const Gap(10),
+                  Text('Rp $profit',
+                      style:
+                          semiBold.copyWith(fontSize: 20, color: greenAccent))
                 ],
               )
             ],
-          ),
-          Column(
-            children: [
-              SvgPicture.asset(
-                'assets/icons/coin.svg',
-              ),
-              const Gap(10),
-              Text('Rp 3.3Jt',
-                  style: semiBold.copyWith(fontSize: 20, color: greenAccent))
-            ],
           )
-        ],
-      )
         ],
       ),
     );

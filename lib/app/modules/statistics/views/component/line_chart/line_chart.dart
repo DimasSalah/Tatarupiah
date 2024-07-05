@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../../utils/currency_format.dart';
 import '../../../controllers/statistics_controller.dart';
 import '../../../../../style/colors.dart';
 
@@ -28,7 +29,19 @@ class LineChartWidget extends StatelessWidget {
           LineChartData(
             lineTouchData: LineTouchData(
               touchTooltipData: LineTouchTooltipData(
-                tooltipBgColor: Colors.transparent,
+                tooltipBgColor: lightHover.withOpacity(0.2),
+                getTooltipItems: (List<LineBarSpot> touchedSpots) {
+                  return touchedSpots.map((spot) {
+                    final text = currencyFormatWithKDouble(spot.y.toString());
+                    return LineTooltipItem(
+                      text,
+                      TextStyle(
+                        color: spot.bar.color,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  }).toList();
+                },
               ),
               handleBuiltInTouches: true,
             ),
@@ -63,13 +76,14 @@ class LineChartWidget extends StatelessWidget {
               ),
             ],
             minY: 0,
-            maxY: 100,
+            maxY: controller.maxY.value.toDouble(),
           ),
         );
       }),
     );
   }
 
+  //controll circle radius
   LineChartBarData createLineChartBarData(List<FlSpot> spots,
       {required Color color}) {
     return LineChartBarData(
@@ -80,7 +94,7 @@ class LineChartWidget extends StatelessWidget {
       dotData: FlDotData(
         show: true,
         getDotPainter: (spot, percent, barData, index) =>
-            FlDotCirclePainter(radius: 8, color: color.withOpacity(0.5)),
+            FlDotCirclePainter(radius: 10, color: color.withOpacity(0.5)),
       ),
       belowBarData: BarAreaData(show: false),
       spots: spots,
@@ -136,25 +150,25 @@ class LineChartWidget extends StatelessWidget {
     switch (value.toInt()) {
       case 0:
         text = const Text(
-          '7 Hari',
+          'Minggu 1',
           style: style,
         );
         break;
       case 1:
         text = const Text(
-          '14 Hari',
+          'Minggu 2',
           style: style,
         );
         break;
       case 2:
         text = const Text(
-          '21 Hari',
+          'Minggu 3',
           style: style,
         );
         break;
       case 3:
         text = const Text(
-          '28 Hari',
+          'Minggu 4',
           style: style,
         );
         break;
