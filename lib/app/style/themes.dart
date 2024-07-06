@@ -11,5 +11,9 @@ class AppTheme {
       selectionColor: normal,
       selectionHandleColor: normal,
     ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: white,
+      surfaceTintColor: Colors.transparent,
+    ),
   );
 }

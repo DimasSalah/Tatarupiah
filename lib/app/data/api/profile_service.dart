@@ -3,7 +3,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:tatarupiah/app/data/endpoint.dart';
-import 'package:tatarupiah/app/models/user_model.dart';
+import 'package:tatarupiah/app/data/models/user_model.dart';
 
 class ProfileService extends GetxService {
   final dio = Dio();

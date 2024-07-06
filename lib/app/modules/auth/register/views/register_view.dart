@@ -64,7 +64,7 @@ class RegisterView extends GetView<RegisterController> {
                   InkWell(
                     onTap: () {
                       controller.register();
-                      print('berhasil register');
+                      print('daftar');
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
