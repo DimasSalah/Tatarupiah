@@ -54,12 +54,6 @@ class ProfileController extends GetxController {
     Get.toNamed(Routes.EDITPROFILE);
   }
 
-  @override
-  void onInit() {
-    fetchProfile();
-    super.onInit();
-  }
-
   Future<void> updateProfile() async {
     print(name.value);
     final profileService = ProfileService();
@@ -79,5 +73,11 @@ class ProfileController extends GetxController {
   void logout() {
     GetStorage().erase;
     Get.offAllNamed(Routes.ONBOARDING);
+  }
+
+  @override
+  void onInit() {
+    fetchProfile();
+    super.onInit();
   }
 }
