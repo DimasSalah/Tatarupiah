@@ -72,10 +72,6 @@ class ProfileController extends GetxController {
     Get.offAllNamed(Routes.ONBOARDING);
   }
 
-  void changeEdit() {
-    isEdit.value = !isEdit.value;
-  }
-
   @override
   void onInit() {
     fetchProfile();
