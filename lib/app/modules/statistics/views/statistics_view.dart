@@ -3,11 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:percent_indicator/percent_indicator.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:tatarupiah/app/modules/home/views/components/header_bar.dart';
 import 'package:tatarupiah/app/modules/statistics/views/component/line_chart/line_chart.dart';
-import 'package:tatarupiah/app/style/gradient.dart';
 import 'package:tatarupiah/app/utils/currency_format.dart';
 import '../../../style/colors.dart';
 import '../../../style/text_style.dart';
@@ -15,6 +12,7 @@ import '../controllers/statistics_controller.dart';
 import 'component/divider_line.dart';
 import 'component/finance_report.dart';
 import 'component/month_filter.dart';
+import 'component/performance_card.dart';
 
 class StatisticsView extends GetView<StatisticsController> {
   const StatisticsView({Key? key}) : super(key: key);
@@ -55,7 +53,7 @@ class StatisticsView extends GetView<StatisticsController> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Get.dialog(MonthFilter());
+                            Get.dialog(const MonthFilter());
                           },
                           child: SvgPicture.asset(
                             'assets/icons/calendar.svg',
@@ -70,7 +68,10 @@ class StatisticsView extends GetView<StatisticsController> {
                 ),
               ),
               const Gap(20),
-              const DividerLine(),
+              const DividerLine(
+                indent: 23,
+                endIndent: 23,
+              ),
               Obx(() {
                 return FinanceReport(
                   income:
@@ -83,50 +84,30 @@ class StatisticsView extends GetView<StatisticsController> {
               }),
               const DividerLine(),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 23),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Target Pendapatan",
-                      style: medium.copyWith(fontSize: 20, color: normal),
-                    ),
-                    const Gap(2),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Rp 6.500.000/",
-                          style:
-                              medium.copyWith(fontSize: 16, color: lightActive),
-                        ),
-                        Text(
-                          "7.000.000",
-                          style:
-                              medium.copyWith(fontSize: 16, color: lightActive),
-                        ),
-                        const Spacer(),
-                        Icon(Icons.edit, color: lightActive, size: 22)
-                      ],
-                    ),
-                    const Gap(8),
-                    LinearPercentIndicator(
-                      animation: true,
-                      lineHeight: 36.0,
-                      animationDuration: 1000,
-                      percent: 0.9,
-                      center: Text(
-                        "90.0%",
-                        style: bold.copyWith(color: dark),
-                      ),
-                      barRadius: const Radius.circular(20),
-                      linearGradient: primary,
-                      padding: EdgeInsets.zero,
-                    ),
-                    const Gap(10),
-                  ],
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 23, vertical: 5),
+                child: Text(
+                  'Performa Penjualan',
+                  style: medium.copyWith(fontSize: 20),
                 ),
               ),
+              const DividerLine(),
+              Obx(() {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.performaPenjualan.length,
+                  itemBuilder: (context, index) {
+                    return PerformanceCard(
+                      no: index + 1,
+                      name: controller.performaPenjualan[index].category,
+                      price: currencyFormatWithK(
+                          controller.performaPenjualan[index].totalPenjualan),
+                    );
+                  },
+                );
+              }),
+              const Gap(26),
             ],
           ),
         ),

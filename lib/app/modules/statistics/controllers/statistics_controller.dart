@@ -14,7 +14,7 @@ class StatisticsController extends GetxController with MonthMixins {
   RxInt maxY = 100.obs;
   RxBool isLoading = true.obs;
   Rx<DateTime?> selectedMonth = DateTime.now().obs;
-
+  RxList<PerformaPenjualan> performaPenjualan = <PerformaPenjualan>[].obs;
   final LineChartServices lineChartServices = LineChartServices();
 
   @override
@@ -58,6 +58,7 @@ class StatisticsController extends GetxController with MonthMixins {
       incomeAmount.value = data.data.summary.pemasukan;
       expenseAmount.value = data.data.summary.pengeluaran;
       profitAmount.value = data.data.summary.keuntungan;
+      performaPenjualan.addAll(data.data.performaPenjualan);
     } catch (e) {
       print(e.toString());
     } finally {

@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../../style/colors.dart';
 
 class DividerLine extends StatelessWidget {
+  final double? indent;
+  final double? endIndent;
   const DividerLine({
     super.key,
+    this.indent,
+    this.endIndent,
   });
 
   @override
@@ -12,7 +16,8 @@ class DividerLine extends StatelessWidget {
     return Divider(
       color: lighter,
       thickness: 1,
-      indent: 23,
-      endIndent: 23,);
+      indent: indent,
+      endIndent: endIndent,
+    );
   }
 }
