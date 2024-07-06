@@ -12,20 +12,24 @@ class AuthService extends GetxService {
   final logger = Logger();
   final baseUrl = baseurl;
 
-  Future<Response?> login(String email, String password) async {
+  Future<Response> login(String email, String password) async {
     try {
       final response = await _dio.post(
-        '$baseUrl/login',
+        'https://tatarupiah.my.id/api/login',
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
         data: {
           'email': email,
           'password': password,
         },
       );
-
       if (response.statusCode == 200) {
         String token = response.data['data']['token'];
         GetStorage().write('token', token);
-        Get.offNamed(Routes.HOME);
+        Get.offNamed(Routes.MAIN);
         logger.i('Berhasil login');
         // GetStorage().erase();
         return response.data;
@@ -35,8 +39,8 @@ class AuthService extends GetxService {
       }
     } catch (e) {
       print(e);
+      rethrow;
     }
-    return null;
   }
 
   Future<Response?> register(String nama, String email, String password,

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:tatarupiah/app/data/api/auth_service.dart';
-import 'package:tatarupiah/app/models/user_model.dart';
+import 'package:tatarupiah/app/data/models/user_model.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
 
 class AuthController extends GetxController {
@@ -39,6 +39,8 @@ class AuthController extends GetxController {
 
   Future<void> login() async {
     final authService = AuthService();
+    print(email.value);
+    print(password.value);
     authService.login(email.value, password.value);
   }
 

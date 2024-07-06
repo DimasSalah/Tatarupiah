@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import 'package:tatarupiah/app/modules/home/category/views/add_category_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/register/bindings/register_binding.dart';
 import '../modules/auth/register/views/register_view.dart';
@@ -9,6 +10,10 @@ import '../modules/auth/views/auth_view.dart';
 import '../modules/chatAi/bindings/chat_ai_binding.dart';
 import '../modules/chatAi/views/chat_ai_view.dart';
 import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/category/bindings/category_binding.dart';
+import '../modules/home/category/views/category_view.dart';
+import '../modules/home/history/bindings/history_binding.dart';
+import '../modules/home/history/views/history_view.dart';
 import '../modules/home/transaction/bindings/transaction_binding.dart';
 import '../modules/home/transaction/views/transaction_view.dart';
 import '../modules/home/views/home_view.dart';
@@ -40,6 +45,20 @@ class AppPages {
           page: () => const TransactionView(),
           binding: TransactionBinding(),
         ),
+        GetPage(
+          name: _Paths.HISTORY,
+          page: () => const HistoryView(),
+          binding: HistoryBinding(),
+        ),
+        GetPage(
+          name: _Paths.CATEGORY,
+          page: () => const CategoryView(),
+          binding: CategoryBinding(),
+        ),
+        GetPage(
+            name: _Paths.ADDCATEGORY,
+            page: () => const AddCategory(),
+            binding: CategoryBinding())
       ],
     ),
     GetPage(
