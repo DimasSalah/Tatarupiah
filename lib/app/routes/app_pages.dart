@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import 'package:tatarupiah/app/modules/home/category/views/add_category_view.dart';
+import 'package:tatarupiah/app/modules/profile/views/password_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/register/bindings/register_binding.dart';
 import '../modules/auth/register/views/register_view.dart';
@@ -63,7 +64,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ONBOARDING,
-      page: () => OnboardingView(),
+      page: () => const OnboardingView(),
       binding: OnboardingBinding(),
     ),
     GetPage(
@@ -99,14 +100,20 @@ class AppPages {
       binding: MainBinding(),
     ),
     GetPage(
-      name: _Paths.PROFILE,
-      page: () => ProfileView(),
-      binding: ProfileBinding(),
-    ),
-    GetPage(
-      name: _Paths.EDITPROFILE,
-      page: () => EditProfileView(),
-      binding: ProfileBinding(),
-    ),
+        name: _Paths.PROFILE,
+        page: () => ProfileView(),
+        binding: ProfileBinding(),
+        children: [
+          GetPage(
+            name: _Paths.EDITPROFILE,
+            page: () => const EditProfileView(),
+            binding: ProfileBinding(),
+          ),
+          GetPage(
+            name: _Paths.CHANGE_PASSWORD,
+            page: () => const ChangePasswordView(),
+            binding: ProfileBinding(),
+          ),
+        ]),
   ];
 }

@@ -14,10 +14,11 @@ abstract class Routes {
   static const HISTORY = _Paths.HOME + _Paths.HISTORY;
   static const CATEGORY = _Paths.HOME + _Paths.CATEGORY;
   static const ADDCATEGORY = _Paths.HOME + _Paths.ADDCATEGORY;
-  static const EDITPROFILE = _Paths.EDITPROFILE;
+  static const EDITPROFILE = _Paths.PROFILE + _Paths.EDITPROFILE;
   static const REGISTER = _Paths.AUTH + _Paths.REGISTER;
   static const SPLASH = _Paths.AUTH + _Paths.SPLASH;
   static const LOGIN = _Paths.LOGIN;
+  static const CHANGE_PASSWORD = _Paths.PROFILE + _Paths.CHANGE_PASSWORD;
 }
 
 abstract class _Paths {
@@ -37,4 +38,5 @@ abstract class _Paths {
   static const REGISTER = '/register';
   static const SPLASH = '/splash';
   static const LOGIN = '/login';
+  static const CHANGE_PASSWORD = '/change-password';
 }

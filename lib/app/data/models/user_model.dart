@@ -41,6 +41,7 @@ class Data {
     String role;
     String alamat;
     String image;
+    String key;
     DateTime createdAt;
     DateTime updatedAt;
 
@@ -53,6 +54,7 @@ class Data {
         required this.role,
         required this.alamat,
         required this.image,
+        required this.key,
         required this.createdAt,
         required this.updatedAt,
     });
@@ -66,6 +68,7 @@ class Data {
         role: json["role"],
         alamat: json["alamat"],
         image: json["image"],
+        key: json["key"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
     );
@@ -79,6 +82,7 @@ class Data {
         "role": role,
         "alamat": alamat,
         "image": image,
+        "key": key,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
     };

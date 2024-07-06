@@ -1,11 +1,14 @@
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 
+import '../../../routes/app_pages.dart';
 import '../../../style/colors.dart';
 import '../../../style/text_style.dart';
 import '../controllers/profile_controller.dart';
@@ -47,8 +50,13 @@ class ProfileView extends GetView<ProfileController> {
                 padding: const EdgeInsets.only(top: 25, bottom: 26, left: 15),
                 child: Row(
                   children: [
-                    const CircleAvatar(
+                    CircleAvatar(
                       radius: 50,
+                      backgroundImage: NetworkImage(
+                        controller.img.string == ''
+                            ? 'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png'
+                            : controller.img.value,
+                      ),
                     ),
                     const SizedBox(
                       width: 36,
@@ -57,12 +65,17 @@ class ProfileView extends GetView<ProfileController> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            controller.name.string == ''
-                                ? ''
-                                : controller.name.value,
-                            style:
-                                semiBold.copyWith(fontSize: 20, color: lighter),
+                          Container(
+                            constraints: const BoxConstraints(maxWidth: 180),
+                            child: Text(
+                              controller.name.string == ''
+                                  ? ''
+                                  : controller.name.value,
+                              style: semiBold.copyWith(
+                                  fontSize: 22, color: lighter),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           const SizedBox(
                             height: 5,
@@ -87,15 +100,13 @@ class ProfileView extends GetView<ProfileController> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Text(
                 'Informasi',
-                style: medium.copyWith(
-                    fontSize: 16,
-                    color: dark,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.normal),
+                style: semiBold.copyWith(
+                  fontSize: 18,
+                  color: dark,
+                ),
               ),
               GestureDetector(
                 onTap: () {
-                  print('edit profile');
                   controller.navigatedToEditProfile();
                 },
                 child: Text('Edit Profile',
@@ -105,6 +116,7 @@ class ProfileView extends GetView<ProfileController> {
             const SizedBox(height: 15),
             Obx(
               () => CustomTextContainer(
+                title: 'Nomor Handphone',
                 text:
                     controller.phone.string == '' ? '' : controller.phone.value,
                 style: controller.phone.string == ''
@@ -112,9 +124,9 @@ class ProfileView extends GetView<ProfileController> {
                     : regular.copyWith(fontSize: 13, color: darkHover),
               ),
             ),
-            const SizedBox(height: 14),
             Obx(
               () => CustomTextContainer(
+                title: 'Email',
                 text:
                     controller.email.string == '' ? '' : controller.email.value,
                 style: controller.email.string == ''
@@ -122,9 +134,9 @@ class ProfileView extends GetView<ProfileController> {
                     : regular.copyWith(fontSize: 13, color: darkHover),
               ),
             ),
-            const SizedBox(height: 14),
             Obx(
               () => CustomTextContainer(
+                title: 'Alamat',
                 text: controller.address.string == ''
                     ? ''
                     : controller.address.value,
@@ -133,22 +145,30 @@ class ProfileView extends GetView<ProfileController> {
                     : regular.copyWith(fontSize: 13, color: darkHover),
               ),
             ),
-            const SizedBox(height: 280),
+            Spacer(),
             RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: 'Bergabung ',
-                  style: regular.copyWith(fontSize: 13, color: lightActive)),
-              TextSpan(
-                  text: DateFormat('dd MMMM yyyy')
-                      .format(controller.creadtedAt.value),
-                  style: regular.copyWith(fontSize: 13, color: darkHover)),
-            ])),
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                      text: 'Bergabung ',
+                      style:
+                          regular.copyWith(fontSize: 13, color: lightActive)),
+                  TextSpan(
+                      text: DateFormat('dd MMMM yyyy')
+                          .format(controller.creadtedAt.value),
+                      style: regular.copyWith(fontSize: 13, color: darkHover)),
+                ],
+              ),
+            ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                GetStorage().erase();
+                Get.offAllNamed(Routes.LOGIN);
+              },
               child: Text('Keluar',
                   style: medium.copyWith(fontSize: 20, color: error)),
             ),
+            const Gap(20),
           ],
         ),
       ),

@@ -7,17 +7,20 @@ import 'package:tatarupiah/app/data/api/profile_service.dart';
 import '../../../routes/app_pages.dart';
 
 class ProfileController extends GetxController {
+  RxString img = ''.obs;
   RxString name = ''.obs;
   RxString storeName = ''.obs;
   RxString email = ''.obs;
   RxString phone = ''.obs;
   RxString address = ''.obs;
   RxBool isEdit = false.obs;
+  RxBool obsecureText = true.obs;
   Rx<DateTime> creadtedAt = DateTime.now().obs;
 
   Future<void> fetchProfile() async {
     final profileService = ProfileService();
     await profileService.getUser().then((value) {
+      img.value = value.data.image;
       name.value = value.data.nama;
       storeName.value = value.data.namaToko;
       email.value = value.data.email;

@@ -7,6 +7,9 @@ class CustomTextFormField extends StatelessWidget {
   final String? hintText;
   final String? initialValue;
   final Color? color;
+  final bool? obscureText;
+
+  final Widget? icon;
 
   const CustomTextFormField({
     Key? key,
@@ -14,26 +17,33 @@ class CustomTextFormField extends StatelessWidget {
     this.hintText,
     this.initialValue,
     this.color,
+    this.obscureText,
+    this.icon,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obscureText ?? false,
       initialValue: initialValue,
       style: semiBold.copyWith(
         fontSize: 16,
         color: color ?? darkHover,
       ),
       decoration: InputDecoration(
+        suffixIcon: Padding(
+          padding: const EdgeInsets.all(10),
+          child: icon ?? null,
+        ),
+        focusColor: greenAccent,
         labelText: labelText,
         hintText: hintText,
         hintStyle: semiBold.copyWith(
           fontSize: 16,
           color: lightActive,
         ),
-        labelStyle: medium.copyWith(
+        labelStyle: semiBold.copyWith(
           color: lightActive,
-          fontSize: 13,
+          fontSize: 16,
         ),
       ),
     );
