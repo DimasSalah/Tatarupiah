@@ -1,13 +1,11 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:tatarupiah/app/data/api/profile_service.dart';
 import 'package:tatarupiah/app/modules/home/data/models/transaction_model.dart';
 import 'package:tatarupiah/app/modules/home/mixins/bar_chart_mixin.dart';
-import 'package:tatarupiah/app/modules/home/views/components/bar%20graph/bar_data.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
 
+import '../../../data/mixins/user_controller.dart';
 import '../data/services/transaction_service.dart';
 
 class HomeController extends GetxController with BarchartMixin {
@@ -23,13 +21,7 @@ class HomeController extends GetxController with BarchartMixin {
   RxInt currentPage = 1.obs;
 
   final ScrollController scrollController = ScrollController();
-
-  Future<void> getProfile() async {
-    final profileService = ProfileService();
-    await profileService.getUser().then((value) {
-      image.value = value.data.image;
-    });
-  }
+  final UserController userController = UserController.to;
 
   Future<void> fetchTransaction() async {
     hasMoreData.value = true;
@@ -107,7 +99,6 @@ class HomeController extends GetxController with BarchartMixin {
     // mybarData.initializeBarData();
     fetchBarChartData();
     dropdownValue.value = "Pemasukan";
-    getProfile();
     currentWeek();
     fetchTransaction();
   }

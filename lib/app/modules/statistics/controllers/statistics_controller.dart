@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
+import 'package:tatarupiah/app/data/mixins/user_controller.dart';
 import '../data/models/line_chart_model.dart';
 import '../data/services/line_chart_services.dart';
 import '../mixins/month_mixins.dart';
@@ -15,7 +16,9 @@ class StatisticsController extends GetxController with MonthMixins {
   RxBool isLoading = true.obs;
   Rx<DateTime?> selectedMonth = DateTime.now().obs;
   RxList<PerformaPenjualan> performaPenjualan = <PerformaPenjualan>[].obs;
+
   final LineChartServices lineChartServices = LineChartServices();
+  final UserController userController = UserController.to;
 
   @override
   void onInit() {
@@ -65,12 +68,6 @@ class StatisticsController extends GetxController with MonthMixins {
       isLoading(false);
     }
   }
-
-  // void changeMonth(DateTime? month) {
-  //   selectedMonth.value = month;
-  //   print(selectedMonth.value);
-  //   // loadChartData();
-  // }
 
   void submitSelectedMonth() {
     print(currentMonth);

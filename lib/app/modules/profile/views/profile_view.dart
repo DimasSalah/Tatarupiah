@@ -1,13 +1,9 @@
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
-
 import '../../../routes/app_pages.dart';
 import '../../../style/colors.dart';
 import '../../../style/text_style.dart';
@@ -15,11 +11,11 @@ import '../controllers/profile_controller.dart';
 import 'componnets/CustomTextContainer.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  ProfileView({Key? key}) : super(key: key);
+  const ProfileView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    controller;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
@@ -53,9 +49,9 @@ class ProfileView extends GetView<ProfileController> {
                     CircleAvatar(
                       radius: 50,
                       backgroundImage: NetworkImage(
-                        controller.img.string == ''
+                        controller.userController.imgProfile.string == ''
                             ? 'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png'
-                            : controller.img.value,
+                            : controller.userController.imgProfile.value,
                       ),
                     ),
                     const SizedBox(
@@ -68,9 +64,9 @@ class ProfileView extends GetView<ProfileController> {
                           Container(
                             constraints: const BoxConstraints(maxWidth: 180),
                             child: Text(
-                              controller.name.string == ''
+                              controller.userController.nameProfile.string == ''
                                   ? ''
-                                  : controller.name.value,
+                                  : controller.userController.nameProfile.value,
                               style: semiBold.copyWith(
                                   fontSize: 22, color: lighter),
                               maxLines: 2,
@@ -81,9 +77,9 @@ class ProfileView extends GetView<ProfileController> {
                             height: 5,
                           ),
                           Text(
-                            controller.storeName.string == ''
+                            controller.userController.storeNameProfile.string == ''
                                 ? ''
-                                : controller.storeName.value,
+                                : controller.userController.storeNameProfile.value,
                             style:
                                 regular.copyWith(fontSize: 16, color: lighter),
                           ),
@@ -117,9 +113,10 @@ class ProfileView extends GetView<ProfileController> {
             Obx(
               () => CustomTextContainer(
                 title: 'Nomor Handphone',
-                text:
-                    controller.phone.string == '' ? '' : controller.phone.value,
-                style: controller.phone.string == ''
+                text: controller.userController.phoneProfile.string == ''
+                    ? ''
+                    : controller.userController.phoneProfile.value,
+                style: controller.userController.phoneProfile.string == ''
                     ? regular.copyWith(fontSize: 13, color: lightActive)
                     : regular.copyWith(fontSize: 13, color: darkHover),
               ),
@@ -127,9 +124,10 @@ class ProfileView extends GetView<ProfileController> {
             Obx(
               () => CustomTextContainer(
                 title: 'Email',
-                text:
-                    controller.email.string == '' ? '' : controller.email.value,
-                style: controller.email.string == ''
+                text: controller.userController.emailProfile.string == ''
+                    ? ''
+                    : controller.userController.emailProfile.value,
+                style: controller.userController.emailProfile.string == ''
                     ? regular.copyWith(fontSize: 13, color: lightActive)
                     : regular.copyWith(fontSize: 13, color: darkHover),
               ),
@@ -137,10 +135,10 @@ class ProfileView extends GetView<ProfileController> {
             Obx(
               () => CustomTextContainer(
                 title: 'Alamat',
-                text: controller.address.string == ''
+                text: controller.userController.addressProfile.string == ''
                     ? ''
-                    : controller.address.value,
-                style: controller.address.string == ''
+                    : controller.userController.addressProfile.value,
+                style: controller.userController.addressProfile.string == ''
                     ? regular.copyWith(fontSize: 13, color: lightActive)
                     : regular.copyWith(fontSize: 13, color: darkHover),
               ),
@@ -155,7 +153,7 @@ class ProfileView extends GetView<ProfileController> {
                           regular.copyWith(fontSize: 13, color: lightActive)),
                   TextSpan(
                       text: DateFormat('dd MMMM yyyy')
-                          .format(controller.creadtedAt.value),
+                          .format(controller.userController.createdAt.value),
                       style: regular.copyWith(fontSize: 13, color: darkHover)),
                 ],
               ),

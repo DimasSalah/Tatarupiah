@@ -56,7 +56,7 @@ class ProfileService extends GetxService {
         },
         options: Options(
           headers: {
-            'Authorization': 'Bearer ${token}',
+            'Authorization': 'Bearer $token',
           },
         ),
       );

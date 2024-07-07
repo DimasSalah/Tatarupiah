@@ -8,8 +8,9 @@ class CustomTextFormField extends StatelessWidget {
   final String? initialValue;
   final Color? color;
   final bool? obscureText;
-
   final Widget? icon;
+  final TextInputType? keyboardType;
+  final TextEditingController? controller;
 
   const CustomTextFormField({
     Key? key,
@@ -19,12 +20,15 @@ class CustomTextFormField extends StatelessWidget {
     this.color,
     this.obscureText,
     this.icon,
+    this.keyboardType,
+    this.controller,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       obscureText: obscureText ?? false,
-      initialValue: initialValue,
+      keyboardType: keyboardType,
       style: semiBold.copyWith(
         fontSize: 16,
         color: color ?? darkHover,

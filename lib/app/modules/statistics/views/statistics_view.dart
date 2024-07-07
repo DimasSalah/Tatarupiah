@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:tatarupiah/app/modules/home/views/components/header_bar.dart';
 import 'package:tatarupiah/app/modules/statistics/views/component/line_chart/line_chart.dart';
 import 'package:tatarupiah/app/utils/currency_format.dart';
+import '../../../routes/app_pages.dart';
 import '../../../style/colors.dart';
 import '../../../style/text_style.dart';
 import '../controllers/statistics_controller.dart';
@@ -24,11 +25,22 @@ class StatisticsView extends GetView<StatisticsController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              HeaderBar(
-                  avatar: Image.network(
-                'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png',
-                fit: BoxFit.cover,
-              )),
+              Obx(
+                () => HeaderBar(
+                  avatar: controller.userController.imgProfile.string == ''
+                      ? Image.network(
+                          'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png',
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network(
+                          controller.userController.imgProfile.string,
+                          fit: BoxFit.cover,
+                        ),
+                  onTap: () {
+                    Get.toNamed(Routes.PROFILE);
+                  },
+                ),
+              ),
               //main content
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 5),

@@ -28,13 +28,13 @@ class HomeView extends GetView<HomeController> {
             children: [
               Obx(
                 () => HeaderBar(
-                  avatar: controller.image.string == ''
+                  avatar: controller.userController.imgProfile.string == ''
                       ? Image.network(
                           'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png',
                           fit: BoxFit.cover,
                         )
                       : Image.network(
-                          controller.image.string,
+                          controller.userController.imgProfile.string,
                           fit: BoxFit.cover,
                         ),
                   onTap: () {
