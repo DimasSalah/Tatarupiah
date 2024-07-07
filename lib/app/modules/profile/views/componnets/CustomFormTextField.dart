@@ -11,6 +11,7 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? icon;
   final TextInputType? keyboardType;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   const CustomTextFormField({
     Key? key,
@@ -22,6 +23,7 @@ class CustomTextFormField extends StatelessWidget {
     this.icon,
     this.keyboardType,
     this.controller,
+    this.validator,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       obscureText: obscureText ?? false,
       keyboardType: keyboardType,
+      validator: validator,
       style: semiBold.copyWith(
         fontSize: 16,
         color: color ?? darkHover,

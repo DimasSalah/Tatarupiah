@@ -46,14 +46,16 @@ class ProfileView extends GetView<ProfileController> {
                 padding: const EdgeInsets.only(top: 25, bottom: 26, left: 15),
                 child: Row(
                   children: [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(
-                        controller.userController.imgProfile.string == ''
-                            ? 'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png'
-                            : controller.userController.imgProfile.value,
-                      ),
-                    ),
+                    Obx(() {
+                      return CircleAvatar(
+                        radius: 50,
+                        backgroundImage: NetworkImage(
+                          controller.userController.imgProfile.string == ''
+                              ? 'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png'
+                              : controller.userController.imgProfile.value,
+                        ),
+                      );
+                    }),
                     const SizedBox(
                       width: 36,
                     ),
@@ -77,9 +79,11 @@ class ProfileView extends GetView<ProfileController> {
                             height: 5,
                           ),
                           Text(
-                            controller.userController.storeNameProfile.string == ''
+                            controller.userController.storeNameProfile.string ==
+                                    ''
                                 ? ''
-                                : controller.userController.storeNameProfile.value,
+                                : controller
+                                    .userController.storeNameProfile.value,
                             style:
                                 regular.copyWith(fontSize: 16, color: lighter),
                           ),
@@ -103,7 +107,7 @@ class ProfileView extends GetView<ProfileController> {
               ),
               GestureDetector(
                 onTap: () {
-                  controller.navigatedToEditProfile();
+                  Get.toNamed(Routes.EDITPROFILE);
                 },
                 child: Text('Edit Profile',
                     style: medium.copyWith(fontSize: 13, color: lightActive)),

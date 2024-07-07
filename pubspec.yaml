@@ -8,7 +8,6 @@ environment:
 dependencies: 
   smooth_page_indicator: ^1.1.0
   cupertino_icons: ^1.0.2
-  get_cli: 1.8.1
   get: 4.6.6
   flutter: 
     sdk: flutter
@@ -28,6 +27,9 @@ dependencies:
   syncfusion_flutter_datepicker: ^26.1.39
   flutter_localizations:
     sdk: flutter
+  file_picker: ^8.0.6
+  image_picker: ^1.1.2
+  permission_handler: ^11.3.1
 
 dev_dependencies: 
   flutter_lints: ^2.0.0

@@ -5,7 +5,7 @@ import 'package:tatarupiah/app/modules/home/data/models/transaction_model.dart';
 import 'package:tatarupiah/app/modules/home/mixins/bar_chart_mixin.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
 
-import '../../../data/mixins/user_controller.dart';
+import '../../../data/global_controller/user_controller.dart';
 import '../data/services/transaction_service.dart';
 
 class HomeController extends GetxController with BarchartMixin {

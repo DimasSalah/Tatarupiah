@@ -39,12 +39,14 @@ class EditProfileView extends GetView<ProfileController> {
             Center(
               child: Stack(
                 children: [
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundImage: NetworkImage(
-                      controller.userController.imgProfile.string == ''
-                          ? 'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png'
-                          : controller.userController.imgProfile.value,
+                  Obx(
+                    () => CircleAvatar(
+                      radius: 60,
+                      backgroundImage: NetworkImage(
+                        controller.userController.imgProfile.string == ''
+                            ? 'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png'
+                            : controller.userController.imgProfile.value,
+                      ),
                     ),
                   ),
                   Positioned(
@@ -53,7 +55,14 @@ class EditProfileView extends GetView<ProfileController> {
                     child: GestureDetector(
                       onTap: () {
                         Get.bottomSheet(
-                          changeAvatar(),
+                          changeAvatar(
+                            gallery: () {
+                              controller.pickFile();
+                            },
+                            camera: () {
+                              controller.captureImage();
+                            },
+                          ),
                         );
                       },
                       child: Container(

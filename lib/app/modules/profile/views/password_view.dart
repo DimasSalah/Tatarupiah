@@ -29,80 +29,96 @@ class ChangePasswordView extends GetView<ProfileController> {
             style: semiBold.copyWith(fontSize: 20),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 23),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 33),
-              Text('Ganti Password', style: semiBold.copyWith(fontSize: 16)),
-              const SizedBox(height: 10),
-              Obx(
-                () => CustomTextFormField(
-                  labelText: 'Password Lama',
-                  obscureText: controller.obsecureText.value,
-                  icon: GestureDetector(
-                    onTap: () {
-                      controller.obsecureText.value =
-                          !controller.obsecureText.value;
-                    },
-                    child: SizedBox(
-                      width: 10,
-                      height: 20,
-                      child: SvgPicture.asset(
-                        controller.obsecureText.value
-                            ? 'assets/icons/eye-closed.svg'
-                            : 'assets/icons/eye-open.svg',
+        body: Form(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          key: controller.formKeyPassword,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 23),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 33),
+                Text('Ganti Password', style: semiBold.copyWith(fontSize: 16)),
+                const SizedBox(height: 10),
+                Obx(
+                  () => CustomTextFormField(
+                    controller: controller.oldPasswordC,
+                    labelText: 'Password Lama',
+                    obscureText: controller.obsecureText.value,
+                    validator: (old) => controller.validatePassword(old),
+                    icon: GestureDetector(
+                      onTap: () {
+                        controller.obsecureText.value =
+                            !controller.obsecureText.value;
+                      },
+                      child: SizedBox(
+                        width: 10,
+                        height: 20,
+                        child: SvgPicture.asset(
+                          controller.obsecureText.value
+                              ? 'assets/icons/eye-closed.svg'
+                              : 'assets/icons/eye-open.svg',
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              Obx(
-                () => CustomTextFormField(
-                  labelText: 'Password Baru',
-                  obscureText: controller.obsecureText.value,
-                  icon: GestureDetector(
-                    onTap: () {
-                      controller.obsecureText.value =
-                          !controller.obsecureText.value;
-                    },
-                    child: SizedBox(
-                      width: 10,
-                      height: 20,
-                      child: SvgPicture.asset(
-                        controller.obsecureText.value
-                            ? 'assets/icons/eye-closed.svg'
-                            : 'assets/icons/eye-open.svg',
+                const SizedBox(height: 10),
+                Obx(
+                  () => CustomTextFormField(
+                    controller: controller.newPasswordC,
+                    labelText: 'Password Baru',
+                    obscureText: controller.obsecureText2.value,
+                    validator: (newPass) =>
+                        controller.validatePassword(newPass),
+                    icon: GestureDetector(
+                      onTap: () {
+                        controller.obsecureText2.value =
+                            !controller.obsecureText2.value;
+                      },
+                      child: SizedBox(
+                        width: 10,
+                        height: 20,
+                        child: SvgPicture.asset(
+                          controller.obsecureText2.value
+                              ? 'assets/icons/eye-closed.svg'
+                              : 'assets/icons/eye-open.svg',
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Spacer(),
-              GestureDetector(
-                onTap: () {
-                  controller.updateProfile();
-                },
-                child: Container(
-                  width: double.infinity,
-                  height: 64,
-                  decoration: BoxDecoration(
-                    color: dark,
-                    borderRadius: BorderRadius.circular(20),
+                Obx(
+                  () => CustomTextFormField(
+                    controller: controller.confirmPasswordC,
+                    labelText: 'Konfirmasi Password Baru',
+                    obscureText: controller.obsecureText2.value,
                   ),
-                  child: Center(
-                    child: Text(
-                      'Simpan',
-                      style:
-                          regular.copyWith(color: Colors.white, fontSize: 16),
+                ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    controller.changePassword();
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    height: 64,
+                    decoration: BoxDecoration(
+                      color: dark,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Simpan',
+                        style:
+                            regular.copyWith(color: Colors.white, fontSize: 16),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Gap(20),
-            ],
+                Gap(20),
+              ],
+            ),
           ),
         ));
   }

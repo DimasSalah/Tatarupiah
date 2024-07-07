@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
-import 'package:tatarupiah/app/data/mixins/user_controller.dart';
+import 'package:tatarupiah/app/data/global_controller/user_controller.dart';
 import '../data/models/line_chart_model.dart';
 import '../data/services/line_chart_services.dart';
 import '../mixins/month_mixins.dart';

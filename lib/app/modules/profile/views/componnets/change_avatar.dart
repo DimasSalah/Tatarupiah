@@ -5,10 +5,13 @@ import 'package:get/get.dart';
 import '../../../../style/colors.dart';
 import '../../../../style/text_style.dart';
 
-
 class changeAvatar extends StatelessWidget {
+  final Function()? gallery;
+  final Function()? camera;
   const changeAvatar({
     super.key,
+    this.gallery,
+    this.camera,
   });
 
   @override
@@ -40,9 +43,7 @@ class changeAvatar extends StatelessWidget {
                     'Camera',
                     style: medium.copyWith(fontSize: 13),
                   ),
-                  onTap: () {
-                    Get.back();
-                  },
+                  onTap: camera,
                 ),
                 Divider(
                   color: dark.withOpacity(0.5),
@@ -54,9 +55,7 @@ class changeAvatar extends StatelessWidget {
                     'Gallery',
                     style: medium.copyWith(fontSize: 13),
                   ),
-                  onTap: () {
-                    Get.back();
-                  },
+                  onTap: gallery,
                 ),
               ],
             ),
@@ -66,10 +65,8 @@ class changeAvatar extends StatelessWidget {
               Get.back();
             },
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                  vertical: 12),
-              margin: const EdgeInsets.symmetric(
-                  horizontal: 23),
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              margin: const EdgeInsets.symmetric(horizontal: 23),
               width: double.infinity,
               decoration: BoxDecoration(
                 color: dark,
@@ -78,8 +75,7 @@ class changeAvatar extends StatelessWidget {
               child: Center(
                 child: Text(
                   'batal',
-                  style: regular.copyWith(
-                      color: Colors.white, fontSize: 16),
+                  style: regular.copyWith(color: Colors.white, fontSize: 16),
                 ),
               ),
             ),
