@@ -1,13 +1,17 @@
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:tatarupiah/app/modules/home/views/components/TransactionCard.dart';
-
 import 'package:tatarupiah/app/modules/home/views/components/bar%20graph/bar_graph.dart';
 import 'package:tatarupiah/app/modules/home/views/components/dropdown_option.dart';
 import 'package:tatarupiah/app/style/colors.dart';
 import 'package:tatarupiah/app/style/gradient.dart';
+import 'package:tatarupiah/app/utils/currency_format.dart';
 import 'package:tatarupiah/app/utils/date_format.dart';
+import '../../../routes/app_pages.dart';
 import '../../../style/text_style.dart';
 import '../controllers/home_controller.dart';
 import 'components/header_bar.dart';
@@ -18,10 +22,26 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        controller: controller.scrollController,
         child: SafeArea(
           child: Column(
             children: [
-              const HeaderBar(),
+              Obx(
+                () => HeaderBar(
+                  avatar: controller.userController.imgProfile.string == ''
+                      ? Image.network(
+                          'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png',
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network(
+                          controller.userController.imgProfile.string,
+                          fit: BoxFit.cover,
+                        ),
+                  onTap: () {
+                    Get.toNamed(Routes.PROFILE);
+                  },
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: Column(
@@ -48,16 +68,54 @@ class HomeView extends GetView<HomeController> {
                                         controller.dropdownValue.string,
                                     onItemSelected: controller.setSelected),
                               ),
-                              SvgPicture.asset(
-                                'assets/icons/calendar.svg',
-                                height: 34,
+                              GestureDetector(
+                                onTap: () async {
+                                  final selectdate = await showDatePicker(
+                                    locale: const Locale('id', 'ID'),
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2021),
+                                    lastDate: DateTime(2050),
+                                    builder: (context, child) {
+                                      return Theme(
+                                          data: ThemeData.dark().copyWith(
+                                            colorScheme: ColorScheme.dark(
+                                              primary: dark,
+                                              onPrimary: white,
+                                              surface: white,
+                                              onSurface: dark,
+                                              onBackground: white,
+                                            ),
+                                            primaryColor: dark,
+                                            textSelectionTheme:
+                                                TextSelectionThemeData(
+                                                    cursorColor: error),
+                                            buttonTheme: ButtonThemeData(
+                                              buttonColor: error,
+                                              textTheme:
+                                                  ButtonTextTheme.primary,
+                                            ),
+                                          ),
+                                          child: child!);
+                                    },
+                                  );
+                                  if (selectdate != null) {
+                                    controller.selectedDate(selectdate);
+                                  }
+                                },
+                                child: SvgPicture.asset(
+                                  'assets/icons/calendar.svg',
+                                  height: 34,
+                                ),
                               ),
                             ],
                           ),
-                          Text(
-                            "Rp 1.000.000",
-                            style: bold.copyWith(fontSize: 33, color: white),
-                          )
+                          Obx(() => Text(
+                                currencyViewFormatter(
+                                    controller.totalAmount.value.toString()),
+                                style:
+                                    bold.copyWith(fontSize: 33, color: white),
+                              )),
                         ],
                       ),
                     ),
@@ -80,14 +138,28 @@ class HomeView extends GetView<HomeController> {
               Padding(
                 padding: const EdgeInsets.only(left: 18, right: 18, top: 18),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       "Transaksi",
                       style: semiBold.copyWith(fontSize: 20, color: normal),
                     ),
+                    const Gap(10),
+                    CircleAvatar(
+                      backgroundColor: dark,
+                      radius: 15,
+                      child: Obx(
+                        () => Text(
+                          controller.totalTransaction.toString(),
+                          style: regular.copyWith(fontSize: 13, color: white),
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
                     GestureDetector(
-                      onTap: controller.navigationToHistory,
+                      onTap: () {
+                        Get.toNamed(Routes.HISTORY);
+                      },
                       child: Text(
                         "Lihat Semua",
                         style:
@@ -114,11 +186,14 @@ class HomeView extends GetView<HomeController> {
                         const SizedBox(
                           width: 10,
                         ),
-                        Text(
-                          "Rp 27.000",
-                          style:
-                              semiBold.copyWith(fontSize: 25, color: success),
-                        ),
+                        Obx(
+                          () => Text(
+                            currencyViewFormatter(
+                                controller.totalProfit.value.toString()),
+                            style: semiBold.copyWith(
+                                fontSize: 25, color: greenAccent),
+                          ),
+                        )
                       ],
                     ),
                     Text(
@@ -130,9 +205,63 @@ class HomeView extends GetView<HomeController> {
                   ],
                 ),
               ),
-              const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-                  child: TransactionsCard()),
+              Obx(
+                () => controller.isLoading.value
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 5,
+                        itemBuilder: (context, index) {
+                          return const Skeletonizer(
+                            child: TransactionCard(
+                              icon: 'assets/icons/add.svg',
+                              title: 'Loading Title',
+                              subtitle: 'Makanan',
+                              price: '10000',
+                              type: 'Pemasukan',
+                            ),
+                          );
+                        },
+                      )
+                    : controller.transactionsList.isEmpty
+                        ? const Center(
+                            child: Text("Data Kosong"),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: controller.transactionsList.length +
+                                (controller.hasMoreData.value &&
+                                        controller.isFetchingMore.value
+                                    ? 1
+                                    : 0), // Tambahkan item untuk indikator jika ada lebih banyak data
+                            itemBuilder: (context, index) {
+                              if (index < controller.transactionsList.length) {
+                                final transaction =
+                                    controller.transactionsList[index];
+                                return TransactionCard(
+                                  icon: transaction.icon,
+                                  title: transaction.subKategori,
+                                  subtitle: transaction.kategori,
+                                  price: transaction.type == 'Pemasukan'
+                                      ? transaction.nominalPenjualan.toString()
+                                      : transaction.nominalPengeluaran
+                                          .toString(),
+                                  type: transaction.type,
+                                );
+                              } else {
+                                if (controller.hasMoreData.value &&
+                                    controller.isFetchingMore.value) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                } else {
+                                  return Container(); // Return an empty container if no more data
+                                }
+                              }
+                            },
+                          ),
+              )
             ],
           ),
         ),
@@ -149,8 +278,7 @@ class HomeView extends GetView<HomeController> {
               borderRadius: BorderRadius.circular(24),
             ),
             elevation: 0,
-            onPressed:
-                controller.navigationToTransaction,
+            onPressed: controller.navigationToTransaction,
             child: Container(
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(

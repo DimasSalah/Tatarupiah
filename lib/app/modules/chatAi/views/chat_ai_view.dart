@@ -19,7 +19,11 @@ class ChatAiView extends GetView<ChatAiController> {
           controller: ScrollController(),
           child: Column(
             children: [
-              HeaderBar(),
+              HeaderBar(
+                  avatar: Image.network(
+                'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png',
+                fit: BoxFit.cover,
+              )),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 5, vertical: 13),

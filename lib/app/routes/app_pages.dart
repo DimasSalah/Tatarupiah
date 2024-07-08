@@ -1,6 +1,12 @@
 import 'package:get/get.dart';
 
+import 'package:tatarupiah/app/modules/home/category/views/add_category_view.dart';
+import 'package:tatarupiah/app/modules/profile/views/password_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
+import '../modules/auth/register/bindings/register_binding.dart';
+import '../modules/auth/register/views/register_view.dart';
+import '../modules/auth/splash/bindings/splash_binding.dart';
+import '../modules/auth/splash/views/splash_view.dart';
 import '../modules/auth/views/auth_view.dart';
 import '../modules/chatAi/bindings/chat_ai_binding.dart';
 import '../modules/chatAi/recomendation/bindings/recomendation_binding.dart';
@@ -20,6 +26,7 @@ import '../modules/main/views/main_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/edit_profile_view.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/statistics/bindings/statistics_binding.dart';
 import '../modules/statistics/views/statistics_view.dart';
@@ -29,7 +36,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.MAIN;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -67,6 +74,18 @@ class AppPages {
       name: _Paths.AUTH,
       page: () => const AuthView(),
       binding: AuthBinding(),
+      children: [
+        GetPage(
+          name: _Paths.REGISTER,
+          page: () => const RegisterView(),
+          binding: RegisterBinding(),
+        ),
+        GetPage(
+          name: _Paths.SPLASH,
+          page: () => const SplashView(),
+          binding: SplashBinding(),
+        ),
+      ],
     ),
     GetPage(
       name: _Paths.STATISTICS,
@@ -91,9 +110,20 @@ class AppPages {
       binding: MainBinding(),
     ),
     GetPage(
-      name: _Paths.PROFILE,
-      page: () => const ProfileView(),
-      binding: ProfileBinding(),
-    ),
+        name: _Paths.PROFILE,
+        page: () => ProfileView(),
+        binding: ProfileBinding(),
+        children: [
+          GetPage(
+            name: _Paths.EDITPROFILE,
+            page: () => const EditProfileView(),
+            binding: ProfileBinding(),
+          ),
+          GetPage(
+            name: _Paths.CHANGE_PASSWORD,
+            page: () => const ChangePasswordView(),
+            binding: ProfileBinding(),
+          ),
+        ]),
   ];
 }

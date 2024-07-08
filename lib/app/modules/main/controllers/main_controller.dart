@@ -15,4 +15,8 @@ class MainController extends GetxController {
   void changeIndex(int index) {
     selectedIndex.value = index;
   }
+
+  
+
+  
 }
