@@ -164,8 +164,37 @@ class ProfileView extends GetView<ProfileController> {
             ),
             GestureDetector(
               onTap: () {
-                GetStorage().erase();
-                Get.offAllNamed(Routes.LOGIN);
+                Get.dialog(
+                  AlertDialog(
+                    title: Text(
+                      'Keluar',
+                      style: semiBold.copyWith(
+                        fontSize: 20,
+                      ),
+                    ),
+                    content: Text('Apakah anda yakin ingin keluar?',
+                        style: regular.copyWith(fontSize: 16)),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Text('Batal',
+                            style: medium.copyWith(fontSize: 16, color: dark)),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          GetStorage().erase();
+                          Get.offAllNamed(Routes.LOGIN);
+                        },
+                        child: Text('Keluar',
+                            style: medium.copyWith(fontSize: 16, color: error)),
+                      ),
+                    ],
+                  ),
+                );
+                // GetStorage().erase();
+                // Get.offAllNamed(Routes.LOGIN);
               },
               child: Text('Keluar',
                   style: medium.copyWith(fontSize: 20, color: error)),
