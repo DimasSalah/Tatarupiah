@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:rive/rive.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
@@ -14,83 +15,86 @@ class ChatAiView extends GetView<ChatAiController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            HeaderBar(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 13),
-              child: Container(
-                  height: 380,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40), color: dark),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 24,
-                      right: 24,
-                      top: 24,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('AI Assistent.',
-                            style: medium.copyWith(fontSize: 25, color: light)),
-                        Center(
-                          child: Container(
-                            height: 300,
-                            width: 500,
-                            child: RiveAnimation.asset(
-                              'assets/icons/robot_ai.riv',
-                              fit: BoxFit.cover,
+        child: SingleChildScrollView(
+          controller: ScrollController(),
+          child: Column(
+            children: [
+              HeaderBar(),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 5, vertical: 13),
+                child: Container(
+                    height: 380,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40), color: dark),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 24,
+                        right: 24,
+                        top: 24,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('AI Assistent.',
+                              style:
+                                  medium.copyWith(fontSize: 25, color: light)),
+                          Center(
+                            child: Container(
+                              height: 300,
+                              width: 500,
+                              child: RiveAnimation.asset(
+                                'assets/icons/robot_ai.riv',
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
+                    )),
+              ),
+              const Gap(19),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 23),
+                child: Column(
+                  children: [
+                    Text(
+                      'Percepat alokasi anggaranmu dengan bantuan Ai',
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      style: medium.copyWith(fontSize: 20, color: dark),
                     ),
-                  )),
-            ),
-            SizedBox(height: 19),
-            Center(
-              child: Text(
-                '''Percepat alokasi anggaranmu 
-dengan bantuan Ai''',
-                textAlign: TextAlign.center,
-                style: medium.copyWith(fontSize: 20, color: dark),
-              ),
-            ),
-            Center(
-              child: Text(
-                '''Rasakan pengalaman baru dengan AI untuk 
-mengelola dana secara efisien dan hemat waktu.''',
-                textAlign: TextAlign.center,
-                style: regular.copyWith(fontSize: 13, color: lightActive),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 19),
-              child: Container(
-                height: 64,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: light,
-                  borderRadius: BorderRadius.circular(20),
+                    Text(
+                      'Coba pengalaman baru dengan AI untuk  mengelola dana secara efisien dan hemat waktu',
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: regular.copyWith(fontSize: 13, color: lightActive),
+                    ),
+                    const Gap(20),
+                    InkWell(
+                      onTap: () => Get.toNamed(Routes.RECOMENDATION),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: light,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: lightActive, width: 1),
+                        ),
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          'Mulai Obrolan',
+                          style:
+                              medium.copyWith(color: lightActive, fontSize: 16),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                child: Center(
-                    child: GestureDetector(
-                  onTap: () => Get.toNamed(Routes.RECOMENDATION),
-                  child: Text(
-                    'Mulai Obrolan',
-                    style: medium.copyWith(color: lightActive, fontSize: 16),
-                  ),
-                )),
-              ),
-            ),
-            Center(
-              child: Text(
-                "Mulai",
-                style: semiBold.copyWith(fontSize: 20, color: white),
-              ),
-            ),
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
