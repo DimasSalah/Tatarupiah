@@ -108,7 +108,7 @@ class BottomChat extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  // controller.sendMessage();
+                  controller.sendMessage();
                 },
                 child: Container(
                   margin: const EdgeInsets.only(left: 10),

@@ -2,10 +2,12 @@ import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../data/global_controller/user_controller.dart';
 import '../data/models/chat_model.dart';
 
 class RecomendationController extends GetxController {
   final TextEditingController textController = TextEditingController();
+  final UserController userController = UserController.to;
   late OpenAI openAi;
 
   RxString message = ''.obs;
@@ -27,10 +29,9 @@ class RecomendationController extends GetxController {
   RxString amount = ''.obs;
 
   void setAmount(String value) {
-      amount.value = value;
+    amount.value = value;
   }
 
-  
   // String getamount() {
   //   if (amount.value.isEmpty) {
   //     amount.value = formatCurrency( homeController.totalIncome.value.toString());
@@ -39,8 +40,9 @@ class RecomendationController extends GetxController {
   //   }
   //   return amount.value;
   // }
-  
-  void toggleOption(String option) { //function to toggle option
+
+  void toggleOption(String option) {
+    //function to toggle option
     if (selectedOptions.contains(option)) {
       selectedOptions.remove(option);
     } else {
@@ -49,11 +51,13 @@ class RecomendationController extends GetxController {
     updateTextField();
   }
 
-  void updateTextField() { //function to update text field with selected options
+  void updateTextField() {
+    //function to update text field with selected options
     textController.text = selectedOptions.join(', ');
   }
-  
-  bool isSelected(String option) { //function to check if option is selected
+
+  bool isSelected(String option) {
+    //function to check if option is selected
     return selectedOptions.contains(option);
   }
 
@@ -72,7 +76,8 @@ class RecomendationController extends GetxController {
     textController.clear();
     var response = await openAi.onCompletion(
       request: CompleteText(
-        prompt: 'Saya mempunyai 100000, ingin digunakan untuk ${message.value}, berapa alokasi anggaran yang tepat?, deskripsikan dengan sangat singkat',
+        prompt:
+            'Saya mempunyai , ingin digunakan untuk ${message.value}, berapa alokasi anggaran yang tepat?, deskripsikan dengan sangat singkat',
         model: Gpt3TurboInstruct(),
         maxTokens: 300,
       ),
@@ -91,9 +96,8 @@ class RecomendationController extends GetxController {
 
   @override
   void onInit() {
-    print('onInit called');
     openAi = OpenAI.instance.build(
-      token: '',
+      token: userController.apiKey.value,
       baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 5)),
       enableLog: true,
     );

@@ -16,14 +16,18 @@ class ChatAiView extends GetView<ChatAiController> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          controller: ScrollController(),
           child: Column(
             children: [
-              HeaderBar(
-                  avatar: Image.network(
-                'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png',
-                fit: BoxFit.cover,
-              )),
+              Obx(
+                () => HeaderBar(
+                  avatar: controller.userController.imgProfile.string == ''
+                      ? 'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png'
+                      : controller.userController.imgProfile.string,
+                  onTap: () {
+                    Get.toNamed(Routes.PROFILE);
+                  },
+                ),
+              ),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 5, vertical: 13),
@@ -44,7 +48,7 @@ class ChatAiView extends GetView<ChatAiController> {
                               style:
                                   medium.copyWith(fontSize: 25, color: light)),
                           Center(
-                            child: Container(
+                            child: SizedBox(
                               height: 300,
                               width: 500,
                               child: RiveAnimation.asset(

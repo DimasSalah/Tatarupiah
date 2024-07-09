@@ -10,6 +10,7 @@ class UserController extends GetxController {
   RxString emailProfile = ''.obs;
   RxString phoneProfile = ''.obs;
   RxString addressProfile = ''.obs;
+  RxString apiKey = ''.obs;
   Rx<DateTime> createdAt = DateTime.now().obs;
 
   @override
@@ -27,6 +28,7 @@ class UserController extends GetxController {
       emailProfile.value = value.data.email;
       phoneProfile.value = value.data.noHandphone;
       addressProfile.value = value.data.alamat;
+      apiKey.value = value.data.key;
       createdAt.value = value.data.createdAt;
     });
   }
