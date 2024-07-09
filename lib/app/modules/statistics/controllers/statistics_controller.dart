@@ -71,7 +71,9 @@ class StatisticsController extends GetxController with MonthMixins {
 
   void submitSelectedMonth() {
     print(currentMonth);
+    performaPenjualan.clear();
     loadChartData();
+
     Get.back();
   }
 }
