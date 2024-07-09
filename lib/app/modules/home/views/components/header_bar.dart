@@ -6,7 +6,7 @@ import '../../../../style/text_style.dart';
 import '../../../../utils/date_format.dart';
 
 class HeaderBar extends StatelessWidget {
-  final Widget avatar;
+  final String avatar;
   final Function()? onTap;
   const HeaderBar({
     super.key,
@@ -22,9 +22,7 @@ class HeaderBar extends StatelessWidget {
         CircleAvatar(
             radius: 26,
             backgroundColor: lighter,
-            child: ClipOval(
-              child: avatar,
-            )),
+            backgroundImage: NetworkImage(avatar),),
         Text(
           appBarDate(
             DateTime.now(),

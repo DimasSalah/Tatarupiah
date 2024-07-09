@@ -25,17 +25,11 @@ class StatisticsView extends GetView<StatisticsController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Obx(
+             Obx(
                 () => HeaderBar(
                   avatar: controller.userController.imgProfile.string == ''
-                      ? Image.network(
-                          'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png',
-                          fit: BoxFit.cover,
-                        )
-                      : Image.network(
-                          controller.userController.imgProfile.string,
-                          fit: BoxFit.cover,
-                        ),
+                      ? 'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png'
+                      : controller.userController.imgProfile.string,
                   onTap: () {
                     Get.toNamed(Routes.PROFILE);
                   },

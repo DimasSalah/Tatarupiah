@@ -4,7 +4,7 @@ import 'package:tatarupiah/app/modules/home/views/home_view.dart';
 import 'package:tatarupiah/app/modules/statistics/views/statistics_view.dart';
 
 class MainController extends GetxController {
-  RxInt selectedIndex = 2.obs;
+  RxInt selectedIndex = 0.obs;
 
   final screen = [
     const HomeView(),
@@ -15,8 +15,4 @@ class MainController extends GetxController {
   void changeIndex(int index) {
     selectedIndex.value = index;
   }
-
-  
-
-  
 }
