@@ -2,8 +2,11 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:tatarupiah/app/modules/home/data/models/transaction_model.dart';
 import 'package:tatarupiah/app/modules/home/views/components/TransactionCard.dart';
 import 'package:tatarupiah/app/modules/home/views/components/bar%20graph/bar_graph.dart';
 import 'package:tatarupiah/app/modules/home/views/components/dropdown_option.dart';
@@ -14,6 +17,9 @@ import 'package:tatarupiah/app/utils/date_format.dart';
 import '../../../routes/app_pages.dart';
 import '../../../style/text_style.dart';
 import '../controllers/home_controller.dart';
+import 'components/date_filter_home.dart';
+import 'components/detail_transaction.dart';
+import 'components/floating_add_transaction.dart';
 import 'components/header_bar.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -29,14 +35,8 @@ class HomeView extends GetView<HomeController> {
               Obx(
                 () => HeaderBar(
                   avatar: controller.userController.imgProfile.string == ''
-                      ? Image.network(
-                          'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png',
-                          fit: BoxFit.cover,
-                        )
-                      : Image.network(
-                          controller.userController.imgProfile.string,
-                          fit: BoxFit.cover,
-                        ),
+                      ? 'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png'
+                      : controller.userController.imgProfile.string,
                   onTap: () {
                     Get.toNamed(Routes.PROFILE);
                   },
@@ -68,46 +68,7 @@ class HomeView extends GetView<HomeController> {
                                         controller.dropdownValue.string,
                                     onItemSelected: controller.setSelected),
                               ),
-                              GestureDetector(
-                                onTap: () async {
-                                  final selectdate = await showDatePicker(
-                                    locale: const Locale('id', 'ID'),
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2021),
-                                    lastDate: DateTime(2050),
-                                    builder: (context, child) {
-                                      return Theme(
-                                          data: ThemeData.dark().copyWith(
-                                            colorScheme: ColorScheme.dark(
-                                              primary: dark,
-                                              onPrimary: white,
-                                              surface: white,
-                                              onSurface: dark,
-                                              onBackground: white,
-                                            ),
-                                            primaryColor: dark,
-                                            textSelectionTheme:
-                                                TextSelectionThemeData(
-                                                    cursorColor: error),
-                                            buttonTheme: ButtonThemeData(
-                                              buttonColor: error,
-                                              textTheme:
-                                                  ButtonTextTheme.primary,
-                                            ),
-                                          ),
-                                          child: child!);
-                                    },
-                                  );
-                                  if (selectdate != null) {
-                                    controller.selectedDate(selectdate);
-                                  }
-                                },
-                                child: SvgPicture.asset(
-                                  'assets/icons/calendar.svg',
-                                  height: 34,
-                                ),
-                              ),
+                              DateFilterHome(controller: controller),
                             ],
                           ),
                           Obx(() => Text(
@@ -248,12 +209,27 @@ class HomeView extends GetView<HomeController> {
                                       : transaction.nominalPengeluaran
                                           .toString(),
                                   type: transaction.type,
+                                  onLongPress: () {
+                                    Get.dialog(
+                                      Dialog(
+                                        child: DetailTransaction(
+                                            transaction: transaction,
+                                            onTap: () {
+                                              controller.delTransaction(
+                                                  transaction.id);
+                                              Get.back();
+                                            }),
+                                      ),
+                                    );
+                                  },
                                 );
                               } else {
                                 if (controller.hasMoreData.value &&
                                     controller.isFetchingMore.value) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      color: dark,
+                                    ),
                                   );
                                 } else {
                                   return Container(); // Return an empty container if no more data
@@ -266,31 +242,8 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
       ),
-      floatingActionButton: SizedBox(
-        height: 74,
-        width: 84,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 10, right: 20),
-          child: FloatingActionButton(
-            splashColor: darker,
-            backgroundColor: dark,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-            elevation: 0,
-            onPressed: controller.navigationToTransaction,
-            child: Container(
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  gradient: primary,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: SvgPicture.asset(
-                  'assets/icons/plus.svg',
-                )),
-          ),
-        ),
-      ),
+      floatingActionButton:
+          FloatingAddTransaction(onTap: controller.navigationToTransaction),
     );
   }
 }

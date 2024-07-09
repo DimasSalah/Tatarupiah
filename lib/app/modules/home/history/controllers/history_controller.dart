@@ -23,6 +23,15 @@ class HistoryController extends GetxController {
   final ScrollController scrollController = ScrollController();
   final TransactionService transactionService = TransactionService();
 
+  Future<void> delTransaction(int id) async {
+    try {
+      await transactionService.deleteTransaction(id);
+      transactionsList.removeWhere((element) => element.id == id);
+    } catch (e) {
+      Get.snackbar("Error", 'Gagal menghapus transaksi');
+    }
+  }
+
   Future<void> fetchTransaction(String start, String end) async {
     print('start date: $start end date: $end');
     final transactionService = TransactionService();

@@ -10,6 +10,7 @@ import 'package:tatarupiah/app/style/colors.dart';
 import 'package:tatarupiah/app/style/text_style.dart';
 import 'package:tatarupiah/app/utils/currency_format.dart';
 import '../../data/models/transaction_model.dart';
+import '../../views/components/detail_transaction.dart';
 import '../controllers/history_controller.dart';
 import 'components/date_range_dialog.dart';
 import 'components/profit_header.dart';
@@ -140,6 +141,19 @@ class HistoryView extends GetView<HistoryController> {
                                             : transaction.nominalPengeluaran
                                                 .toString(),
                                         type: transaction.type,
+                                        longPress: () {
+                                          Get.dialog(
+                                            Dialog(
+                                              child: DetailTransaction(
+                                                  transaction: transaction,
+                                                  onTap: () {
+                                                    controller.delTransaction(
+                                                        transaction.id);
+                                                    Get.back();
+                                                  }),
+                                            ),
+                                          );
+                                        },
                                       );
                                     }).toList(),
                                   ],
