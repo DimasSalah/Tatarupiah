@@ -46,4 +46,28 @@ class TransactionService extends GetxService {
       rethrow;
     }
   }
+
+  Future<Response> deleteTransaction(int id) async {
+    try {
+      final response = await dio.delete(
+        '$baseUrl/transaction/$id',
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        logger.i(response.data);
+        return response;
+      } else {
+        logger.e(response);
+        throw Exception('Gagal menghapus transaksi');
+      }
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
 }

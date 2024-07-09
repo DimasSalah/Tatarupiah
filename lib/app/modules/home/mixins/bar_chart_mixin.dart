@@ -26,11 +26,6 @@ mixin BarchartMixin on GetxController {
 
   void fetchBarChartData() async {
     try {
-      // Pastikan tanggal akhir adalah hari Minggu untuk memuat 7 hari sebelumnya
-      //replace date.value with endOfWeek.value
-      // DateTime now = DateTime.now();
-      // DateTime endOfWeek = now.add(Duration(days: 7 - now.weekday));
-      // initialDate.value = DateFormat('yyyy-MM-dd').format(endOfWeek);
       BarChartModel barChartModel = await BarChartServices()
           .getBarChart(endDate: initialDate.value, type: dropdownValue.value);
       barChartModel.data

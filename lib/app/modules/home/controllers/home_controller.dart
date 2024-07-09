@@ -21,11 +21,22 @@ class HomeController extends GetxController with BarchartMixin {
   RxInt currentPage = 1.obs;
 
   final ScrollController scrollController = ScrollController();
+  final transactionService = TransactionService();
   final UserController userController = UserController.to;
+
+  Future<void> delTransaction(int id) async {
+    try {
+      await transactionService.deleteTransaction(id);
+      transactionsList.removeWhere((element) => element.id == id);
+      getProfit();
+      fetchBarChartData();
+    } catch (e) {
+      Get.snackbar("Error", 'Gagal menghapus transaksi');
+    }
+  }
 
   Future<void> fetchTransaction() async {
     hasMoreData.value = true;
-    final transactionService = TransactionService();
     try {
       isLoading.value = true;
       final transaction = await transactionService.getTransaction(
