@@ -9,7 +9,6 @@ class SplashController extends GetxController {
   void onReady() {
     checkLogin();
   }
-
   // void checkLogin() async {
   //   final getToken = await GetStorage().read('token');
   //   token.value = getToken;
@@ -31,8 +30,7 @@ class SplashController extends GetxController {
         Get.offNamed(Routes.AUTH);
       } else {
         token.value = getToken;
-
-        Get.offNamed(Routes.HOME);
+        Get.offNamed(Routes.MAIN);
       }
     });
   }

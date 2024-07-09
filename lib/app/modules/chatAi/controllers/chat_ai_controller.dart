@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
 
+import '../../../data/global_controller/user_controller.dart';
+
 class ChatAiController extends GetxController {
   //TODO: Implement ChatAiController
+  final UserController userController = UserController.to;
 
   final count = 0.obs;
   @override

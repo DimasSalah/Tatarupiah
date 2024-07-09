@@ -1,0 +1,90 @@
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+
+import '../../../../../style/colors.dart';
+import '../../../../../style/text_style.dart';
+import '../../../../../utils/currency_format.dart';
+
+class InitialMessage extends StatelessWidget {
+  final String initialValue;
+  final void Function(String) onChanged;
+  const InitialMessage({
+    super.key,
+    required this.initialValue,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 23, right: 23, top: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: light,
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20)),
+            ),
+            child: Text(
+              'Ayo, biarkan aku membantumu mengalokasikan anggaran dengan maksimal, menggunakan opsi dibawah!',
+              style: regular.copyWith(fontSize: 13),
+              textAlign: TextAlign.left,
+            ),
+          ),
+          const Gap(4),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: light,
+              borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'ingin digunakan untuk apa saja uang sebesar',
+                  style: regular.copyWith(fontSize: 13),
+                ),
+                TextFormField(
+                  style: semiBold.copyWith(fontSize: 14),
+                  onChanged: onChanged,
+                  initialValue: currencyViewFormatter(
+                      initialValue),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      isDense: true,
+                      contentPadding: EdgeInsets.zero,
+                      suffixIcon: const Icon(Icons.create),
+                      suffixIconConstraints:
+                          const BoxConstraints(maxWidth: 30, maxHeight: 30),
+                      hintStyle: regular.copyWith(fontSize: 14, color: dark),
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      constraints: BoxConstraints(
+                          maxWidth: Get.width * 0.3, maxHeight: 30)),
+                )
+              ],
+            ),
+          ),
+          const Gap(6),
+          CircleAvatar(
+            radius: 20,
+            backgroundColor: normal,
+            child: Image.asset('assets/icons/bot.png'),
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -36,49 +36,48 @@ class RegisterController extends GetxController {
   }
 
   Future<void> register() async {
+    print('register');
     final authService = AuthService();
-    print(name.value);
-    print(email.value);
-    print(password.value);
-    print('confirm password: ${confirmPassword.value}');
     final bool isSamePassword = password.value == confirmPassword.value;
     final bool isValid = EmailValidator.validate(email.value);
-    if (!isValid) {
-      Get.dialog(
-        AlertDialog(
-          title: Text('Email tidak valid'),
-          content: Text('Silahkan masukkan email yang valid'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Get.back();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
-    } else if (!isSamePassword) {
-      Get.dialog(
-        AlertDialog(
-          title: Text('Password tidak sama'),
-          content: Text('Silahkan masukkan password yang sama'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Get.back();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
-    } else {
-      authService.register(
+    authService.register(
           name.value, email.value, password.value, confirmPassword.value);
-      Get.offNamed(Routes.HOME);
-    }
+    // if (!isValid) {
+    //   Get.dialog(
+    //     AlertDialog(
+    //       title: Text('Email tidak valid'),
+    //       content: Text('Silahkan masukkan email yang valid'),
+    //       actions: [
+    //         TextButton(
+    //           onPressed: () {
+    //             Get.back();
+    //           },
+    //           child: Text('OK'),
+    //         ),
+    //       ],
+    //     ),
+    //   );
+    // } else if (!isSamePassword) {
+    //   Get.dialog(
+    //     AlertDialog(
+    //       title: Text('Password tidak sama'),
+    //       content: Text('Silahkan masukkan password yang sama'),
+    //       actions: [
+    //         TextButton(
+    //           onPressed: () {
+    //             Get.back();
+    //           },
+    //           child: Text('OK'),
+    //         ),
+    //       ],
+    //     ),
+    //   );
+    // } else {
+    //   authService.register(
+    //       name.value, email.value, password.value, confirmPassword.value);
+    // }
   }
+  
 
   // // Fungsi untuk mengirim data pendaftaran dan melakukan validasi
   // void register() {

@@ -5,8 +5,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:tatarupiah/app/modules/auth/controllers/auth_controller.dart';
 import 'package:tatarupiah/app/modules/auth/register/views/components/CustomTextFormFieldContainer.dart';
+import 'package:tatarupiah/app/routes/app_pages.dart';
 import 'package:tatarupiah/app/style/colors.dart';
 import 'package:tatarupiah/app/style/text_style.dart';
+
+import '../../../routes/app_pages.dart';
 
 class AuthView extends GetView<AuthController> {
   const AuthView({Key? key}) : super(key: key);
@@ -85,7 +88,8 @@ class AuthView extends GetView<AuthController> {
                   Center(
                     child: GestureDetector(
                       onTap: () {
-                        controller.navigationToRegister();
+                        // controller.navigationToRegister()
+                        Get.toNamed(Routes.REGISTER);
                       },
                       child: RichText(
                         text: TextSpan(

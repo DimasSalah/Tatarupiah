@@ -29,7 +29,7 @@ class MainView extends GetView<MainController> {
             selectedIndex: controller.selectedIndex.value,
             onDestinationSelected: (index) =>
                 controller.selectedIndex.value = index,
-            destinations:  [
+            destinations: [
               NavigationDestination(
                 icon: SvgPicture.asset('assets/icons/home_outline.svg'),
                 selectedIcon: SvgPicture.asset('assets/icons/home_fill.svg'),

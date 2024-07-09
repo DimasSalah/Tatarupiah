@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:tatarupiah/app/data/api/auth_service.dart';
+import 'package:tatarupiah/app/data/models/user_model.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
 
 class AuthController extends GetxController {
@@ -10,6 +11,7 @@ class AuthController extends GetxController {
   // Variabel untuk menyimpan pesan kesalahan validasi
   var emailError = RxString('');
   var passwordError = RxString('');
+  // Variabel untuk menyimpan data pengguna setelah login
 
   // Fungsi untuk mengubah nilai input form
   void onEmailChanged(String value) {
@@ -34,12 +36,11 @@ class AuthController extends GetxController {
   }
 
 // Fungsi untuk navigasi ke halaman pendaftaran
-  void navigationToRegister() {
-    Get.toNamed(Routes.REGISTER);
-  }
 
   Future<void> login() async {
     final authService = AuthService();
+    print(email.value);
+    print(password.value);
     authService.login(email.value, password.value);
   }
 
@@ -53,6 +54,8 @@ class AuthController extends GetxController {
   //   // Setelah pendaftaran berhasil, navigasikan pengguna ke halaman login
   //   Get.toNamed(Routes.AUTH);
   // }
+
+// Metode untuk mendapatkan data pengguna
 
   // Fungsi untuk validasi email
   bool validateEmail() {

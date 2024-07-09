@@ -9,16 +9,17 @@ abstract class Routes {
   static const STATISTICS = _Paths.STATISTICS;
   static const CHAT_AI = _Paths.CHAT_AI;
   static const TRANSACTION = _Paths.HOME + _Paths.TRANSACTION;
-<<<<<<< HEAD
   static const MAIN = _Paths.MAIN;
   static const PROFILE = _Paths.PROFILE;
   static const HISTORY = _Paths.HOME + _Paths.HISTORY;
   static const CATEGORY = _Paths.HOME + _Paths.CATEGORY;
   static const ADDCATEGORY = _Paths.HOME + _Paths.ADDCATEGORY;
-=======
+  static const RECOMENDATION = _Paths.CHAT_AI + _Paths.RECOMENDATION;
+  static const EDITPROFILE = _Paths.PROFILE + _Paths.EDITPROFILE;
   static const REGISTER = _Paths.AUTH + _Paths.REGISTER;
   static const SPLASH = _Paths.AUTH + _Paths.SPLASH;
->>>>>>> 3ebdb5be0b235d5fd99ac2fc284d6562b7e8566e
+  static const LOGIN = _Paths.LOGIN;
+  static const CHANGE_PASSWORD = _Paths.PROFILE + _Paths.CHANGE_PASSWORD;
 }
 
 abstract class _Paths {
@@ -29,14 +30,15 @@ abstract class _Paths {
   static const STATISTICS = '/statistics';
   static const CHAT_AI = '/chat-ai';
   static const TRANSACTION = '/transaction';
-<<<<<<< HEAD
   static const MAIN = '/main';
   static const PROFILE = '/profile';
   static const HISTORY = '/history';
   static const CATEGORY = '/category';
   static const ADDCATEGORY = '/addcategory';
-=======
+  static const RECOMENDATION = '/recomendation';
+  static const EDITPROFILE = '/editprofile';
   static const REGISTER = '/register';
   static const SPLASH = '/splash';
->>>>>>> 3ebdb5be0b235d5fd99ac2fc284d6562b7e8566e
+  static const LOGIN = '/login';
+  static const CHANGE_PASSWORD = '/change-password';
 }
