@@ -36,7 +36,7 @@ class RecomendationView extends GetView<RecomendationController> {
               child: Column(
                 children: [
                   InitialMessage(
-                    initialValue: '100000',
+                    initialValue: controller.amount.value,
                     onChanged: controller.setAmount,
                   ),
                   const SizedBox(height: 4),

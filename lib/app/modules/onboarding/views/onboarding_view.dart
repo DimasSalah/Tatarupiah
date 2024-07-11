@@ -140,16 +140,19 @@ class OnboardingView extends GetView<OnboardingController> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                RichText(
-                  text: TextSpan(
-                    text: 'Sudah punya akun? ',
-                    style: regular.copyWith(fontSize: 13, color: lightActive),
-                    children: [
-                      TextSpan(
-                        text: 'Masuk',
-                        style: regular.copyWith(fontSize: 13, color: darker),
-                      ),
-                    ],
+                GestureDetector(
+                  onTap: () => Get.toNamed(Routes.AUTH),
+                  child: RichText(
+                    text: TextSpan(
+                      text: 'Sudah punya akun? ',
+                      style: regular.copyWith(fontSize: 13, color: lightActive),
+                      children: [
+                        TextSpan(
+                          text: 'Masuk',
+                          style: regular.copyWith(fontSize: 13, color: darker),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

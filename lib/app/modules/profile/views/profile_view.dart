@@ -183,9 +183,9 @@ class ProfileView extends GetView<ProfileController> {
                             style: medium.copyWith(fontSize: 16, color: dark)),
                       ),
                       TextButton(
-                        onPressed: () {
-                          GetStorage().erase();
-                          Get.offAllNamed(Routes.LOGIN);
+                        onPressed: () async {
+                          print('keluar');
+                          controller.logout();
                         },
                         child: Text('Keluar',
                             style: medium.copyWith(fontSize: 16, color: error)),
@@ -193,8 +193,9 @@ class ProfileView extends GetView<ProfileController> {
                     ],
                   ),
                 );
-                // GetStorage().erase();
+
                 // Get.offAllNamed(Routes.LOGIN);
+                // GetStorage().erase();
               },
               child: Text('Keluar',
                   style: medium.copyWith(fontSize: 20, color: error)),

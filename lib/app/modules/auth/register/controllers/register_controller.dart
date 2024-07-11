@@ -1,8 +1,11 @@
-import 'package:email_validator/email_validator.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tatarupiah/app/data/api/auth_service.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
+
+import '../../../../data/api/auth_service.dart';
+import '../../../../data/global_controller/user_controller.dart';
 
 class RegisterController extends GetxController {
   // Variabel untuk menyimpan nilai input dari form
@@ -20,6 +23,10 @@ class RegisterController extends GetxController {
   var passwordError = RxString('');
   var confirmPasswordError = RxString('');
 
+  final formKey = GlobalKey<FormState>();
+  final authService = AuthService();
+  final UserController userController = UserController.to;
+
   void onNameChanged(String value) {
     name.value = value;
   }
@@ -36,64 +43,96 @@ class RegisterController extends GetxController {
     confirmPassword.value = value;
   }
 
-// Fungsi untuk registrasi
-  Future<void> register() async {
-    print('register');
-    final authService = AuthService();
-    isLoading.value = true;
-    try {
-      await authService.register(
-          name.value, email.value, password.value, confirmPassword.value);
-      print(isLoading.value);
-    } catch (e) {
-      print(e);
+  validateEmail(String? email) {
+    if (email != null && !GetUtils.isEmail(email)) {
+      return 'Email tidak valid';
     }
-    print(isLoading.value);
-    isLoading.value = false;
-    print(name.value);
-    print(email.value);
-    print(password.value);
-    print('confirm password: ${confirmPassword.value}');
-    final bool isSamePassword = password.value == confirmPassword.value;
-    final bool isValid = EmailValidator.validate(email.value);
-    authService.register(
-          name.value, email.value, password.value, confirmPassword.value);
-    // if (!isValid) {
-    //   Get.dialog(
-    //     AlertDialog(
-    //       title: Text('Email tidak valid'),
-    //       content: Text('Silahkan masukkan email yang valid'),
-    //       actions: [
-    //         TextButton(
-    //           onPressed: () {
-    //             Get.back();
-    //           },
-    //           child: Text('OK'),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // } else if (!isSamePassword) {
-    //   Get.dialog(
-    //     AlertDialog(
-    //       title: Text('Password tidak sama'),
-    //       content: Text('Silahkan masukkan password yang sama'),
-    //       actions: [
-    //         TextButton(
-    //           onPressed: () {
-    //             Get.back();
-    //           },
-    //           child: Text('OK'),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // } else {
-    //   authService.register(
-    //       name.value, email.value, password.value, confirmPassword.value);
-    // }
+    return null;
   }
-  
+
+  validatePassword(String? pwd) {
+    if (pwd!.length < 6) {
+      return 'Password minimal 6 karakter';
+    }
+    return null;
+  }
+
+  Future<void> register() async {
+    if (password.value != confirmPassword.value) {
+      Get.snackbar('Gagal', 'password tidak sama');
+    } else if (formKey.currentState!.validate()) {
+      Get.dialog(Dialog(
+        child: Container(
+          height: 100,
+          width: 100,
+          alignment: Alignment.center,
+          child: const CircularProgressIndicator(),
+        ),
+      ));
+      try {
+        await authService.register(
+            name.value, email.value, password.value, confirmPassword.value);
+        Get.back();
+        await userController.fetchProfile();
+        Get.offAllNamed(Routes.MAIN);
+      } catch (e) {
+        Get.back();
+        Get.snackbar('Error', e.toString());
+        Get.back();
+      }
+    }
+  }
+
+// Fungsi untuk registrasi
+  // Future<void> register() async {
+  //   final authService = AuthService();
+  //   isLoading.value = true;
+  //   try {
+  //     await authService.register(
+  //         name.value, email.value, password.value, confirmPassword.value);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //   isLoading.value = false;
+  //   final bool isSamePassword = password.value == confirmPassword.value;
+  //   final bool isValid = EmailValidator.validate(email.value);
+  //   authService.register(
+  //         name.value, email.value, password.value, confirmPassword.value);
+  //   if (!isValid) {
+  //     Get.dialog(
+  //       AlertDialog(
+  //         title: Text('Email tidak valid'),
+  //         content: Text('Silahkan masukkan email yang valid'),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () {
+  //               Get.back();
+  //             },
+  //             child: Text('OK'),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   } else if (!isSamePassword) {
+  //     Get.dialog(
+  //       AlertDialog(
+  //         title: Text('Password tidak sama'),
+  //         content: Text('Silahkan masukkan password yang sama'),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () {
+  //               Get.back();
+  //             },
+  //             child: Text('OK'),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   } else {
+  //     authService.register(
+  //         name.value, email.value, password.value, confirmPassword.value);
+  //   }
+  // }
 
   // Fungsi untuk validasi nama
   bool validateName() {
@@ -107,18 +146,18 @@ class RegisterController extends GetxController {
   }
 
   // Fungsi untuk validasi password
-  bool validatePassword() {
-    if (password.isEmpty) {
-      passwordError.value = 'Password harus diisi';
-      return false;
-    } else if (password.value.length < 6) {
-      passwordError.value = 'Password minimal terdiri dari 6 karakter';
-      return false;
-    } else {
-      passwordError.value = '';
-      return true;
-    }
-  }
+  // bool validatePassword() {
+  //   if (password.isEmpty) {
+  //     passwordError.value = 'Password harus diisi';
+  //     return false;
+  //   } else if (password.value.length < 6) {
+  //     passwordError.value = 'Password minimal terdiri dari 6 karakter';
+  //     return false;
+  //   } else {
+  //     passwordError.value = '';
+  //     return true;
+  //   }
+  // }
 
   // Fungsi untuk validasi konfirmasi password
   bool validateConfirmPassword() {
@@ -151,7 +190,7 @@ class RegisterController extends GetxController {
   }
 
   void navigationToLogin() {
-    Get.toNamed(Routes.AUTH);
+    Get.offNamed(Routes.AUTH);
   }
 
   void samePassword() {
@@ -160,5 +199,11 @@ class RegisterController extends GetxController {
     } else {
       confirmPasswordError.value = '';
     }
+  }
+
+  @override
+  void dispose() {
+    formKey.currentState;
+    super.dispose();
   }
 }

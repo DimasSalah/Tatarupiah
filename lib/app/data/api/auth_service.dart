@@ -12,7 +12,8 @@ class AuthService extends GetxService {
   final logger = Logger();
   final baseUrl = baseurl;
 
-  Future<Response> login(String email, String password) async {
+  Future login(String email, String password) async {
+    print('service');
     try {
       final response = await _dio.post(
         'https://tatarupiah.my.id/api/login',
@@ -27,12 +28,12 @@ class AuthService extends GetxService {
         },
       );
       if (response.statusCode == 200) {
+        Map<String, dynamic> responseData = response.data;
         String token = response.data['data']['token'];
         GetStorage().write('token', token);
-        Get.offNamed(Routes.MAIN);
+
         logger.i('Berhasil login');
-        // GetStorage().erase();
-        return response.data;
+        return responseData;
       } else {
         logger.e(response.data);
         throw Exception('Gagal login');
@@ -43,7 +44,7 @@ class AuthService extends GetxService {
     }
   }
 
-  Future<Response?> register(String nama, String email, String password,
+  Future register(String nama, String email, String password,
       String confirmPassword) async {
     try {
       final response = await _dio.post(
@@ -60,14 +61,12 @@ class AuthService extends GetxService {
       );
 
       if (response.statusCode == 201) {
-        print(response.data);
+        Map<String, dynamic> responseData = response.data;
         // Get.offNamed(Routes.AUTH);
         String token = response.data['data']['token'];
         GetStorage().write('token', token);
-        Get.offNamed(Routes.HOME);
         logger.i('Berhasil register');
-        print(response.data);
-        return response.data;
+        return responseData;
       } else {
         logger.e(response.data);
         throw Exception('Gagal register');

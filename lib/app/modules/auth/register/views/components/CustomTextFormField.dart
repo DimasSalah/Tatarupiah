@@ -6,9 +6,10 @@ import '../../../../../style/text_style.dart';
 class CustomTextFieldContainer extends StatelessWidget {
   final String labelText;
   final String hintText;
-  bool? obscureText;
+  final bool? obscureText;
   final Function(String) onChanged;
   final Widget? icon;
+  final String? Function(String?)? validator;
 
   CustomTextFieldContainer(
       {Key? key,
@@ -16,7 +17,8 @@ class CustomTextFieldContainer extends StatelessWidget {
       required this.hintText,
       this.obscureText,
       required this.onChanged,
-      this.icon})
+      this.icon,
+      this.validator})
       : super(key: key);
 
   @override
@@ -25,6 +27,7 @@ class CustomTextFieldContainer extends StatelessWidget {
       style: regular.copyWith(fontSize: 14, color: dark),
       obscureText: obscureText ?? false,
       onChanged: onChanged,
+      validator: validator,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: regular.copyWith(fontSize: 14, color: lightActive),

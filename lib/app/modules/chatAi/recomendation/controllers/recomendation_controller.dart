@@ -1,6 +1,7 @@
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tatarupiah/app/modules/statistics/controllers/statistics_controller.dart';
 
 import '../../../../data/global_controller/user_controller.dart';
 import '../data/models/chat_model.dart';
@@ -8,6 +9,7 @@ import '../data/models/chat_model.dart';
 class RecomendationController extends GetxController {
   final TextEditingController textController = TextEditingController();
   final UserController userController = UserController.to;
+  final StatisticsController staticController = Get.put(StatisticsController());
   late OpenAI openAi;
 
   RxString message = ''.obs;
@@ -26,7 +28,7 @@ class RecomendationController extends GetxController {
     'pendidikan',
   ].obs;
 
-  RxString amount = ''.obs;
+  RxString amount = '0'.obs;
 
   void setAmount(String value) {
     amount.value = value;
@@ -77,7 +79,7 @@ class RecomendationController extends GetxController {
     var response = await openAi.onCompletion(
       request: CompleteText(
         prompt:
-            'Saya mempunyai , ingin digunakan untuk ${message.value}, berapa alokasi anggaran yang tepat?, deskripsikan dengan sangat singkat',
+            'Saya mempunyai uang dengan nominal ${amount.value} , ingin digunakan untuk ${message.value}, berapa alokasi anggaran yang tepat berikan list anggaranya, deskripsikan dengan singkat',
         model: Gpt3TurboInstruct(),
         maxTokens: 300,
       ),
@@ -96,6 +98,9 @@ class RecomendationController extends GetxController {
 
   @override
   void onInit() {
+    // print('harga ${staticController.incomeAmount.value.toString()}');
+    // String incomeAmountString = staticController.incomeAmount.value.toString();
+    // incomeAmountString = amount.value;
     openAi = OpenAI.instance.build(
       token: userController.apiKey.value,
       baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 5)),
