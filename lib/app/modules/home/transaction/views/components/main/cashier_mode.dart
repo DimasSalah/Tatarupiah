@@ -76,6 +76,7 @@ class CashierMode extends StatelessWidget {
                                                   subCategory.nominalPenjualan,
                                               countOrder:
                                                   subCategory.orderCount,
+                                              icon: subCategory.icon,
                                               increment: () => controller
                                                   .incrementOrder(subCategory),
                                               decrement: () => controller

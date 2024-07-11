@@ -51,24 +51,35 @@ class TransactionCard extends StatelessWidget {
                     child: SvgPicture.asset(icon),
                   ),
                   const SizedBox(width: 17),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: medium.copyWith(fontSize: 16, color: normal),
-                      ),
-                      Text(
-                        subtitle,
-                        style: regular.copyWith(fontSize: 13, color: lightActive),
-                      )
-                    ],
+                  Container(
+                    constraints: const BoxConstraints(
+                        maxWidth:
+                            120), // add this line to make the text wrap when it's too long
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: medium.copyWith(fontSize: 16, color: normal),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          subtitle,
+                          style: regular.copyWith(
+                              fontSize: 13, color: lightActive),
+                        )
+                      ],
+                    ),
                   )
                 ],
               ),
               Text(
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 currencyViewFormatter(price),
-                style: semiBold.copyWith(fontSize: 20, color: type == 'Pemasukan' ? success : error),
+                style: semiBold.copyWith(
+                    fontSize: 20, color: type == 'Pemasukan' ? success : error),
               )
             ],
           ),

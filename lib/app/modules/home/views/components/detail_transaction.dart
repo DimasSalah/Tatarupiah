@@ -125,7 +125,7 @@ class DetailTransaction extends StatelessWidget {
                       style: regular.copyWith(fontSize: 13),
                     ),
                     Text(
-                      'Rp. ${transaction.nominalPengeluaran}',
+                      'Rp${currencyFormatWithK(transaction.nominalPengeluaran.toString())}',
                       style: semiBold.copyWith(fontSize: 13, color: error),
                     )
                   ],
@@ -140,7 +140,7 @@ class DetailTransaction extends StatelessWidget {
                             style: regular.copyWith(fontSize: 13),
                           ),
                           Text(
-                            'Rp. ${transaction.nominalPenjualan}',
+                            'Rp${currencyFormatWithK(transaction.nominalPenjualan.toString())}',
                             style:
                                 semiBold.copyWith(fontSize: 13, color: success),
                           )

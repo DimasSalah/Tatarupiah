@@ -94,7 +94,7 @@ class ProfileController extends GetxController {
     await changeImage();
     userController.fetchProfile();
   }
-  
+
   //pic file from camera
   void captureImage() async {
     var imageReq = await Permission.camera.request();
@@ -166,7 +166,7 @@ class ProfileController extends GetxController {
 
   void logout() async {
     await GetStorage().erase();
-    Get.offNamed(Routes.AUTH);
+    Get.offAllNamed(Routes.AUTH);
   }
 
   @override

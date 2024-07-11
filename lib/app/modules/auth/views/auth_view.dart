@@ -96,8 +96,7 @@ class AuthView extends GetView<AuthController> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      fixedSize:
-                          const Size(double.infinity, 64),
+                      fixedSize: const Size(double.infinity, 64),
                     ),
                     child: Text(
                       'Masuk',

@@ -30,6 +30,7 @@ class HomeController extends GetxController with BarchartMixin {
       transactionsList.removeWhere((element) => element.id == id);
       getProfit();
       fetchBarChartData();
+      fetchTransaction();
     } catch (e) {
       Get.snackbar("Error", 'Gagal menghapus transaksi');
     }

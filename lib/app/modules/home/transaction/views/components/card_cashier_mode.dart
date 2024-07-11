@@ -12,6 +12,7 @@ class CardCashierMode extends StatelessWidget {
   final String title;
   final String price;
   final int countOrder;
+  final String icon;
   final void Function()? increment;
   final void Function()? decrement;
   const CardCashierMode({
@@ -19,6 +20,7 @@ class CardCashierMode extends StatelessWidget {
     required this.title,
     required this.price,
     required this.countOrder,
+    required this.icon,
     this.increment,
     this.decrement,
   });
@@ -40,13 +42,13 @@ class CardCashierMode extends StatelessWidget {
               Container(
                   height: 50,
                   width: 50,
+                  padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
                     color: dark,
                     borderRadius: BorderRadius.circular(11),
                   ),
                   child: SvgPicture.asset(
-                    "assets/icons/fooddrink.svg",
-                    fit: BoxFit.scaleDown,
+                    icon,
                   )),
               const SizedBox(
                 width: 17.5,

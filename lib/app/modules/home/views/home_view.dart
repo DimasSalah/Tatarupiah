@@ -27,10 +27,14 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        controller: controller.scrollController,
-        child: SafeArea(
-          child: Column(
+      body: SafeArea(
+        child: RefreshIndicator(
+          onRefresh: () async {
+            controller.fetchBarChartData();
+            controller.fetchTransaction();
+          },
+          child: ListView(
+            controller: controller.scrollController,
             children: [
               Obx(
                 () => HeaderBar(

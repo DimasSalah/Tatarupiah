@@ -97,79 +97,91 @@ class HistoryView extends GetView<HistoryController> {
                           child: Text("Data Kosong"),
                         )
                       : Expanded(
-                          child: ListView.builder(
-                            controller: controller.scrollController,
-                            itemCount:
-                                controller.groupedTransactions.keys.length +
-                                    (controller.hasMoreData.value &&
-                                            controller.isFetchingMore.value
-                                        ? 1
-                                        : 0),
-                            itemBuilder: (context, index) {
-                              if (index <
-                                  controller.groupedTransactions.keys.length) {
-                                DateTime date = controller
-                                    .groupedTransactions.keys
-                                    .elementAt(index);
-                                List<TransactionHistory> transactions =
-                                    controller.groupedTransactions[date]!;
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    ProfitHeader(
-                                      countTransaction:
-                                          transactions.length.toString(),
-                                      profit: currencyFormatWithK(transactions
-                                          .fold(
-                                              0,
-                                              (sum, item) =>
-                                                  sum +
-                                                  item.nominalPenjualan -
-                                                  item.nominalPengeluaran)
-                                          .toString()),
-                                      date: DateFormat('dd MMM yyyy')
-                                          .format(transactions.first.tanggal),
-                                    ),
-                                    ...transactions.map((transaction) {
-                                      return TransactionHistoryWidget(
-                                        icon: transaction.icon,
-                                        title: transaction.subKategori,
-                                        subtitle: transaction.kategori,
-                                        price: transaction.type == 'Pemasukan'
-                                            ? transaction.nominalPenjualan
-                                                .toString()
-                                            : transaction.nominalPengeluaran
-                                                .toString(),
-                                        type: transaction.type,
-                                        longPress: () {
-                                          Get.dialog(
-                                            Dialog(
-                                              child: DetailTransaction(
-                                                  transaction: transaction,
-                                                  onTap: () {
-                                                    controller.delTransaction(
-                                                        transaction.id);
-                                                    Get.back();
-                                                  }),
-                                            ),
-                                          );
-                                        },
+                          child: GetBuilder<HistoryController>(
+                              id: 'history',
+                              builder: (controller) {
+                                return ListView.builder(
+                                  controller: controller.scrollController,
+                                  itemCount: controller
+                                          .groupedTransactions.keys.length +
+                                      (controller.hasMoreData.value &&
+                                              controller.isFetchingMore.value
+                                          ? 1
+                                          : 0),
+                                  itemBuilder: (context, index) {
+                                    if (index <
+                                        controller
+                                            .groupedTransactions.keys.length) {
+                                      DateTime date = controller
+                                          .groupedTransactions.keys
+                                          .elementAt(index);
+                                      List<TransactionHistory> transactions =
+                                          controller.groupedTransactions[date]!;
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          ProfitHeader(
+                                            countTransaction:
+                                                transactions.length.toString(),
+                                            profit: currencyFormatWithK(transactions
+                                                .fold(
+                                                    0,
+                                                    (sum, item) =>
+                                                        sum +
+                                                        item.nominalPenjualan -
+                                                        item.nominalPengeluaran)
+                                                .toString()),
+                                            date: DateFormat('dd MMM yyyy')
+                                                .format(
+                                                    transactions.first.tanggal),
+                                          ),
+                                          ...transactions.map((transaction) {
+                                            return TransactionHistoryWidget(
+                                              icon: transaction.icon,
+                                              title: transaction.subKategori,
+                                              subtitle: transaction.kategori,
+                                              price: transaction.type ==
+                                                      'Pemasukan'
+                                                  ? transaction.nominalPenjualan
+                                                      .toString()
+                                                  : transaction
+                                                      .nominalPengeluaran
+                                                      .toString(),
+                                              type: transaction.type,
+                                              longPress: () {
+                                                Get.dialog(
+                                                  Dialog(
+                                                    child: DetailTransaction(
+                                                        transaction:
+                                                            transaction,
+                                                        onTap: () {
+                                                          controller
+                                                              .delTransaction(
+                                                                  transaction
+                                                                      .id);
+                                                          Get.back();
+                                                        }),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          }).toList(),
+                                        ],
                                       );
-                                    }).toList(),
-                                  ],
+                                    } else {
+                                      if (controller.hasMoreData.value &&
+                                          controller.isFetchingMore.value) {
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      } else {
+                                        return Container(); // Return an empty container if no more data
+                                      }
+                                    }
+                                  },
                                 );
-                              } else {
-                                if (controller.hasMoreData.value &&
-                                    controller.isFetchingMore.value) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                } else {
-                                  return Container(); // Return an empty container if no more data
-                                }
-                              }
-                            },
-                          ),
+                              }),
                         ),
             ),
           ],

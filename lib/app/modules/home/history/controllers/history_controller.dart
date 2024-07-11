@@ -27,6 +27,8 @@ class HistoryController extends GetxController {
     try {
       await transactionService.deleteTransaction(id);
       transactionsList.removeWhere((element) => element.id == id);
+      groupTransactionsByDate();
+      update(['history']);
     } catch (e) {
       Get.snackbar("Error", 'Gagal menghapus transaksi');
     }
@@ -96,16 +98,15 @@ class HistoryController extends GetxController {
   }
 
   void groupTransactionsByDate() {
-    var grouped = <DateTime, List<TransactionHistory>>{};
+    groupedTransactions.clear();
     for (var transaction in transactionsList) {
-      DateTime date = DateTime(transaction.tanggal.year,
-          transaction.tanggal.month, transaction.tanggal.day);
-      if (!grouped.containsKey(date)) {
-        grouped[date] = [];
+      final date = transaction.tanggal;
+      if (!groupedTransactions.containsKey(date)) {
+        groupedTransactions[date] = [];
       }
-      grouped[date]!.add(transaction);
+      groupedTransactions[date]!.add(transaction);
     }
-    groupedTransactions.value = grouped;
+    update(['history']); // Ensure the view is updated after grouping
   }
 
   @override
