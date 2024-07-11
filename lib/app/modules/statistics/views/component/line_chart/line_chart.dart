@@ -17,14 +17,6 @@ class LineChartWidget extends StatelessWidget {
       width: 340,
       height: 250,
       child: Obx(() {
-        if (controller.incomeData.isEmpty ||
-            controller.expenseData.isEmpty ||
-            controller.profitData.isEmpty) {
-          return Center(
-              child:
-                  CircularProgressIndicator()); // Show a loading indicator while data is being loaded
-        }
-
         return LineChart(
           LineChartData(
             lineTouchData: LineTouchData(
@@ -100,44 +92,6 @@ class LineChartWidget extends StatelessWidget {
       spots: spots,
     );
   }
-
-  Widget leftTitleWidget(double value, TitleMeta meta) {
-    const style = TextStyle(
-      color: Colors.red,
-      fontSize: 12,
-    );
-    String text;
-    switch (value.toInt()) {
-      case 0:
-        text = '0';
-        break;
-      case 1:
-        text = '3';
-        break;
-      case 2:
-        text = '5';
-        break;
-      case 3:
-        text = '7';
-        break;
-      case 4:
-        text = '10';
-        break;
-      default:
-        return const SizedBox();
-    }
-    return Text(
-      text,
-      style: style,
-    );
-  }
-
-  SideTitles leftTitles() => SideTitles(
-        getTitlesWidget: leftTitleWidget,
-        showTitles: false, // Hide left titles
-        interval: 1,
-        reservedSize: 28,
-      );
 
   Widget bottomTitleWidget(double value, TitleMeta meta) {
     const style = TextStyle(

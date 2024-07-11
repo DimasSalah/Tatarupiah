@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
-import 'package:tatarupiah/app/data/global_controller/user_controller.dart';
+import 'package:tatarupiah/app/utils/global_controller/user_controller.dart';
 import '../data/models/line_chart_model.dart';
 import '../data/services/line_chart_services.dart';
 import '../mixins/month_mixins.dart';
@@ -29,11 +29,11 @@ class StatisticsController extends GetxController with MonthMixins {
   double calculateMaxY(List<FlSpot> incomeData, List<FlSpot> expenseData,
       List<FlSpot> profitData) {
     double maxIncomeY =
-        incomeData.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
+        incomeData.map((spot) => spot.y.abs()).reduce((a, b) => a > b ? a : b);
     double maxExpenseY =
-        expenseData.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
+        expenseData.map((spot) => spot.y.abs()).reduce((a, b) => a > b ? a : b);
     double maxProfitY =
-        profitData.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
+        profitData.map((spot) => spot.y.abs()).reduce((a, b) => a > b ? a : b);
     double maxY =
         [maxIncomeY, maxExpenseY, maxProfitY].reduce((a, b) => a > b ? a : b);
 
