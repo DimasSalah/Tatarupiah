@@ -37,17 +37,22 @@ String currencyWithoutSymbol(String value) {
 }
 
 String currencyFormatWithK(String value) {
-  if (value.isEmpty) return '0';
-  final amount = double.parse(value);
-  if (amount < 1000) {
-    return amount.toStringAsFixed(0);
-  } else if (amount < 1000000) {
-    final formatter = NumberFormat("#,##0.0", "id");
-    return "${formatter.format(amount / 1000)}rb"; // Menggunakan 'rb' untuk ribu
+  double amount = double.tryParse(value) ?? 0;
+  bool isNegative = amount < 0;
+  amount = amount.abs();
+
+  String formattedValue;
+  if (amount >= 1000) {
+    formattedValue = '${(amount / 1000).toStringAsFixed(1)}K';
   } else {
-    final formatter = NumberFormat("#,##0.0", "id");
-    return "${formatter.format(amount / 1000000)}jt"; // Menggunakan 'jt' untuk juta
+    formattedValue = amount.toStringAsFixed(0);
   }
+
+  if (isNegative) {
+    formattedValue = '-$formattedValue';
+  }
+
+  return formattedValue;
 }
 
 String currencyFormatWithKDouble(String value) {

@@ -34,12 +34,16 @@ class BarGraph extends StatelessWidget {
                   BarChartRodData rod,
                   int rodIndex,
                 ) {
+                  double actualValue = controller.barData.barData[groupIndex].y;
                   return BarTooltipItem(
-                      currencyFormatWithK(rod.toY.round().toString()),
-                      semiBold.copyWith(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ));
+                    currencyFormatWithK(actualValue
+                        .round()
+                        .toString()), // Display original value in tooltip
+                    semiBold.copyWith(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  );
                 },
               ),
             ),
@@ -73,7 +77,7 @@ class BarGraph extends StatelessWidget {
                     x: data.x,
                     barRods: [
                       BarChartRodData(
-                        toY: data.y,
+                        toY: data.y.abs(), // Display absolute value
                         width: Get.width / 8.5,
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(14),
@@ -81,17 +85,32 @@ class BarGraph extends StatelessWidget {
                         ),
                         borderSide: controller.selectedBarIndex.value == data.x
                             ? BorderSide(
-                                color: greenYellow,
+                                color: data.y < 0 ? Colors.red : greenAccent,
                                 width: 2,
                               )
-                            : BorderSide.none,
-                        gradient: controller.selectedBarIndex.value == data.x
-                            ? primary
-                            : LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [light, light],
+                            : BorderSide(
+                                width: 2,
+                                color: data.y < 0 ? error : Colors.transparent,
                               ),
+                        gradient: data.y < 0 // Check if the value is negative
+                            ? controller.selectedBarIndex.value == data.x
+                                ? LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [Colors.red, error],
+                                  )
+                                : LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [light, error],
+                                  )
+                            : controller.selectedBarIndex.value == data.x
+                                ? primary
+                                : LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [light, light],
+                                  ),
                       ),
                     ],
                   ),

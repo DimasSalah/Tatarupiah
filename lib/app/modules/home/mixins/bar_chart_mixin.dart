@@ -54,11 +54,13 @@ mixin BarchartMixin on GetxController {
 //   }
 
   double calculateMax(List<BarChartValue> data) {
-    //setting for max value of y axis
     if (data.isEmpty) return 100.0;
-    double max =
-        data.map((d) => d.amount.toDouble()).reduce((a, b) => a > b ? a : b);
-    return max * 1.1; // Increase cap slightly
+    double max = data
+        .map((d) =>
+            d.amount.abs().toDouble()) // Convert negative values to positive
+        .reduce((a, b) => a > b ? a : b);
+    return (max < 100 ? 100 : max) *
+        1.1; // Ensure max is at least 100 and increase cap slightly
   }
 
   int calculateTotalAmount(List<BarChartValue> data) {
