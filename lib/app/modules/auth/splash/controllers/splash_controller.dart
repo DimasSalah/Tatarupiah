@@ -9,14 +9,6 @@ class SplashController extends GetxController {
   void onReady() {
     checkLogin();
   }
-  // void checkLogin() async {
-  //   final getToken = await GetStorage().read('token');
-  //   token.value = getToken;
-  //   print(token.value);
-  //   Future.delayed(Duration(seconds: 3), () {
-  //     Get.offNamed(Routes.ONBOARDING);
-  //   });
-  // }
   void checkLogin() async {
     final getToken = await GetStorage().read('token');
     final isOnBoardingCompleted =
