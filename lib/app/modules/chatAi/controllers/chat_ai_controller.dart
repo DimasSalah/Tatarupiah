@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../../data/global_controller/user_controller.dart';
+import '../../../utils/global_controller/user_controller.dart';
 
 class ChatAiController extends GetxController {
   //TODO: Implement ChatAiController

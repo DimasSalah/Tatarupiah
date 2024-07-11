@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tatarupiah/app/modules/statistics/controllers/statistics_controller.dart';
 
-import '../../../../data/global_controller/user_controller.dart';
+import '../../../../utils/global_controller/user_controller.dart';
 import '../data/models/chat_model.dart';
 
 class RecomendationController extends GetxController {

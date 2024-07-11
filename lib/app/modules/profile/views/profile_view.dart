@@ -59,37 +59,41 @@ class ProfileView extends GetView<ProfileController> {
                     const SizedBox(
                       width: 36,
                     ),
-                    Obx(() {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            constraints: const BoxConstraints(maxWidth: 180),
-                            child: Text(
-                              controller.userController.nameProfile.string == ''
-                                  ? ''
-                                  : controller.userController.nameProfile.value,
-                              style: semiBold.copyWith(
-                                  fontSize: 22, color: lighter),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                    Expanded(
+                      child: Obx(() {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Text(
+                                controller.userController.nameProfile.string ==
+                                        ''
+                                    ? ''
+                                    : controller
+                                        .userController.nameProfile.value,
+                                style: semiBold.copyWith(
+                                    fontSize: 22, color: lighter),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            controller.userController.storeNameProfile.string ==
-                                    ''
-                                ? ''
-                                : controller
-                                    .userController.storeNameProfile.value,
-                            style:
-                                regular.copyWith(fontSize: 16, color: lighter),
-                          ),
-                        ],
-                      );
-                    })
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              controller.userController.storeNameProfile
+                                          .string ==
+                                      ''
+                                  ? ''
+                                  : controller
+                                      .userController.storeNameProfile.value,
+                              style: regular.copyWith(
+                                  fontSize: 16, color: lighter),
+                            ),
+                          ],
+                        );
+                      }),
+                    ),
                   ],
                 ),
               ),
@@ -147,7 +151,7 @@ class ProfileView extends GetView<ProfileController> {
                     : regular.copyWith(fontSize: 13, color: darkHover),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             RichText(
               text: TextSpan(
                 children: [

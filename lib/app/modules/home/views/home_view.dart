@@ -14,6 +14,7 @@ import 'package:tatarupiah/app/style/colors.dart';
 import 'package:tatarupiah/app/style/gradient.dart';
 import 'package:tatarupiah/app/utils/currency_format.dart';
 import 'package:tatarupiah/app/utils/date_format.dart';
+import 'package:tatarupiah/app/utils/global_controller/user_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../../../style/text_style.dart';
 import '../controllers/home_controller.dart';
@@ -29,9 +30,12 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
+          color: dark,
+          backgroundColor: light,
           onRefresh: () async {
             controller.fetchBarChartData();
             controller.fetchTransaction();
+            controller.userController.fetchProfile();
           },
           child: ListView(
             controller: controller.scrollController,

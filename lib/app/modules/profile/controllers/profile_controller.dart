@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tatarupiah/app/data/services/profile_service.dart';
 
-import '../../../data/global_controller/user_controller.dart';
+import '../../../utils/global_controller/user_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../views/componnets/loading_circular.dart';
 
