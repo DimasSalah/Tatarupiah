@@ -105,24 +105,25 @@ class RegisterView extends GetView<RegisterController> {
                           ),
                         )),
                     const Gap(26),
-                    ElevatedButton(
-                      onPressed: () {
+                    InkWell(
+                      onTap: () {
                         controller.register();
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: dark, // Background color
+                      child: Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 141, vertical: 20),
-                        shape: RoundedRectangleBorder(
+                        decoration: BoxDecoration(
+                          color: dark,
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        fixedSize: const Size(double.infinity, 64),
-                      ),
-                      child: Text(
-                        'Daftar',
-                        maxLines: 1,
-                        style: regular.copyWith(fontSize: 16, color: white),
-                        textAlign: TextAlign.center,
+                        width: double.infinity,
+                        height: 64,
+                        child: Text(
+                          'Register',
+                          maxLines: 1,
+                          style: regular.copyWith(fontSize: 16, color: white),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),

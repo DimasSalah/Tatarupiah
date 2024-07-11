@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:tatarupiah/app/routes/app_pages.dart';
 
 import '../../../../data/api/auth_service.dart';
-import '../../../../data/global_controller/user_controller.dart';
+import '../../../../utils/global_controller/user_controller.dart';
 
 class RegisterController extends GetxController {
   // Variabel untuk menyimpan nilai input dari form

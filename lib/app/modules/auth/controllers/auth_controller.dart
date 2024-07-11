@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:tatarupiah/app/data/api/auth_service.dart';
 
-import '../../../data/global_controller/user_controller.dart';
+import '../../../utils/global_controller/user_controller.dart';
 import '../../../routes/app_pages.dart';
 
 class AuthController extends GetxController {
