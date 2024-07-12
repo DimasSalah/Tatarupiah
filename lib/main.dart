@@ -17,8 +17,7 @@ Future<void> main() async {
   await initializeDateFormatting('id_ID', null);
   Intl.defaultLocale = 'id_ID';
   DependencyInjection.init();
-  runApp(DevicePreview(
-    builder: (context) => GetMaterialApp(
+  runApp(GetMaterialApp(
       title: "Application",
       debugShowCheckedModeBanner: false,
       initialRoute: AppPages.INITIAL,
@@ -33,6 +32,5 @@ Future<void> main() async {
       supportedLocales: const [
         Locale('id', 'ID'),
       ],
-    ),
-  ));
+    ));
 }
