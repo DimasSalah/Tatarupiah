@@ -36,10 +36,11 @@ dependencies:
   flutter_intro: ^3.2.3
   connectivity_plus: ^6.0.3
   dash_chat_2: ^0.0.21
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies: 
   flutter_lints: ^2.0.0
-  flutter_launcher_icons: ^0.13.1
+  
   flutter_test: 
     sdk: flutter
 
@@ -47,6 +48,8 @@ flutter_icons:
   android: true
   ios: true
   image_path: "assets/icons/app_icon.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/icons/app_icon.png"
 
 flutter:
   assets: 
