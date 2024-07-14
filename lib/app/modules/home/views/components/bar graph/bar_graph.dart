@@ -36,7 +36,7 @@ class BarGraph extends StatelessWidget {
                 ) {
                   double actualValue = controller.barData.barData[groupIndex].y;
                   return BarTooltipItem(
-                    currencyFormatWithK(actualValue
+                    currencyFormatWithKDouble(actualValue
                         .round()
                         .toString()), // Display original value in tooltip
                     semiBold.copyWith(

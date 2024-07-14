@@ -90,7 +90,8 @@ class DetailTransaction extends StatelessWidget {
                     ),
                     child: Text(
                       DateFormat("HH:mm, dd EEEE, MMM yyyy").format(
-                        DateTime.parse(transaction.createdAt),
+                        DateTime.parse(transaction.createdAt)
+                            .add(Duration(hours: 7)),
                       ),
                       style: regular.copyWith(fontSize: 11, color: normal),
                     ),
@@ -125,7 +126,7 @@ class DetailTransaction extends StatelessWidget {
                       style: regular.copyWith(fontSize: 13),
                     ),
                     Text(
-                      'Rp${currencyFormatWithK(transaction.nominalPengeluaran.toString())}',
+                      'Rp${currencyFormatWithKDouble(transaction.nominalPengeluaran.toString())}',
                       style: semiBold.copyWith(fontSize: 13, color: error),
                     )
                   ],
@@ -140,7 +141,7 @@ class DetailTransaction extends StatelessWidget {
                             style: regular.copyWith(fontSize: 13),
                           ),
                           Text(
-                            'Rp${currencyFormatWithK(transaction.nominalPenjualan.toString())}',
+                            'Rp${currencyFormatWithKDouble(transaction.nominalPenjualan.toString())}',
                             style:
                                 semiBold.copyWith(fontSize: 13, color: success),
                           )

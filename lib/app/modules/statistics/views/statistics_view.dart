@@ -25,7 +25,7 @@ class StatisticsView extends GetView<StatisticsController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-             Obx(
+              Obx(
                 () => HeaderBar(
                   avatar: controller.userController.imgProfile.string == ''
                       ? 'https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307t-user-account-image-log-user.png'
@@ -80,12 +80,12 @@ class StatisticsView extends GetView<StatisticsController> {
               ),
               Obx(() {
                 return FinanceReport(
-                  income:
-                      currencyFormatWithK(controller.incomeAmount.toString()),
-                  expense:
-                      currencyFormatWithK(controller.expenseAmount.toString()),
-                  profit:
-                      currencyFormatWithK(controller.profitAmount.toString()),
+                  income: currencyFormatWithKDouble(
+                      controller.incomeAmount.toString()),
+                  expense: currencyFormatWithKDouble(
+                      controller.expenseAmount.toString()),
+                  profit: currencyFormatWithKDouble(
+                      controller.profitAmount.toString()),
                 );
               }),
               const DividerLine(),

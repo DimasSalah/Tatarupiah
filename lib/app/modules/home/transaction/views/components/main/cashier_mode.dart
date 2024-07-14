@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
-import 'package:tatarupiah/app/routes/app_pages.dart';
 import 'package:tatarupiah/app/style/colors.dart';
 import 'package:tatarupiah/app/style/text_style.dart';
 import '../../../../../../style/gradient.dart';
@@ -259,20 +257,32 @@ class CashierMode extends StatelessWidget {
                         );
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(6),
+                        padding: const EdgeInsets.only(
+                            left: 12, bottom: 6, top: 6, right: 6),
                         decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: dark,
                           borderRadius: BorderRadius.circular(24),
                         ),
-                        child: Container(
-                          padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                            gradient: primary,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/icons/plus.svg',
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Tambah',
+                              style:
+                                  regular.copyWith(fontSize: 16, color: white),
+                            ),
+                            const Gap(10),
+                            Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                gradient: primary,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: SvgPicture.asset(
+                                'assets/icons/plus.svg',
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),

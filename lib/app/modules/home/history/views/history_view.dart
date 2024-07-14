@@ -87,6 +87,7 @@ class HistoryView extends GetView<HistoryController> {
                             title: 'Loading Title',
                             subtitle: 'Makanan',
                             price: '10000',
+                            date: '2024-07-12T15:21:47.000000Z',
                             type: 'Pemasukan',
                           ),
                         );
@@ -124,14 +125,15 @@ class HistoryView extends GetView<HistoryController> {
                                           ProfitHeader(
                                             countTransaction:
                                                 transactions.length.toString(),
-                                            profit: currencyFormatWithK(transactions
-                                                .fold(
-                                                    0,
-                                                    (sum, item) =>
-                                                        sum +
-                                                        item.nominalPenjualan -
-                                                        item.nominalPengeluaran)
-                                                .toString()),
+                                            profit: currencyFormatWithKDouble(
+                                                transactions
+                                                    .fold(
+                                                        0,
+                                                        (sum, item) =>
+                                                            sum +
+                                                            item.nominalPenjualan -
+                                                            item.nominalPengeluaran)
+                                                    .toString()),
                                             date: DateFormat('dd MMM yyyy')
                                                 .format(
                                                     transactions.first.tanggal),
@@ -149,6 +151,7 @@ class HistoryView extends GetView<HistoryController> {
                                                       .nominalPengeluaran
                                                       .toString(),
                                               type: transaction.type,
+                                              date: transaction.createdAt,
                                               longPress: () {
                                                 Get.dialog(
                                                   Dialog(

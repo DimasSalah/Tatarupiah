@@ -17,6 +17,16 @@ class LineChartWidget extends StatelessWidget {
       width: 340,
       height: 250,
       child: Obx(() {
+        if (controller.incomeData.isEmpty ||
+            controller.expenseData.isEmpty ||
+            controller.profitData.isEmpty) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: whites,
+            ), // Display a loading indicator
+          );
+        }
+
         return LineChart(
           LineChartData(
             lineTouchData: LineTouchData(
@@ -75,7 +85,6 @@ class LineChartWidget extends StatelessWidget {
     );
   }
 
-  //controll circle radius
   LineChartBarData createLineChartBarData(List<FlSpot> spots,
       {required Color color}) {
     return LineChartBarData(

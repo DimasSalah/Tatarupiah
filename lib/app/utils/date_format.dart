@@ -9,3 +9,9 @@ String appBarDate(DateTime date) {
 String statusDate(DateTime date) {
   return DateFormat('dd MMM yyyy').format(date);
 }
+
+//format hour to 24 hour
+String formatTo24Hour(String isoDate) {
+  DateTime dateTime = DateTime.parse(isoDate).add(Duration(hours: 7)); // Tambah 7 jam
+  return DateFormat('HH').format(dateTime);
+}

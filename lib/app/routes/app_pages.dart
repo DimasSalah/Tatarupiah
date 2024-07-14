@@ -1,19 +1,20 @@
 import 'package:get/get.dart';
 
-import 'package:tatarupiah/app/modules/home/category/views/add_category_view.dart';
-import 'package:tatarupiah/app/modules/profile/views/password_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/register/bindings/register_binding.dart';
 import '../modules/auth/register/views/register_view.dart';
 import '../modules/auth/splash/bindings/splash_binding.dart';
 import '../modules/auth/splash/views/splash_view.dart';
 import '../modules/auth/views/auth_view.dart';
+import '../modules/chatAi/assistant/bindings/assistant_binding.dart';
+import '../modules/chatAi/assistant/views/assistant_view.dart';
 import '../modules/chatAi/bindings/chat_ai_binding.dart';
 import '../modules/chatAi/recomendation/bindings/recomendation_binding.dart';
 import '../modules/chatAi/recomendation/views/recomendation_view.dart';
 import '../modules/chatAi/views/chat_ai_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/category/bindings/category_binding.dart';
+import '../modules/home/category/views/add_category_view.dart';
 import '../modules/home/category/views/add_category_view.dart';
 import '../modules/home/category/views/category_view.dart';
 import '../modules/home/history/bindings/history_binding.dart';
@@ -27,6 +28,7 @@ import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/edit_profile_view.dart';
+import '../modules/profile/views/password_view.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/statistics/bindings/statistics_binding.dart';
 import '../modules/statistics/views/statistics_view.dart';
@@ -101,6 +103,11 @@ class AppPages {
           name: _Paths.RECOMENDATION,
           page: () => const RecomendationView(),
           binding: RecomendationBinding(),
+        ),
+        GetPage(
+          name: _Paths.ASSISTANT,
+          page: () => const AssistantView(),
+          binding: AssistantBinding(),
         ),
       ],
     ),

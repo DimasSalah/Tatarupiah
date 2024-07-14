@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:tatarupiah/app/utils/currency_format.dart';
 
 import '../../../../../style/colors.dart';
@@ -11,6 +12,7 @@ class TransactionHistoryWidget extends StatelessWidget {
   final String subtitle;
   final String price;
   final String type;
+  final String date;
   final Function()? longPress;
   const TransactionHistoryWidget({
     super.key,
@@ -19,6 +21,7 @@ class TransactionHistoryWidget extends StatelessWidget {
     required this.subtitle,
     required this.price,
     required this.type,
+    required this.date,
     this.longPress,
   });
 
@@ -60,16 +63,33 @@ class TransactionHistoryWidget extends StatelessWidget {
                       ),
                       Text(
                         subtitle,
-                        style: regular.copyWith(fontSize: 13, color: lightActive),
+                        style:
+                            regular.copyWith(fontSize: 13, color: lightActive),
                       )
                     ],
                   )
                 ],
               ),
-              Text(
-                currencyViewFormatter(price),
-                style: semiBold.copyWith(
-                    fontSize: 20, color: type == 'Pemasukan' ? success : error),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    DateFormat("HH:mm").format(
+                      DateTime.parse(date).add(Duration(hours: 7)),
+                    ),
+                    style: regular.copyWith(
+                      fontSize: 10,
+                      color: normal.withOpacity(0.6),
+                    ),
+                  ),
+                  Text(
+                    'Rp ${currencyFormatWithKDouble(price)}',
+                    style: semiBold.copyWith(
+                        fontSize: 20,
+                        color: type == 'Pemasukan' ? success : error),
+                  ),
+                ],
               )
             ],
           ),

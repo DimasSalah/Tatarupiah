@@ -22,7 +22,7 @@ class HomeController extends GetxController with BarchartMixin {
 
   final ScrollController scrollController = ScrollController();
   final transactionService = TransactionService();
-  final UserController userController = UserController.to;
+  final userController = Get.put(UserController());
 
   Future<void> delTransaction(int id) async {
     try {

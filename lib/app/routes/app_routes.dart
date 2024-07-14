@@ -20,6 +20,7 @@ abstract class Routes {
   static const SPLASH = _Paths.AUTH + _Paths.SPLASH;
   static const LOGIN = _Paths.LOGIN;
   static const CHANGE_PASSWORD = _Paths.PROFILE + _Paths.CHANGE_PASSWORD;
+  static const ASSISTANT = _Paths.CHAT_AI + _Paths.ASSISTANT;
 }
 
 abstract class _Paths {
@@ -41,4 +42,5 @@ abstract class _Paths {
   static const SPLASH = '/splash';
   static const LOGIN = '/login';
   static const CHANGE_PASSWORD = '/change-password';
+  static const ASSISTANT = '/assistant';
 }

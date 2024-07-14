@@ -87,7 +87,7 @@ class FinanceReport extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Pendapatan",
+                            "Pengeluaran",
                             style: medium.copyWith(
                                 fontSize: 13, color: lightActive),
                           ),

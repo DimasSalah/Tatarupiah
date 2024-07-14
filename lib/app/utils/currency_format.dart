@@ -58,13 +58,15 @@ String currencyFormatWithK(String value) {
 String currencyFormatWithKDouble(String value) {
   if (value.isEmpty) return '0';
   final amount = double.parse(value);
-  if (amount < 1000) {
-    return amount.toStringAsFixed(0);
-  } else if (amount < 1000000) {
+  final isNegative = amount < 0; // Cek apakah nilai negatif
+  final absAmount = amount.abs(); // Gunakan nilai absolut untuk format
+  if (absAmount < 1000) {
+    return '${isNegative ? '-' : ''}${absAmount.toStringAsFixed(0)}';
+  } else if (absAmount < 1000000) {
     final formatter = NumberFormat("#,##0.0", "id");
-    return "${formatter.format(amount / 1000)}rb"; // Menggunakan 'rb' untuk ribu
+    return "${isNegative ? '-' : ''}${formatter.format(absAmount / 1000)}rb"; // Menggunakan 'rb' untuk ribu
   } else {
     final formatter = NumberFormat("#,##0.0", "id");
-    return "${formatter.format(amount / 1000000)}jt"; // Menggunakan 'jt' untuk juta
+    return "${isNegative ? '-' : ''}${formatter.format(absAmount / 1000000)}jt"; // Menggunakan 'jt' untuk juta
   }
 }
