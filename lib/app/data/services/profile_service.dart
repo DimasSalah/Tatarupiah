@@ -14,27 +14,22 @@ class ProfileService extends GetxService {
   final baseUrl = baseurl;
 
   Future<UserModel> getUser() async {
-    try {
-      final response = await dio.get(
-        '$baseUrl/user',
-        options: Options(
-          contentType: Headers.jsonContentType,
-          headers: {
-            'Authorization': 'Bearer ${token}',
-          },
-        ),
-      );
-      if (response.statusCode == 200) {
-        logger.i(response.data);
-        return UserModel.fromJson(response.data);
-      } else {
-        throw Exception('Failed to load profile');
-      }
-    } catch (e) {
-      if (e is DioException) {
-        logger.e(e.response!.data);
-      }
-      throw Exception(e);
+    final response = await dio.get(
+      '$baseUrl/user',
+      options: Options(
+        contentType: Headers.jsonContentType,
+        headers: {
+          'Authorization': 'Bearer ${token}',
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      logger.i(response.data);
+      return UserModel.fromJson(response.data);
+    } else {
+      logger
+          .e('Failed to load profile with status code: ${response.statusCode}');
+      throw Exception('Failed to load profile');
     }
   }
 
