@@ -22,7 +22,7 @@ class LineChartWidget extends StatelessWidget {
             controller.profitData.isEmpty) {
           return Center(
             child: CircularProgressIndicator(
-              color: whites,
+              color: white,
             ), // Display a loading indicator
           );
         }
