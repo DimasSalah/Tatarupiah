@@ -105,22 +105,20 @@ class RegisterView extends GetView<RegisterController> {
                           ),
                         )),
                     const Gap(26),
-                    InkWell(
+                    GestureDetector(
                       onTap: () {
                         controller.register();
                       },
                       child: Container(
+                        width: double.infinity,
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 141, vertical: 20),
+                            horizontal: 12, vertical: 24),
                         decoration: BoxDecoration(
                           color: dark,
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        width: double.infinity,
-                        height: 64,
                         child: Text(
-                          'Register',
-                          maxLines: 1,
+                          'Daftar',
                           style: regular.copyWith(fontSize: 16, color: white),
                           textAlign: TextAlign.center,
                         ),
