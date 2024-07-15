@@ -77,7 +77,7 @@ class TransactionCard extends StatelessWidget {
               Text(
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                currencyViewFormatter(price),
+                currencyFormatWithKDouble(price),
                 style: semiBold.copyWith(
                     fontSize: 20, color: type == 'Pemasukan' ? success : error),
               )

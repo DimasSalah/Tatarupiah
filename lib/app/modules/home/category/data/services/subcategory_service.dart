@@ -49,9 +49,7 @@ class SubCategoryService extends GetxService {
         throw Exception('Gagal menambahkan sub kategori');
       }
     } on DioException catch (e) {
-      if (e.response != null && e.response!.statusCode == 409) {
-        Get.snackbar('Error', 'Sub Category already exists', colorText: error);
-      }
+      Get.snackbar('Error', 'Sub Category already exists', colorText: error);
       rethrow;
     } catch (e) {
       logger.e(e);
