@@ -31,8 +31,8 @@ mixin AddCategoryMixin on GetxController {
 
   void closeAddCategory() {
     iconSelected.value = '';
-    incomeAmount.value = '';
-    expanseAmount.value = '';
+    incomeAmount.value = '0';
+    expanseAmount.value = '0';
     subCategoryName.value = '';
   }
 }

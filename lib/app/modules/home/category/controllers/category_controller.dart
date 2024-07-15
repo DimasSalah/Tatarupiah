@@ -26,13 +26,17 @@ class CategoryController extends GetxController
 
   void incrementOrder(SubCategory subCategory) {
     subCategory.orderCount++;
-    update(['order_${subCategory.id}']); // Memanggil update untuk memberitahu GetX bahwa ada perubahan pada subCategory tertentu
+    update([
+      'order_${subCategory.id}'
+    ]); // Memanggil update untuk memberitahu GetX bahwa ada perubahan pada subCategory tertentu
   }
 
   void decrementOrder(SubCategory subCategory) {
     if (subCategory.orderCount > 0) {
       subCategory.orderCount--;
-      update(['order_${subCategory.id}']); // Memanggil update untuk memberitahu GetX bahwa ada perubahan pada subCategory tertentu
+      update([
+        'order_${subCategory.id}'
+      ]); // Memanggil update untuk memberitahu GetX bahwa ada perubahan pada subCategory tertentu
     }
   }
 
@@ -71,12 +75,21 @@ class CategoryController extends GetxController
       );
     } else {
       final subCategoryService = SubCategoryService();
+      int parseAmount(String amount) {
+        String sanitizedAmount = amount.replaceAll('.', '').trim();
+        if (sanitizedAmount.isEmpty ||
+            !RegExp(r'^\d+$').hasMatch(sanitizedAmount)) {
+          return 0; // Default to 0 if the amount is not a valid integer string
+        }
+        return int.parse(sanitizedAmount);
+      }
+
       subCategoryService.postSubCategory(
         categoryId: categoryId.value,
         type: categoryType.value,
         name: subCategoryName.value,
         icon: iconSelected.value,
-        income: int.parse(incomeAmount.value.replaceAll('.', '')),
+        income: parseAmount(incomeAmount.value),
         expanse: categoryType.value == "Pemasukan"
             ? int.parse(expanseAmount.value.replaceAll('.', ''))
             : int.parse(outcomeAmount.value
