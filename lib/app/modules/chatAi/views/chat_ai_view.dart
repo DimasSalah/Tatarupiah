@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:rive/rive.dart';
@@ -29,10 +30,9 @@ class ChatAiView extends GetView<ChatAiController> {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 5, vertical: 13),
+                padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: Container(
-                    height: 380,
+                    height: 400,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40), color: dark),
                     child: Padding(
@@ -48,7 +48,7 @@ class ChatAiView extends GetView<ChatAiController> {
                               style:
                                   medium.copyWith(fontSize: 25, color: light)),
                           Center(
-                            child: SizedBox(
+                            child: Container(
                               height: 300,
                               width: 500,
                               child: RiveAnimation.asset(
@@ -81,8 +81,8 @@ class ChatAiView extends GetView<ChatAiController> {
                     ),
                     const Gap(20),
                     InkWell(
-                      onTap: () => Get.toNamed(Routes.RECOMENDATION),
-                      child: Container(
+                      onTap: () => Get.toNamed(Routes.ASSISTANT),
+                      child: Ink(
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -92,7 +92,26 @@ class ChatAiView extends GetView<ChatAiController> {
                         ),
                         child: Text(
                           textAlign: TextAlign.center,
-                          'Mulai Obrolan',
+                          'Alokasikan Anggaran',
+                          style:
+                              medium.copyWith(color: lightActive, fontSize: 16),
+                        ),
+                      ),
+                    ),
+                    const Gap(20),
+                    InkWell(
+                      onTap: () => Get.toNamed(Routes.RECOMENDATION),
+                      child: Ink(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: light,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: lightActive, width: 1),
+                        ),
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          'AI Assistent',
                           style:
                               medium.copyWith(color: lightActive, fontSize: 16),
                         ),

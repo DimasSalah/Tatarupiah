@@ -5,18 +5,18 @@ import 'package:get/get.dart';
 import '../../../../../style/colors.dart';
 import '../../../../../style/text_style.dart';
 import '../../../../../utils/currency_format.dart';
+import '../../../../statistics/controllers/statistics_controller.dart';
 
 class InitialMessage extends StatelessWidget {
-  final String initialValue;
   final void Function(String) onChanged;
   const InitialMessage({
     super.key,
-    required this.initialValue,
     required this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
+    final statisticsController = Get.put(StatisticsController());
     return Padding(
       padding: const EdgeInsets.only(left: 23, right: 23, top: 16),
       child: Column(
@@ -60,7 +60,7 @@ class InitialMessage extends StatelessWidget {
                   style: semiBold.copyWith(fontSize: 14),
                   onChanged: onChanged,
                   initialValue: currencyViewFormatter(
-                      initialValue),
+                      statisticsController.incomeAmount.value.toString()),
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       isDense: true,
