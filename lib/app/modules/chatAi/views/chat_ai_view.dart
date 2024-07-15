@@ -94,11 +94,11 @@ class ChatAiView extends GetView<ChatAiController> {
                           textAlign: TextAlign.center,
                           'Alokasikan Anggaran',
                           style:
-                              medium.copyWith(color: lightActive, fontSize: 16),
+                              medium.copyWith(color: lightActive, fontSize: 15),
                         ),
                       ),
                     ),
-                    const Gap(20),
+                    const Gap(10),
                     InkWell(
                       onTap: () => Get.toNamed(Routes.RECOMENDATION),
                       child: Ink(
@@ -111,12 +111,13 @@ class ChatAiView extends GetView<ChatAiController> {
                         ),
                         child: Text(
                           textAlign: TextAlign.center,
-                          'AI Assistent',
+                          'AI Services',
                           style:
-                              medium.copyWith(color: lightActive, fontSize: 16),
+                              medium.copyWith(color: lightActive, fontSize: 15),
                         ),
                       ),
                     ),
+                    const Gap(20)
                   ],
                 ),
               )

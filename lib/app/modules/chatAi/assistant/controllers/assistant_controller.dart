@@ -29,6 +29,7 @@ class AssistantController extends GetxController {
     'hiburan',
     'pendidikan',
     'modal usaha',
+    'sewa',
     'sedekah',
     'dana darurat',
   ].obs;

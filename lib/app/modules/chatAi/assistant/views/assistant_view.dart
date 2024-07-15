@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 
@@ -14,8 +15,18 @@ class AssistantView extends GetView<AssistantController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AssistantView'),
-        centerTitle: true,
+        leading: IconButton(
+          icon: SvgPicture.asset(
+            'assets/icons/arrow_left.svg',
+          ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
+        title: Text(
+          'Ai Service',
+          style: semiBold.copyWith(fontSize: 20),
+        ),
       ),
       body: Column(
         children: [
@@ -79,7 +90,7 @@ class AssistantView extends GetView<AssistantController> {
                                     radius: 20,
                                     backgroundColor: normal,
                                     child: convo.isMe
-                                        ? ClipOval(
+                                        ? const ClipOval(
                                             child: Icon(
                                             Icons.person,
                                             color: Colors.white,
