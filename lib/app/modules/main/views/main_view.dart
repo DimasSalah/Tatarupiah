@@ -36,8 +36,16 @@ class MainView extends GetView<MainController> {
                 label: 'Home',
               ),
               NavigationDestination(
-                icon: SvgPicture.asset('assets/icons/chart_outline.svg'),
-                selectedIcon: SvgPicture.asset('assets/icons/chart_fill.svg'),
+                icon: SvgPicture.asset(
+                  'assets/icons/Chart_alt.svg',
+                  width: 30,
+                  height: 30,
+                ),
+                selectedIcon: SvgPicture.asset(
+                  'assets/icons/Chart_alt_fill.svg',
+                  width: 30,
+                  height: 30,
+                ),
                 label: 'Statistics',
               ),
               NavigationDestination(
