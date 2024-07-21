@@ -78,13 +78,7 @@ class AuthView extends GetView<AuthController> {
                       ),
                     ),
                     const SizedBox(height: 11),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        'lupa password ?',
-                        style: regular.copyWith(fontSize: 13, color: normal),
-                      ),
-                    ),
+                   
                     const SizedBox(height: 14),
                     GestureDetector(
                       onTap: () {

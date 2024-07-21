@@ -91,10 +91,6 @@ class HomeController extends GetxController with BarchartMixin {
     }
   }
 
-  void navigationToTransaction() {
-    Get.toNamed(Routes.TRANSACTION);
-  }
-
   int getProfit() {
     totalProfit.value = 0;
     for (var transaction in transactionsList) {

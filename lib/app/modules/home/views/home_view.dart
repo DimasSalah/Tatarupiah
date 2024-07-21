@@ -1,20 +1,15 @@
+import 'package:flutter_intro/flutter_intro.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:tatarupiah/app/modules/home/data/models/transaction_model.dart';
 import 'package:tatarupiah/app/modules/home/views/components/TransactionCard.dart';
 import 'package:tatarupiah/app/modules/home/views/components/bar%20graph/bar_graph.dart';
 import 'package:tatarupiah/app/modules/home/views/components/dropdown_option.dart';
 import 'package:tatarupiah/app/style/colors.dart';
-import 'package:tatarupiah/app/style/gradient.dart';
 import 'package:tatarupiah/app/utils/currency_format.dart';
 import 'package:tatarupiah/app/utils/date_format.dart';
-import 'package:tatarupiah/app/utils/global_controller/user_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../../../style/text_style.dart';
 import '../controllers/home_controller.dart';
@@ -81,12 +76,14 @@ class HomeView extends GetView<HomeController> {
                                 DateFilterHome(controller: controller),
                               ],
                             ),
-                            Obx(() => Text(
-                                  currencyFormatWithKDouble(
-                                      controller.totalAmount.value.toString()),
-                                  style:
-                                      bold.copyWith(fontSize: 33, color: white),
-                                )),
+                            Obx(
+                              () => Text(
+                                currencyViewFormatter(
+                                    controller.totalAmount.value.toString()),
+                                style:
+                                    bold.copyWith(fontSize: 33, color: white),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -257,8 +254,9 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
       ),
-      floatingActionButton:
-          FloatingAddTransaction(onTap: controller.navigationToTransaction),
+      floatingActionButton: FloatingAddTransaction(onTap: () {
+        Get.toNamed(Routes.TRANSACTION);
+      }),
     );
   }
 }

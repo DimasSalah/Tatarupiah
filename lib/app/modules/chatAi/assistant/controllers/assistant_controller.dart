@@ -54,14 +54,12 @@ class AssistantController extends GetxController {
     super.onInit();
   }
 
-  // String getamount() {
-  //   if (amount.value.isEmpty) {
-  //     amount.value = formatCurrency( homeController.totalIncome.value.toString());
-  //   } else {
-  //     amount.value = amount.value;
-  //   }
-  //   return amount.value;
-  // }
+  @override
+  void onClose() {
+    textController.dispose();
+    statisticController.onClose();
+    super.onClose();
+  }
 
   void toggleOption(String option) {
     //function to toggle option
@@ -107,14 +105,19 @@ class AssistantController extends GetxController {
     );
     update(['chat']);
     textController.clear();
-    var response = await openAi.onCompletion(
+    var response = await openAi
+        .onCompletion(
       request: CompleteText(
         prompt:
             'Saya mempunyai uang dengan nominal ${getamount()} , ingin digunakan untuk ${message.value}, berapa alokasi anggaran yang tepat berikan list anggaranya, deskripsikan dengan singkat',
         model: Gpt3TurboInstruct(),
-        maxTokens: 300,
+        maxTokens: 500,
       ),
-    );
+    )
+        .catchError((e) {
+      Get.snackbar('Error', e.toString());
+      return null;
+    });
     if (response!.choices.isNotEmpty) {
       conversation.add(
         Chat(

@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:tatarupiah/app/modules/home/history/views/components/transaction_history_widget.dart';
-import 'package:tatarupiah/app/style/colors.dart';
 import 'package:tatarupiah/app/style/text_style.dart';
 import 'package:tatarupiah/app/utils/currency_format.dart';
 import '../../data/models/transaction_model.dart';

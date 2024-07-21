@@ -31,7 +31,6 @@ mixin CategoryData on GetxController {
           .where((category) => category.nama == categoryName)
           .toList();
     }
-
     super.onClose();
   }
 }

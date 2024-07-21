@@ -24,7 +24,7 @@ class AssistantView extends GetView<AssistantController> {
           },
         ),
         title: Text(
-          'Ai Service',
+          'Ai Alokasi Anggaran',
           style: semiBold.copyWith(fontSize: 20),
         ),
       ),

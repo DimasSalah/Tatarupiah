@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -56,24 +57,26 @@ class InitialMessage extends StatelessWidget {
                   'ingin digunakan untuk apa saja uang sebesar',
                   style: regular.copyWith(fontSize: 13),
                 ),
-                TextFormField(
-                  style: semiBold.copyWith(fontSize: 14),
-                  onChanged: onChanged,
-                  initialValue: currencyViewFormatter(
-                      statisticsController.incomeAmount.value.toString()),
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      isDense: true,
-                      contentPadding: EdgeInsets.zero,
-                      suffixIcon: const Icon(Icons.create),
-                      suffixIconConstraints:
-                          const BoxConstraints(maxWidth: 30, maxHeight: 30),
-                      hintStyle: regular.copyWith(fontSize: 14, color: dark),
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      constraints: BoxConstraints(
-                          maxWidth: Get.width * 0.3, maxHeight: 30)),
-                )
+                Obx(() {
+                  return TextFormField(
+                    style: semiBold.copyWith(fontSize: 14),
+                    onChanged: onChanged,
+                    initialValue: currencyViewFormatter(
+                        statisticsController.incomeAmount.value.toString()),
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.zero,
+                        suffixIcon: const Icon(Icons.create),
+                        suffixIconConstraints:
+                            const BoxConstraints(maxWidth: 30, maxHeight: 30),
+                        hintStyle: regular.copyWith(fontSize: 14, color: dark),
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        constraints: BoxConstraints(
+                            maxWidth: Get.width * 0.3, maxHeight: 30)),
+                  );
+                })
               ],
             ),
           ),

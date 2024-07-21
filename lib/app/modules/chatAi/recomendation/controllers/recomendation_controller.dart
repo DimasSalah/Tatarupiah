@@ -2,20 +2,21 @@ import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tatarupiah/app/modules/statistics/controllers/statistics_controller.dart';
-
 import '../../../../utils/global_controller/user_controller.dart';
-import '../data/models/chat_model.dart';
 
-class RecomendationController extends GetxController {
- 
+class RecomendationController extends GetxController{
   final userController = Get.put(UserController());
+  final textController = TextEditingController();
+
+  final List<String> questions = [
+    'Bagaimana cara mengatur anggaran bulanan?',
+    'Bagaimana cara mengurangi biaya operasional tanpa mengorbankan kualitas',
+    'Apa saja indikator keuangan yang harus saya pantau secara rutin?',
+    'Apa saja langkah-langkah untuk memaksimalkan keuntungan selama musim ramai dan tetap bertahan di musim sepi?'
+  ];
 
   @override
   void onInit() {
-    // print('harga ${staticController.incomeAmount.value.toString()}');
-    // String incomeAmountString = staticController.incomeAmount.value.toString();
-    // incomeAmountString = amount.value;
     openAi = OpenAI.instance.build(
       token: userController.apiKey.value,
       baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 5)),
@@ -54,7 +55,7 @@ class RecomendationController extends GetxController {
       }
     }).toList();
     final request = ChatCompleteText(
-        messages: messagesHistory, maxToken: 200, model: GptTurboChatModel());
+        messages: messagesHistory, maxToken: 500, model: GptTurboChatModel());
     final response = await openAi.onChatCompletion(request: request);
     for (var element in response!.choices) {
       if (element.message != null) {
@@ -98,5 +99,15 @@ class RecomendationController extends GetxController {
         update(['chat']);
       }
     }
+  }
+
+  void sendMessage(String text) {
+    final message = ChatMessage(
+      user: currentUser,
+      createdAt: DateTime.now(),
+      text: text,
+    );
+    getChatResponse(message);
+    textController.clear();
   }
 }

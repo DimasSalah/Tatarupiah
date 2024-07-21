@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:rive/rive.dart';
@@ -7,6 +8,7 @@ import 'package:tatarupiah/app/routes/app_pages.dart';
 import 'package:tatarupiah/app/style/colors.dart';
 import 'package:tatarupiah/app/style/text_style.dart';
 
+import '../../../style/gradient.dart';
 import '../../home/views/components/header_bar.dart';
 import '../controllers/chat_ai_controller.dart';
 
@@ -51,7 +53,7 @@ class ChatAiView extends GetView<ChatAiController> {
                             child: Container(
                               height: 300,
                               width: 500,
-                              child: RiveAnimation.asset(
+                              child: const RiveAnimation.asset(
                                 'assets/icons/robot_ai.riv',
                                 fit: BoxFit.cover,
                               ),
@@ -80,41 +82,79 @@ class ChatAiView extends GetView<ChatAiController> {
                       style: regular.copyWith(fontSize: 13, color: lightActive),
                     ),
                     const Gap(20),
-                    InkWell(
-                      onTap: () => Get.toNamed(Routes.ASSISTANT),
-                      child: Ink(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: light,
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                          color: normal,
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: lightActive, width: 1),
-                        ),
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          'Alokasikan Anggaran',
-                          style:
-                              medium.copyWith(color: lightActive, fontSize: 15),
-                        ),
-                      ),
-                    ),
-                    const Gap(10),
-                    InkWell(
-                      onTap: () => Get.toNamed(Routes.RECOMENDATION),
-                      child: Ink(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: light,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: lightActive, width: 1),
-                        ),
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          'AI Services',
-                          style:
-                              medium.copyWith(color: lightActive, fontSize: 15),
-                        ),
+                          border: Border.all(
+                              color: normal.withOpacity(0.4), width: 2),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            )
+                          ]),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                            onTap: () => Get.toNamed(Routes.ASSISTANT),
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  decoration: BoxDecoration(
+                                    gradient: primary,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: SvgPicture.asset(
+                                    'assets/icons/funds.svg',
+                                    width: 20,
+                                  ),
+                                ),
+                                Text(
+                                  'Anggaran',
+                                  style: medium.copyWith(
+                                      fontSize: 15, color: white),
+                                ),
+                              ],
+                            ),
+                          ),
+                          VerticalDivider(
+                            color:
+                                error, // Assuming 'light' is defined elsewhere as a Color
+                            thickness: 5,
+                            width:
+                                20, // Adjust the width to create space around the divider
+                          ),
+                          GestureDetector(
+                            onTap: () => Get.toNamed(Routes.RECOMENDATION),
+                            child: Column(
+                              children: [
+                                Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      gradient: primary,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: SvgPicture.asset(
+                                      'assets/icons/assistant.svg',
+                                      width: 20,
+                                    )),
+                                Text(
+                                  'services',
+                                  style: medium.copyWith(
+                                      fontSize: 15, color: white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     const Gap(20)
