@@ -93,9 +93,12 @@ class HistoryView extends GetView<HistoryController> {
                       },
                     )
                   : controller.transactionsList.isEmpty
-                      ? const Center(
-                          child: Text("Data Kosong"),
-                        )
+                      ? Center(
+                              child: Text(
+                                "pencatatan transaksi masih kosong",
+                                style: regular.copyWith(fontSize: 15),
+                              ),
+                            )
                       : Expanded(
                           child: GetBuilder<HistoryController>(
                               id: 'history',

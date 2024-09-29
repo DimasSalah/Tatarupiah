@@ -2,11 +2,14 @@ import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../../../utils/global_controller/user_controller.dart';
 
-class RecomendationController extends GetxController{
+class RecomendationController extends GetxController {
   final userController = Get.put(UserController());
   final textController = TextEditingController();
+  final storage = GetStorage();
+  final String chatKey = 'chatMessages';
 
   final List<String> questions = [
     'Bagaimana cara mengatur anggaran bulanan?',
@@ -22,7 +25,9 @@ class RecomendationController extends GetxController{
       baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 5)),
       enableLog: true,
     );
+    loadChatMessages();
     sendInitialMessage();
+
     super.onInit();
   }
 
@@ -41,6 +46,7 @@ class RecomendationController extends GetxController{
 
   Future<void> getChatResponse(ChatMessage m) async {
     messagesList.insert(0, m);
+    saveChatMessages();
     typingUsers.add(gptUser);
     update(['chat']);
     List<Map<String, dynamic>> messagesHistory = messagesList.reversed.map((m) {
@@ -69,6 +75,7 @@ class RecomendationController extends GetxController{
       }
     }
     typingUsers.remove(gptUser);
+    saveChatMessages();
   }
 
   Future<void> sendInitialMessage() async {
@@ -99,6 +106,7 @@ class RecomendationController extends GetxController{
         update(['chat']);
       }
     }
+    saveChatMessages();
   }
 
   void sendMessage(String text) {
@@ -109,5 +117,36 @@ class RecomendationController extends GetxController{
     );
     getChatResponse(message);
     textController.clear();
+  }
+
+  void saveChatMessages() {
+    List<Map<String, dynamic>> chatMessages = messagesList.map((message) {
+      return {
+        'user': message.user.id,
+        'text': message.text,
+        'createdAt': message.createdAt.toIso8601String(),
+      };
+    }).toList();
+    storage.write(chatKey, chatMessages);
+  }
+
+  void loadChatMessages() {
+    List<dynamic> storedMessages = storage.read(chatKey) ?? [];
+    messagesList.clear();
+    storedMessages.forEach((msg) {
+      ChatUser user = msg['user'] == '1' ? currentUser : gptUser;
+      messagesList.add(ChatMessage(
+        user: user,
+        text: msg['text'],
+        createdAt: DateTime.parse(msg['createdAt']),
+      ));
+    });
+    update(['chat']);
+  }
+
+  void deleteChatMessages() {
+    messagesList.clear();
+    storage.remove(chatKey);
+    update(['chat']);
   }
 }

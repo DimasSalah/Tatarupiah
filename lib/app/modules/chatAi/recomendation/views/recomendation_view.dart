@@ -1,6 +1,7 @@
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:tatarupiah/app/style/colors.dart';
 import 'package:tatarupiah/app/style/text_style.dart';
@@ -32,6 +33,15 @@ class RecomendationView extends GetView<RecomendationController> {
             },
             icon: Icon(
               Icons.info_outline,
+              color: normal,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              controller.deleteChatMessages();
+            },
+            icon: Icon(
+              Icons.delete,
               color: normal,
             ),
           ),

@@ -194,8 +194,11 @@ class HomeView extends GetView<HomeController> {
                           },
                         )
                       : controller.transactionsList.isEmpty
-                          ? const Center(
-                              child: Text("Data Kosong"),
+                          ? Center(
+                              child: Text(
+                                "pencatatan transaksi masih kosong",
+                                style: regular.copyWith(fontSize: 15),
+                              ),
                             )
                           : ListView.builder(
                               shrinkWrap: true,
